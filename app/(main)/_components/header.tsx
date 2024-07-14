@@ -32,7 +32,7 @@ export default function Header() {
           </Link>
         </div>
       </div>
-      <div className="flex gap-6 items-center">
+      <div className="flex gap-7 items-center">
         <Search className="w-5 h-5 text-primary cursor-pointer" />
         <Bell className="w-5 h-5 text-primary cursor-pointer" />
         <Avatar className="w-8 h-8 cursor-pointer">
