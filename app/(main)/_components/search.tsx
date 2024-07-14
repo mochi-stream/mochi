@@ -1,6 +1,8 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 import Link from "next/link";
+
 import { cn } from "@/lib/utils";
 
 import {
@@ -22,14 +24,18 @@ import lodash from "lodash";
 import { searchAnime } from "@/handlers/anime";
 import { IAnimeResult, ITitle } from "@consumet/extensions";
 
+import qs from "query-string";
+
 export default function SearchDialog() {
   const [searchValue, setSearchValue] = useState("");
   const [results, setResults] = useState<IAnimeResult[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [open, setOpen] = useState(false);
   const [error, setError] = useState("");
 
   const handleInputChange = (userInput: string) => {
     setIsLoading(true);
+    setResults([]);
     searchAnime(userInput)
       .then((response) => {
         setResults(response.results);
@@ -46,11 +52,47 @@ export default function SearchDialog() {
 
   const onSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
-    handler(event.target.value);
+    if (event.target.value !== "") {
+      handler(event.target.value);
+    } else {
+      setResults([]);
+    }
   };
 
+  const router = useRouter();
+  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (!searchValue) {
+      return;
+    }
+    const url = qs.stringifyUrl(
+      {
+        url: "/search",
+        query: { query: searchValue },
+      },
+      { skipEmptyString: true }
+    );
+    setOpen(false);
+    router.push(url);
+  }
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.ctrlKey && event.key === "k") {
+        event.preventDefault();
+        setOpen(true);
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Search className="w-5 h-5 text-primary cursor-pointer" />
       </DialogTrigger>
@@ -59,35 +101,38 @@ export default function SearchDialog() {
           <DialogTitle>Find what you&apos;re looking for.</DialogTitle>
         </DialogHeader>
         <div className="grid gap-4 py-4">
-          <div className="flex justify-between">
-            <div className="relative w-full max-w-md">
-              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                <Search className="w-5 h-5 text-muted-foreground" />
+          <form onSubmit={onSubmit}>
+            <div className="flex justify-between">
+              <div className="relative w-full max-w-md">
+                <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                  <Search className="w-5 h-5 text-muted-foreground" />
+                </div>
+                <Input
+                  type="search"
+                  value={searchValue}
+                  onChange={onSearchChange}
+                  placeholder="Search for an anime"
+                  className="w-full h-10 pl-10 pr-10 text-sm bg-background border border-input rounded-md shadow-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                />
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  type="button"
+                  onClick={() => setSearchValue("")}
+                  className={cn(
+                    "absolute inset-y-0 right-0 flex items-center pr-3",
+                    {
+                      hidden: !searchValue,
+                    }
+                  )}
+                >
+                  <X className="w-5 h-5 text-muted-foreground" />
+                  <span className="sr-only">Clear</span>
+                </Button>
               </div>
-              <Input
-                type="search"
-                value={searchValue}
-                onChange={onSearchChange}
-                placeholder="Search..."
-                className="w-full h-10 pl-10 pr-10 text-sm bg-background border border-input rounded-md shadow-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
-              />
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setSearchValue("")}
-                className={cn(
-                  "absolute inset-y-0 right-0 flex items-center pr-3",
-                  {
-                    hidden: !searchValue,
-                  }
-                )}
-              >
-                <X className="w-5 h-5 text-muted-foreground" />
-                <span className="sr-only">Clear</span>
-              </Button>
+              <Button type="submit">Search</Button>
             </div>
-            <Button>Search</Button>
-          </div>
+          </form>
           <div className="max-h-[300px] overflow-auto">
             <div className="grid gap-3">
               {isLoading ? (
@@ -110,6 +155,7 @@ export default function SearchDialog() {
                   <Link
                     href={`/anime/${result.id}`}
                     key={index}
+                    onClick={() => setOpen(false)}
                     className="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-muted/50 transition-colors"
                     prefetch={false}
                   >
@@ -119,10 +165,6 @@ export default function SearchDialog() {
                     </div>
                   </Link>
                 ))
-              ) : !results ? (
-                <div className="text-muted-foreground text-sm">
-                  No results found
-                </div>
               ) : error ? (
                 <div className="text-muted-foreground text-sm">{error}</div>
               ) : null}

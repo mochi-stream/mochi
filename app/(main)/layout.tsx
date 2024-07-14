@@ -1,5 +1,6 @@
 import Header from "./_components/header";
 import { Toaster } from "sonner";
+import NextTopLoader from "nextjs-toploader";
 
 export default function AppLayout({
   children,
@@ -8,6 +9,7 @@ export default function AppLayout({
 }>) {
   return (
     <div>
+      <NextTopLoader color="#ffffff" showSpinner={false} height={2} />
       <Header />
       <Toaster />
       {children}
