@@ -11,8 +11,6 @@ import { ITitle, IAnimeResult } from "@consumet/extensions";
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 
-const animation = { duration: 20000, easing: (t: number) => t };
-
 export function Trending() {
   const [trendingAnime, setTrendingAnime] = useState<IAnimeResult[]>([]);
   const [loading, setLoading] = useState(true);
@@ -53,19 +51,10 @@ export function Trending() {
         },
       },
     },
-    created(s) {
-      s.moveToIdx(5, true, animation);
-    },
-    updated(s) {
-      s.moveToIdx(s.track.details.abs + 5, true, animation);
-    },
-    animationEnded(s) {
-      s.moveToIdx(s.track.details.abs + 5, true, animation);
-    },
     mode: "snap",
-    loop: true,
     renderMode: "precision",
     drag: true,
+    loop: true,
   });
 
   if (loading) {
@@ -78,7 +67,10 @@ export function Trending() {
         <h1 className="text-2xl font-medium">Trending</h1>
         <p className="text-sm text-muted-foreground">Popular animes for you.</p>
       </div>
-      <div className="mt-6 keen-slider relative" ref={ref}>
+      <div
+        className="mt-6 keen-slider relative pl-0 lg:pl-[5%]"
+        ref={ref}
+      >
         {trendingAnime.map((anime, index) => (
           <div
             key={index}
@@ -119,8 +111,8 @@ export function Trending() {
             </Link>
           </div>
         ))}
-        <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-background to-transparent pointer-events-none opacity-65"></div>
-        <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-background to-transparent pointer-events-none opacity-65"></div>
+        <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-background to-transparent pointer-events-none opacity-65"></div>
+        <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-background to-transparent pointer-events-none opacity-65"></div>
       </div>
     </div>
   );
