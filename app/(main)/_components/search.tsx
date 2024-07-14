@@ -1,4 +1,7 @@
+import { useState, useCallback } from "react";
+
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 import {
   Dialog,
@@ -6,17 +9,46 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogDescription,
-  DialogFooter,
 } from "@/components/ui/dialog";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Skeleton } from "@/components/ui/skeleton";
+
 import { Search, X } from "lucide-react";
-import { useState } from "react";
-import { cn } from "@/lib/utils";
+
+import lodash from "lodash";
+
+import { searchAnime } from "@/handlers/anime";
+import { IAnimeResult, ITitle } from "@consumet/extensions";
 
 export default function SearchDialog() {
   const [searchValue, setSearchValue] = useState("");
+  const [results, setResults] = useState<IAnimeResult[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleInputChange = (userInput: string) => {
+    setIsLoading(true);
+    searchAnime(userInput)
+      .then((response) => {
+        setResults(response.results);
+      })
+      .catch((error) => {
+        setError(error.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
+  const handler = useCallback(lodash.debounce(handleInputChange, 500), []);
+
+  const onSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(event.target.value);
+    handler(event.target.value);
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -35,7 +67,7 @@ export default function SearchDialog() {
               <Input
                 type="search"
                 value={searchValue}
-                onChange={(e) => setSearchValue(e.target.value)}
+                onChange={onSearchChange}
                 placeholder="Search..."
                 className="w-full h-10 pl-10 pr-10 text-sm bg-background border border-input rounded-md shadow-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
               />
@@ -57,16 +89,43 @@ export default function SearchDialog() {
             <Button>Search</Button>
           </div>
           <div className="max-h-[300px] overflow-auto">
-            <div className="grid gap-2">
-              <Link
-                href="#"
-                className="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-muted/50 transition-colors"
-                prefetch={false}
-              >
-                <div className="flex-1 overflow-hidden text-sm text-muted-foreground text-ellipsis whitespace-nowrap">
-                  One Piece (1999)
+            <div className="grid gap-3">
+              {isLoading ? (
+                <>
+                  {Array.from({ length: 3 }).map((_, index) => (
+                    <Link
+                      href="#"
+                      key={index}
+                      className="block"
+                      prefetch={false}
+                    >
+                      <Skeleton className="flex items-center gap-3 px-4 py-2 rounded-md transition-colors">
+                        <div className="flex-1 h-5 w-40 rounded bg-muted"></div>
+                      </Skeleton>
+                    </Link>
+                  ))}
+                </>
+              ) : results && results.length > 1 ? (
+                results.map((result, index) => (
+                  <Link
+                    href={`/anime/${result.id}`}
+                    key={index}
+                    className="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-muted/50 transition-colors"
+                    prefetch={false}
+                  >
+                    <div className="flex-1 overflow-hidden text-sm text-muted-foreground text-ellipsis">
+                      {(result.title as ITitle).english ||
+                        (result.title as ITitle).userPreferred}
+                    </div>
+                  </Link>
+                ))
+              ) : !results ? (
+                <div className="text-muted-foreground text-sm">
+                  No results found
                 </div>
-              </Link>
+              ) : error ? (
+                <div className="text-muted-foreground text-sm">{error}</div>
+              ) : null}
             </div>
           </div>
         </div>
