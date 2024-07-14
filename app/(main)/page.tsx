@@ -4,7 +4,7 @@ import { Trending } from "./_components/trending";
 
 export default function App() {
   return (
-    <div className="px-8 py-6">
+    <div className="">
       <Trending />
     </div>
   );
