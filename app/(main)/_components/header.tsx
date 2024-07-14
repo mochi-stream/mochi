@@ -1,33 +1,44 @@
 "use client";
 
 import Link from "next/link";
-import SearchInput from "./search-input";
 import { Button } from "@/components/ui/button";
+import { Bell, Search } from "lucide-react";
+
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default function Header() {
   return (
-    <header className="flex h-14 items-center justify-between gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6 select-none">
-      <div className="flex gap-12 items-center">
-        <h1 className="text-2xl">Mochi.</h1>
-        <div className="hidden lg:flex">
-          <Button variant="link" size="link">
-            <Link href="/">Home</Link>
-          </Button>
-          <Button variant="link" size="link">
-            <Link href="/about">Anime</Link>
-          </Button>
-          <Button variant="link" size="link">
-            <Link href="/contact">Collection</Link>
-          </Button>
-          <Button variant="link" size="link">
-            <Link href="/contact">News</Link>
-          </Button>
+    <header className="flex items-center justify-between sticky left-0 right-0 top-0 z-50 bg-gradient-to-b from-background to-background/0 px-8 py-6 fade-in">
+      <div className="flex gap-8 items-center">
+        <h1 className="text-2xl select-none">Mochi.</h1>
+        <div className="hidden lg:flex gap-4">
+          <Link
+            href="/about"
+            className="transition-colors hover:text-muted-foreground"
+          >
+            TV Series
+          </Link>
+          <Link
+            href="/contact"
+            className="transition-colors hover:text-muted-foreground"
+          >
+            Movies
+          </Link>
+          <Link
+            href="/contact"
+            className="transition-colors hover:text-muted-foreground"
+          >
+            Collections
+          </Link>
         </div>
       </div>
-      <div className="flex gap-4">
-        <SearchInput />
-        <Button variant="secondary">Login</Button>
-        <Button>Get Started</Button>
+      <div className="flex gap-6 items-center">
+        <Search className="w-5 h-5 text-primary cursor-pointer" />
+        <Bell className="w-5 h-5 text-primary cursor-pointer" />
+        <Avatar className="w-8 h-8 cursor-pointer">
+          <AvatarImage src="#" alt="@user" />
+          <AvatarFallback>U</AvatarFallback>
+        </Avatar>
       </div>
     </header>
   );

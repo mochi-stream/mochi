@@ -1,4 +1,5 @@
 import Header from "./_components/header";
+import { Toaster } from "sonner";
 
 export default function AppLayout({
   children,
@@ -8,6 +9,7 @@ export default function AppLayout({
   return (
     <div>
       <Header />
+      <Toaster />
       {children}
     </div>
   );

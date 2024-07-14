@@ -1,7 +1,11 @@
+"use client";
+
+import { Trending } from "./_components/trending";
+
 export default function App() {
   return (
-    <div>
-      <h1>Hello World</h1>
+    <div className="px-8 py-6">
+      <Trending />
     </div>
   );
 }
