@@ -11,7 +11,9 @@ import { ITitle, IAnimeResult } from "@consumet/extensions";
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 
-export function Trending() {
+const animation = { duration: 20000, easing: (t: number) => t };
+
+export default function Trending() {
   const [trendingAnime, setTrendingAnime] = useState<IAnimeResult[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -32,9 +34,15 @@ export function Trending() {
 
   const [ref] = useKeenSlider<HTMLDivElement>({
     breakpoints: {
-      "(min-width: 640px)": {
+      "(min-width: 0px)": {
         slides: {
           perView: 2,
+          spacing: 15,
+        },
+      },
+      "(min-width: 600px)": {
+        slides: {
+          perView: 3,
           spacing: 15,
         },
       },
@@ -50,11 +58,32 @@ export function Trending() {
           spacing: 15,
         },
       },
+      "(min-width: 1440px)": {
+        slides: {
+          perView: 6,
+          spacing: 15,
+        },
+      },
+      "(min-width: 1600px)": {
+        slides: {
+          perView: 7,
+          spacing: 15,
+        },
+      },
     },
-    mode: "snap",
+    mode: "free",
     renderMode: "precision",
     drag: true,
     loop: true,
+    created(s) {
+      s.moveToIdx(5, true, animation);
+    },
+    updated(s) {
+      s.moveToIdx(s.track.details.abs + 5, true, animation);
+    },
+    animationEnded(s) {
+      s.moveToIdx(s.track.details.abs + 5, true, animation);
+    },
   });
 
   if (loading) {
@@ -65,12 +94,9 @@ export function Trending() {
     <div className="px-4 lg:px-8 py-6">
       <div>
         <h1 className="text-2xl font-medium">Trending</h1>
-        <p className="text-sm text-muted-foreground">Popular animes for you.</p>
+        {/* <p className="text-sm text-muted-foreground">Popular animes for you.</p> */}
       </div>
-      <div
-        className="mt-6 keen-slider relative pl-0 lg:pl-[5%]"
-        ref={ref}
-      >
+      <div className="mt-6 keen-slider relative" ref={ref}>
         {trendingAnime.map((anime, index) => (
           <div
             key={index}
@@ -86,7 +112,7 @@ export function Trending() {
                 }
                 width={460}
                 height={650}
-                className="object-cover w-full h-[250px] lg:h-[350px] rounded-lg hover:scale-105 transition-all duration-300 hover:opacity-80"
+                className="object-cover w-full h-[300px] lg:h-[350px] rounded-lg hover:scale-105 transition-all duration-300 hover:opacity-80"
               />
               <div className="py-3 flex-1 flex flex-col">
                 <h2 className="text-lg font-semibold leading-6">

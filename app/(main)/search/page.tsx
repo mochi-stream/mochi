@@ -1,4 +1,9 @@
+"use client";
+
 import { redirect } from "next/navigation";
+
+import SearchSidebar from "./_components/search-sidebar";
+import SearchResults from "./_components/search-results";
 
 interface SearchPageProps {
   searchParams: {
@@ -6,10 +11,24 @@ interface SearchPageProps {
   };
 }
 
+function capitalize(str: string) {
+  if (typeof str !== "string" || !str.length) {
+    return str;
+  }
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 export default function SearchPage({ searchParams }: SearchPageProps) {
   if (!searchParams.query) {
     redirect("/");
   }
-
-  return <div></div>;
+  return (
+    <>
+      <title>{`Search for ${capitalize(searchParams.query)} on Mochi`}</title>
+      <div className="flex w-full  px-4 lg:px-8">
+        <SearchSidebar />
+        <SearchResults query={searchParams.query} />
+      </div>
+    </>
+  );
 }
