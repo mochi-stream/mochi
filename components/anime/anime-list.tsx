@@ -9,7 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 import { IAnimeResult, ITitle } from "@consumet/extensions";
 
-interface IAnimeListProps {
+interface SearchResultsProps {
   title: string;
   description: string;
   type: "default" | "search"; // Define the type variant options here
@@ -28,7 +28,7 @@ const listVariants = cva("mt-6 grid grid-cols-2 gap-2 lg:gap-4", {
   },
 });
 
-export function AnimeList({ title, description, type, list }: IAnimeListProps) {
+export function AnimeList({ title, description, type, list }: SearchResultsProps) {
   return (
     <>
       <div>
@@ -88,7 +88,7 @@ export function AnimeListSkeleton({
   title,
   description,
   type,
-}: IAnimeListProps) {
+  }: Omit<SearchResultsProps, "list">) {
   return (
     <>
       <div>
@@ -96,7 +96,7 @@ export function AnimeListSkeleton({
         <p className="text-sm text-muted-foreground">{description}</p>
       </div>
       <div className={cn(listVariants({ type }))}>
-        {Array(6)
+        {Array(7)
           .fill(0)
           .map((_, index) => (
             <div

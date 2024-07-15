@@ -4,7 +4,7 @@ import { IAnimeResult } from "@consumet/extensions";
 
 import { getPopularAnime } from "@/handlers/anime";
 
-import { AnimeList } from "@/components/anime/anime-list";
+import { AnimeList, AnimeListSkeleton } from "@/components/anime/anime-list";
 
 export default function Popular() {
   const [popularAnime, setPopularAnime] = useState<IAnimeResult[]>([]);
@@ -29,12 +29,20 @@ export default function Popular() {
 
   return (
     <div className="px-4 lg:px-8">
-      <AnimeList
-        title="Popular Animes"
-        type="default"
-        list={popularAnime}
-        description=""
-      />
+      {loading ? (
+        <AnimeListSkeleton
+          title="Popular Animes"
+          type="default"
+          description=""
+        />
+      ) : (
+        <AnimeList
+          title="Popular Animes"
+          type="default"
+          list={popularAnime}
+          description=""
+        />
+      )}
     </div>
   );
 }
