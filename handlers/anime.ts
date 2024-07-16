@@ -1,17 +1,20 @@
 "use server";
 
-import { META } from "@consumet/extensions";
+import { META, ANIME } from "@consumet/extensions";
 
-const metaProvider = new META.Anilist();
+const anilistProvider = new META.Anilist();
+const malProvider = new META.Myanimelist();
+
+const animeProvider = new ANIME.Crunchyroll();
 
 export async function getTrendingAnime() {
-  return await metaProvider.fetchTrendingAnime();
+  return await anilistProvider.fetchTrendingAnime();
 }
 
 export async function getPopularAnime() {
-  return await metaProvider.fetchPopularAnime();
+  return await anilistProvider.fetchPopularAnime();
 }
 
-export async function searchAnime(query: string) {
-  return await metaProvider.advancedSearch(query);
+export async function searchAnime(query: string, page: number) {
+  return await anilistProvider.advancedSearch(query, undefined, page);
 }
