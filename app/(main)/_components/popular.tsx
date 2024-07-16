@@ -11,33 +11,31 @@ export default function Popular() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchTrendingAnime() {
+    async function fetchPopularAnime() {
       try {
         const response = await getPopularAnime();
         setPopularAnime(response.results);
       } catch (error) {
-        console.error("Failed to fetch trending anime:", error);
+        console.error("Failed to fetch popular anime:", error);
       } finally {
         setLoading(false);
       }
     }
 
-    fetchTrendingAnime();
+    fetchPopularAnime();
   }, []);
 
-  // TODO: Add Skeleton
-
   return (
-    <div className="px-4 lg:px-8">
+    <div className="px-4 lg:px-8 py-6">
       {loading ? (
         <AnimeListSkeleton
-          title="Popular Animes"
+          title="Popular Animes of All Time"
           type="default"
           description=""
         />
       ) : (
         <AnimeList
-          title="Popular Animes"
+          title="Popular Animes of All Time"
           type="default"
           list={popularAnime}
           description=""

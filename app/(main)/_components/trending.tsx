@@ -93,7 +93,7 @@ export default function Trending() {
   return (
     <div className="px-4 lg:px-8 py-6">
       <div>
-        <h1 className="text-2xl font-medium">Trending</h1>
+        <h1 className="text-2xl font-medium">Trending Now</h1>
         {/* <p className="text-sm text-muted-foreground">Popular animes for you.</p> */}
       </div>
       <div className="mt-6 keen-slider relative" ref={ref}>

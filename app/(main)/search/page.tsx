@@ -2,7 +2,6 @@
 
 import { redirect } from "next/navigation";
 
-import SearchSidebar from "./_components/search-sidebar";
 import SearchResults from "./_components/search-results";
 
 interface SearchPageProps {
@@ -25,8 +24,7 @@ export default function SearchPage({ searchParams }: SearchPageProps) {
   return (
     <>
       <title>{`Search for ${capitalize(searchParams.query)} on Mochi`}</title>
-      <div className="flex w-full  px-4 lg:px-8">
-        <SearchSidebar />
+      <div className="flex w-full px-4 lg:px-8 py-6">
         <SearchResults query={searchParams.query} />
       </div>
     </>
