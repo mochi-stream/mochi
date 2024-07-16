@@ -36,7 +36,7 @@ export default function SearchDialog() {
   const handleInputChange = (userInput: string) => {
     setIsLoading(true);
     setResults([]);
-    searchAnime(userInput)
+    searchAnime(userInput, 1)
       .then((response) => {
         setResults(response.results);
       })

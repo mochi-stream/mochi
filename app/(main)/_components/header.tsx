@@ -5,6 +5,7 @@ import { Bell } from "lucide-react";
 import SearchDialog from "./search";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 
 export default function Header() {
   return (
@@ -36,11 +37,12 @@ export default function Header() {
       </div>
       <div className="flex gap-5 lg:gap-7 items-center">
         <SearchDialog />
-        <Bell className="w-5 h-5 text-primary cursor-pointer" />
+        <Button>Get Started</Button>
+        {/* <Bell className="w-5 h-5 text-primary cursor-pointer" />
         <Avatar className="w-8 h-8 cursor-pointer">
           <AvatarImage src="#" alt="@user" />
           <AvatarFallback>U</AvatarFallback>
-        </Avatar>
+        </Avatar> */}
       </div>
     </header>
   );
