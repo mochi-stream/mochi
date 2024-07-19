@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 import { searchAnime } from "@/providers/anime";
 import { AnilistResult } from "@/types/anime";
@@ -16,7 +16,6 @@ import { AnimeList, AnimeListSkeleton } from "@/components/anime/anime-list";
 import { ArrowDownUp } from "lucide-react";
 
 export default function SearchResults() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const [searchResults, setSearchResults] = useState<AnilistResult[]>([]);
   const [isLoading, setIsLoading] = useState(false);

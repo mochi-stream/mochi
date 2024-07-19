@@ -7,7 +7,7 @@ const CONSUMET_URL = process.env.CONSUMET_URL;
 
 import axios from "axios";
 
-import { AnilistSearchResult } from "@/types/anime";
+import { AnilistSearchResult, AnimeInfo } from "@/types/anime";
 
 export async function getTrendingAnime(): Promise<AnilistSearchResult> {
   try {
@@ -78,6 +78,20 @@ export async function searchAnime(
   }
 }
 
-export async function getAnimeDetails(id: string) {
-  // return await anilistProvider.fetchAnimeInfo(id);
+export async function getAnimeDetails(
+  id: string,
+  provider: string
+): Promise<AnimeInfo> {
+  try {
+    const response = await axios.get<AnimeInfo>(
+      `${CONSUMET_URL}/meta/anilist/info/${id}`,
+      {
+        params: { provider },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
 }
