@@ -27,19 +27,14 @@ export default function Popular() {
 
   return (
     <div className="px-4 lg:px-8 py-6">
+      <div>
+        <h1 className="text-2xl font-medium">Popular Animes of All Time</h1>
+        {/* <p className="text-sm text-muted-foreground">{description}</p> */}
+      </div>
       {loading ? (
-        <AnimeListSkeleton
-          title="Popular Animes of All Time"
-          type="default"
-          description=""
-        />
+        <AnimeListSkeleton type="default" />
       ) : (
-        <AnimeList
-          title="Popular Animes of All Time"
-          type="default"
-          list={popularAnime}
-          description=""
-        />
+        <AnimeList type="default" list={popularAnime} />
       )}
     </div>
   );

@@ -15,6 +15,16 @@ export async function getPopularAnime() {
   return await anilistProvider.fetchPopularAnime();
 }
 
-export async function searchAnime(query: string, page: number) {
-  return await anilistProvider.advancedSearch(query, undefined, page);
+export async function searchAnime(
+  query: string,
+  page: number,
+  format?: string
+) {
+  return await anilistProvider.advancedSearch(
+    query,
+    undefined,
+    page,
+    undefined,
+    format === "" ? undefined : format
+  );
 }

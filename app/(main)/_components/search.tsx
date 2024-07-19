@@ -112,7 +112,7 @@ export default function SearchDialog() {
                   value={searchValue}
                   onChange={onSearchChange}
                   placeholder="Search for an anime"
-                  className="w-full h-10 pl-10 pr-10 text-sm bg-background border border-input rounded-md shadow-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                  className="w-[95%] md:w-full h-10 pl-10 pr-10 text-sm bg-background border border-input rounded-md shadow-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
                 />
                 <Button
                   variant="ghost"
@@ -120,7 +120,7 @@ export default function SearchDialog() {
                   type="button"
                   onClick={() => setSearchValue("")}
                   className={cn(
-                    "absolute inset-y-0 right-0 flex items-center pr-3",
+                    "absolute inset-y-0 right-5 md:right-0 flex items-center pr-3",
                     {
                       hidden: !searchValue,
                     }

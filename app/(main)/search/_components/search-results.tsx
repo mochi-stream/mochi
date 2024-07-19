@@ -1,24 +1,39 @@
 import { useState, useEffect, useCallback, useRef } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import { searchAnime } from "@/handlers/anime";
 import { IAnimeResult } from "@consumet/extensions";
 
-import { AnimeList, AnimeListSkeleton } from "@/components/anime/anime-list";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+} from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import { AnimeList, AnimeListSkeleton } from "@/components/anime/anime-list";
+import { ArrowDownUp } from "lucide-react";
 
-export default function SearchResults({ query }: { query: string }) {
+export default function SearchResults() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [searchResults, setSearchResults] = useState<IAnimeResult[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasNextPage, setHasNextPage] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const observer = useRef<IntersectionObserver | null>(null);
 
+  // Extract and capitalize format from query
+  const format = searchParams.get("format")?.toUpperCase() || "";
+
   const fetchSearchResults = useCallback(
     async (page: number) => {
+      const query = searchParams.get("query") || undefined; // Ensure query is fetched from params
       if (!query) return;
       setIsLoading(true);
       try {
-        const response = await searchAnime(query, page);
+        const response = await searchAnime(query, page, format);
         setHasNextPage(response.hasNextPage || false);
         setSearchResults((prevResults) => [
           ...prevResults,
@@ -30,14 +45,14 @@ export default function SearchResults({ query }: { query: string }) {
         setIsLoading(false);
       }
     },
-    [query]
+    [format, searchParams]
   );
 
   useEffect(() => {
     setSearchResults([]); // Clear previous results
     setCurrentPage(1); // Reset to the first page
     fetchSearchResults(1);
-  }, [query, fetchSearchResults]);
+  }, [fetchSearchResults]);
 
   const loadMoreResults = useCallback(() => {
     const nextPage = currentPage + 1;
@@ -68,19 +83,35 @@ export default function SearchResults({ query }: { query: string }) {
 
   return (
     <div className="flex-1 overflow-auto">
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-medium">{`Search Results for "${searchParams.get(
+            "query"
+          )}"`}</h1>
+        </div>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="shrink-0">
+              <ArrowDownUp className="w-4 h-4 mr-2" />
+              Sort by
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-[200px]" align="end">
+            <DropdownMenuRadioGroup value="newest">
+              <DropdownMenuRadioItem value="newest">
+                Newest
+              </DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="oldest">
+                Oldest
+              </DropdownMenuRadioItem>
+            </DropdownMenuRadioGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
       {isLoading && currentPage === 1 ? (
-        <AnimeListSkeleton
-          title={`Search Results for "${query}"`}
-          type="default"
-          description=""
-        />
+        <AnimeListSkeleton type="search" />
       ) : (
-        <AnimeList
-          title={`Search Results for "${query}"`}
-          type="default"
-          list={searchResults}
-          description=""
-        />
+        <AnimeList type="search" list={searchResults} />
       )}
 
       {!isLoading && searchResults.length === 0 && (
