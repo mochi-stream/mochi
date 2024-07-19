@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-import { searchAnime } from "@/handlers/anime";
-import { IAnimeResult } from "@consumet/extensions";
+import { searchAnime } from "@/providers/anime";
+import { AnilistResult } from "@/types/anime";
 
 import {
   DropdownMenu,
@@ -18,7 +18,7 @@ import { ArrowDownUp } from "lucide-react";
 export default function SearchResults() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [searchResults, setSearchResults] = useState<IAnimeResult[]>([]);
+  const [searchResults, setSearchResults] = useState<AnilistResult[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasNextPage, setHasNextPage] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);

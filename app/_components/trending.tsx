@@ -5,8 +5,8 @@ import Image from "next/image";
 
 import { Skeleton } from "@/components/ui/skeleton";
 
-import { getTrendingAnime } from "@/handlers/anime";
-import { ITitle, IAnimeResult } from "@consumet/extensions";
+import { getTrendingAnime } from "@/providers/anime";
+import { AnilistResult } from "@/types/anime";
 
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
@@ -14,7 +14,7 @@ import "keen-slider/keen-slider.min.css";
 const animation = { duration: 20000, easing: (t: number) => t };
 
 export default function Trending() {
-  const [trendingAnime, setTrendingAnime] = useState<IAnimeResult[]>([]);
+  const [trendingAnime, setTrendingAnime] = useState<AnilistResult[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -94,7 +94,7 @@ export default function Trending() {
     <div className="px-4 lg:px-8 py-6">
       <div>
         <h1 className="text-2xl font-medium">Trending Now</h1>
-        {/* <p className="text-sm text-muted-foreground">Popular animes for you.</p> */}
+        <p className="text-sm text-muted-foreground">Popular animes for you.</p>
       </div>
       <div className="mt-6 keen-slider relative" ref={ref}>
         {trendingAnime.map((anime, index) => (
@@ -106,9 +106,7 @@ export default function Trending() {
               <Image
                 src={anime.image || "default.png"}
                 alt={
-                  (anime.title as ITitle).english ||
-                  (anime.title as ITitle).userPreferred ||
-                  "No Title"
+                  anime.title.english || anime.title.userPreferred || "No Title"
                 }
                 width={460}
                 height={650}
@@ -117,17 +115,17 @@ export default function Trending() {
               <div className="py-3 flex-1 flex flex-col">
                 <h2 className="text-lg font-semibold leading-6">
                   {(
-                    (anime.title as ITitle).english ||
-                    (anime.title as ITitle).userPreferred ||
+                    anime.title.english ||
+                    anime.title.userPreferred ||
                     "No Title"
                   ).length > 40
                     ? (
-                        (anime.title as ITitle).english ||
-                        (anime.title as ITitle).userPreferred ||
+                        anime.title.english ||
+                        anime.title.userPreferred ||
                         "No Title"
                       ).slice(0, 37) + "..."
-                    : (anime.title as ITitle).english ||
-                      (anime.title as ITitle).userPreferred ||
+                    : anime.title.english ||
+                      anime.title.userPreferred ||
                       "No Title"}
                 </h2>
                 <p className="text-sm text-muted-foreground mt-1">
@@ -148,7 +146,7 @@ function TrendingSkeleton() {
   return (
     <div className="px-4 lg:px-8 py-6">
       <div>
-        <h1 className="text-2xl font-medium">Trending</h1>
+        <h1 className="text-2xl font-medium">Trending Now</h1>
         <p className="text-sm text-muted-foreground">Popular animes for you.</p>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-8 mt-6">

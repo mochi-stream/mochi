@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
@@ -7,11 +6,11 @@ import Image from "next/image";
 
 import { Skeleton } from "@/components/ui/skeleton";
 
-import { IAnimeResult, ITitle } from "@consumet/extensions";
+import { AnilistResult } from "@/types/anime";
 
 interface SearchResultsProps {
   type: "default" | "search";
-  list: IAnimeResult[];
+  list: AnilistResult[];
 }
 
 const listVariants = cva("mt-6 grid grid-cols-2 gap-2 lg:gap-4 select-none", {
@@ -29,55 +28,61 @@ const listVariants = cva("mt-6 grid grid-cols-2 gap-2 lg:gap-4 select-none", {
 export function AnimeList({ type, list }: SearchResultsProps) {
   return (
     <div className={cn(listVariants({ type }))}>
-      {list.map(
-        (anime, index) =>
-          anime.releaseDate && (
-            <div
-              key={index}
-              className="group relative overflow-hidden shadow-lg p-2 rounded-lg"
-            >
-              <Link href={`/anime/${anime.id}`}>
-                <div className="relative">
-                  <Image
-                    src={anime.image || "default.png"}
-                    alt={
-                      (anime.title as ITitle).english ||
-                      (anime.title as ITitle).userPreferred ||
-                      "No Title"
-                    }
-                    width={460}
-                    height={650}
-                    className="object-cover w-full h-[300px] lg:h-[370px] rounded-lg transition-all hover:opacity-80"
-                  />
-                  <div className="absolute top-2 left-2 bg-purple-800 text-white text-xs font-semibold px-2 py-1 rounded">
-                    {(anime.type || "").replace(/_/g, " ")}
+      {list.map((anime, index) => (
+        <div
+          key={index}
+          className="group relative overflow-hidden shadow-lg p-2 rounded-lg"
+        >
+          <Link href={`/anime/${anime.id}`}>
+            <div className="relative">
+              <Image
+                src={anime.image || "default.png"}
+                alt={
+                  anime.title.english || anime.title.userPreferred || "No Title"
+                }
+                width={460}
+                height={650}
+                className="object-cover w-full h-[300px] lg:h-[370px] rounded-lg transition-all hover:opacity-80"
+              />
+              <div className="absolute flex top-2 left-2">
+                <div
+                  className={`bg-purple-800 text-white text-xs font-semibold  px-2 py-1 ${
+                    anime.totalEpisodes ? "rounded-tl rounded-bl" : "rounded"
+                  }`}
+                >
+                  {(anime.type || "").replace(/_/g, " ")}
+                </div>
+                {anime.totalEpisodes && (
+                  <div className="bg-indigo-600 text-white text-xs font-semibold rounded-tr rounded-br px-2 py-1">
+                    {anime.totalEpisodes}
                   </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-10% from-black via-[transparent] to-transparent opacity-70 rounded-lg pointer-events-none"></div>
-                </div>
-                <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
-                  <h2 className="text-md lg:text-lg lg:w-[80%] font-semibold leading-5">
-                    {(
-                      (anime.title as ITitle).english ||
-                      (anime.title as ITitle).userPreferred ||
-                      "No Title"
-                    ).length > 40
-                      ? (
-                          (anime.title as ITitle).english ||
-                          (anime.title as ITitle).userPreferred ||
-                          "No Title"
-                        ).slice(0, 37) + "..."
-                      : (anime.title as ITitle).english ||
-                        (anime.title as ITitle).userPreferred ||
-                        "No Title"}
-                  </h2>
-                  <p className="text-sm mt-1">
-                    {anime.releaseDate} • {anime.status}
-                  </p>
-                </div>
-              </Link>
+                )}
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-10% from-black via-[transparent] to-transparent opacity-70 rounded-lg pointer-events-none"></div>
             </div>
-          )
-      )}
+            <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
+              <h2 className="text-md lg:text-lg lg:w-[80%] font-semibold leading-5">
+                {(
+                  anime.title.english ||
+                  anime.title.userPreferred ||
+                  "No Title"
+                ).length > 40
+                  ? (
+                      anime.title.english ||
+                      anime.title.userPreferred ||
+                      "No Title"
+                    ).slice(0, 37) + "..."
+                  : anime.title.english ||
+                    anime.title.userPreferred ||
+                    "No Title"}
+              </h2>
+              <p className="text-sm mt-1">
+                {anime.releaseDate} • {anime.status}
+              </p>
+            </div>
+          </Link>
+        </div>
+      ))}
     </div>
   );
 }
