@@ -7,6 +7,7 @@ import Image from "next/image";
 import { Skeleton } from "@/components/ui/skeleton";
 
 import { AnilistResult } from "@/types/anime";
+import { TvMinimal } from "lucide-react";
 
 interface SearchResultsProps {
   type: "default" | "search";
@@ -53,7 +54,8 @@ export function AnimeList({ type, list }: SearchResultsProps) {
                   {(anime.type || "").replace(/_/g, " ")}
                 </div>
                 {anime.totalEpisodes && (
-                  <div className="bg-indigo-600 text-white text-xs font-semibold rounded-tr rounded-br px-2 py-1">
+                  <div className="bg-teal-600 text-white text-xs font-semibold rounded-tr rounded-br px-2 py-1 flex items-center">
+                    <TvMinimal className="h-3 w-3 mr-1" />
                     {anime.totalEpisodes}
                   </div>
                 )}

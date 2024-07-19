@@ -10,6 +10,7 @@ import { UserButton } from "@clerk/nextjs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 
+
 export default function Header() {
   return (
     <header className="flex items-center justify-between sticky left-0 right-0 top-0 z-50 bg-gradient-to-b from-background from-5% to-background/0 px-4 lg:px-8 py-6 fade-in">
