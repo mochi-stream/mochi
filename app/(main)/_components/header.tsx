@@ -37,7 +37,7 @@ export default function Header() {
       </div>
       <div className="flex gap-5 lg:gap-7 items-center">
         <SearchDialog />
-        <Button>Get Started</Button>
+        <Button>Become a Member</Button>
         {/* <Bell className="w-5 h-5 text-primary cursor-pointer" />
         <Avatar className="w-8 h-8 cursor-pointer">
           <AvatarImage src="#" alt="@user" />
