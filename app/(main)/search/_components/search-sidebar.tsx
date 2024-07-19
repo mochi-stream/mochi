@@ -6,12 +6,12 @@ import { Label } from "@/components/ui/label";
 
 const formats: string[] = [
   "TV",
-  "TV Short",
-  "Movie",
-  "Special",
+  "TV_SHORT",
+  "MOVIE",
+  "SPECIAL",
   "OVA",
   "ONA",
-  "Music",
+  "MUSIC",
 ];
 
 export default function SearchSidebar() {
@@ -19,7 +19,7 @@ export default function SearchSidebar() {
   const searchParams = useSearchParams();
   const [selectedFormat, setSelectedFormat] = useState<string>(() => {
     const formatParams = searchParams.get("format");
-    return formatParams || ""; // Initialize with the existing format if available
+    return formatParams || "";
   });
 
   const handleCheckboxChange = (format: string) => {
@@ -56,7 +56,9 @@ export default function SearchSidebar() {
                   <div key={format} className="flex items-center text-sm">
                     <Checkbox
                       className="mr-2"
-                      checked={selectedFormat === format}
+                      checked={
+                        selectedFormat.toLowerCase() === format.toLowerCase()
+                      }
                       onClick={() => handleCheckboxChange(format)}
                     />
                     <Label>{format.replace(/_/g, " ")}</Label>

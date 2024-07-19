@@ -50,7 +50,7 @@ export function AnimeList({ type, list }: SearchResultsProps) {
                     className="object-cover w-full h-[300px] lg:h-[370px] rounded-lg transition-all hover:opacity-80"
                   />
                   <div className="absolute top-2 left-2 bg-purple-800 text-white text-xs font-semibold px-2 py-1 rounded">
-                    {anime.type}
+                    {(anime.type || "").replace(/_/g, " ")}
                   </div>
                   <div className="absolute inset-0 bg-gradient-to-t from-10% from-black via-[transparent] to-transparent opacity-70 rounded-lg pointer-events-none"></div>
                 </div>
