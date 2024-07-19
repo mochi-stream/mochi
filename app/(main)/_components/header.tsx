@@ -3,6 +3,9 @@
 import Link from "next/link";
 import { Bell } from "lucide-react";
 import SearchDialog from "./search";
+import { RedirectToSignIn, SignedIn, SignedOut, useAuth } from "@clerk/nextjs";
+
+import { UserButton } from "@clerk/nextjs";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -37,12 +40,17 @@ export default function Header() {
       </div>
       <div className="flex gap-5 lg:gap-7 items-center">
         <SearchDialog />
-        <Button>Become a Member</Button>
-        {/* <Bell className="w-5 h-5 text-primary cursor-pointer" />
-        <Avatar className="w-8 h-8 cursor-pointer">
+        <SignedOut>
+            <Button>Become a Member</Button>
+        </SignedOut>
+        <SignedIn>
+          <Bell className="w-5 h-5 text-primary cursor-pointer" />
+            {/* <Avatar className="w-8 h-8 cursor-pointer">
           <AvatarImage src="#" alt="@user" />
           <AvatarFallback>U</AvatarFallback>
         </Avatar> */}
+          <UserButton />
+        </SignedIn>
       </div>
     </header>
   );
