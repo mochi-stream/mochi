@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { Bell } from "lucide-react";
 import SearchDialog from "./search";
-import { RedirectToSignIn, SignedIn, SignedOut, useAuth } from "@clerk/nextjs";
+import { SignedIn, SignedOut } from "@clerk/nextjs";
+import Notifications from "./notifications";
 
 import { UserButton } from "@clerk/nextjs";
 
@@ -41,11 +41,11 @@ export default function Header() {
       <div className="flex gap-5 lg:gap-7 items-center">
         <SearchDialog />
         <SignedOut>
-            <Button>Become a Member</Button>
+          <Link href={"/join"}><Button>Become a Member</Button></Link>
         </SignedOut>
         <SignedIn>
-          <Bell className="w-5 h-5 text-primary cursor-pointer" />
-            {/* <Avatar className="w-8 h-8 cursor-pointer">
+          <Notifications />
+          {/* <Avatar className="w-8 h-8 cursor-pointer">
           <AvatarImage src="#" alt="@user" />
           <AvatarFallback>U</AvatarFallback>
         </Avatar> */}

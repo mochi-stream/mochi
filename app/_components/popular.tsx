@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 
-import { IAnimeResult } from "@consumet/extensions";
+import { AnilistResult } from "@/types/anime";
 
-import { getPopularAnime } from "@/handlers/anime";
+import { getPopularAnime } from "@/providers/anime";
 
 import { AnimeList, AnimeListSkeleton } from "@/components/anime/anime-list";
 
 export default function Popular() {
-  const [popularAnime, setPopularAnime] = useState<IAnimeResult[]>([]);
+  const [popularAnime, setPopularAnime] = useState<AnilistResult[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

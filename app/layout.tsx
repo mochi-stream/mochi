@@ -7,6 +7,10 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 
+import Header from "./_components/header";
+import { Toaster } from "sonner";
+import NextTopLoader from "nextjs-toploader";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -33,7 +37,13 @@ export default function RootLayout({
               baseTheme: dark,
             }}
           >
-            {children}
+            <div className="relative">
+              <NextTopLoader color="#ffffff" showSpinner={false} height={2} />
+              <Header />
+              <Toaster />
+              <div className="absolute inset-0 bg-purple-950 bg-[size:20px_20px] opacity-15 blur-[100px] -z-50"></div>
+              {children}
+            </div>
           </ClerkProvider>
         </ThemeProvider>
       </body>

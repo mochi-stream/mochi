@@ -21,14 +21,14 @@ import { Search, X } from "lucide-react";
 
 import lodash from "lodash";
 
-import { searchAnime } from "@/handlers/anime";
-import { IAnimeResult, ITitle } from "@consumet/extensions";
+import { searchAnime } from "@/providers/anime";
+import { AnilistResult } from "@/types/anime";
 
 import qs from "query-string";
 
 export default function SearchDialog() {
   const [searchValue, setSearchValue] = useState("");
-  const [results, setResults] = useState<IAnimeResult[]>([]);
+  const [results, setResults] = useState<AnilistResult[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [error, setError] = useState("");
@@ -160,8 +160,7 @@ export default function SearchDialog() {
                     prefetch={false}
                   >
                     <div className="flex-1 overflow-hidden text-sm text-muted-foreground text-ellipsis">
-                      {(result.title as ITitle).english ||
-                        (result.title as ITitle).userPreferred}
+                      {result.title.english || result.title.userPreferred}
                     </div>
                   </Link>
                 ))
