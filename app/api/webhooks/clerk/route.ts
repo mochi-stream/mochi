@@ -62,7 +62,7 @@ export async function POST(req: Request) {
       data: {
         username: payload.data.username,
         imageUrl: payload.data.image_url,
-      } as unknown as Prisma.UserUpdateInput,
+      },
     });
   }
   if (eventType === "user.deleted") {
