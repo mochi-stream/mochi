@@ -4,8 +4,6 @@ import { WebhookEvent } from "@clerk/nextjs/server";
 import { db } from "@/lib/db";
 import { Prisma } from "@prisma/client";
 
-// TODO: Fix Type Safety
-
 export async function POST(req: Request) {
   const WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET;
   if (!WEBHOOK_SECRET) {
@@ -51,7 +49,7 @@ export async function POST(req: Request) {
         externalUserId: payload.data.id,
         username: payload.data.username,
         imageUrl: payload.data.image_url,
-      } as unknown as Prisma.UserCreateInput,
+      } as Prisma.UserCreateInput, // explicitly typing the data object,
     });
   }
   if (eventType === "user.updated") {
