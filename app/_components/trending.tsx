@@ -5,7 +5,7 @@ import Image from "next/image";
 
 import { Skeleton } from "@/components/ui/skeleton";
 
-import { getTrendingAnime } from "@/providers/anime";
+import { getTrendingAnime } from "@/lib/anime";
 import { AnilistResult } from "@/types/anime";
 
 import { useKeenSlider } from "keen-slider/react";

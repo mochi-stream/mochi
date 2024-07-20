@@ -1,11 +1,6 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
@@ -19,12 +14,29 @@ model User {
   externalUserId String         @unique
   email          String         @unique
   imageUrl       String         @db.Text
+  name           String?        @db.Text
   username       String         @unique @default(uuid())
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
   bio            String?
   watchHistory   WatchHistory[]
   collection     Collection[]
+  following      Follow[]       @relation("Following")
+  followedBy     Follow[]       @relation("FollowedBy")
+}
+
+model Follow {
+  id          String   @id @default(cuid())
+  followerId  String
+  followingId String
+  follower    User     @relation(name: "Following", fields: [followerId], references: [id], onDelete: Cascade)
+  following   User     @relation(name: "FollowedBy", fields: [followingId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([followerId, followingId])
+  @@index([followerId])
+  @@index([followingId])
 }
 
 enum Provider {

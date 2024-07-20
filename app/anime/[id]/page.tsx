@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 
-import { getAnimeDetails } from "@/providers/anime";
+import { getAnimeDetails } from "@/lib/anime";
 import { AnimeInfo } from "@/types/anime";
 
 const provider = "zoro"; // Use the appropriate provider

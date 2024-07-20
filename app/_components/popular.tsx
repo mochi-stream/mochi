@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { AnilistResult } from "@/types/anime";
 
-import { getPopularAnime } from "@/providers/anime";
+import { getPopularAnime } from "@/lib/anime";
 
 import { AnimeList, AnimeListSkeleton } from "@/components/anime/anime-list";
 

@@ -21,7 +21,7 @@ import { Search, X } from "lucide-react";
 
 import lodash from "lodash";
 
-import { searchAnime } from "@/providers/anime";
+import { searchAnime } from "@/lib/anime";
 import { AnilistResult } from "@/types/anime";
 
 import qs from "query-string";

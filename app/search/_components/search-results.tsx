@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 
-import { searchAnime } from "@/providers/anime";
+import { searchAnime } from "@/lib/anime";
 import { AnilistResult } from "@/types/anime";
 
 import {

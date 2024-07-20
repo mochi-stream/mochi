@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { AnilistResult } from "@/types/anime";
-import { getUpcomingAnime } from "@/providers/anime";
+import { getUpcomingAnime } from "@/lib/anime";
 import { AnimeList, AnimeListSkeleton } from "@/components/anime/anime-list";
 
 export default function Upcoming() {
