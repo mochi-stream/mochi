@@ -11,7 +11,7 @@ import { useAuth } from "@clerk/nextjs";
 import { getFollowersCount, getFollowingsCount } from "@/services/follow";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export default function ProfileHeader({ user }: { user: User }) {
+export function ProfileHeader({ user }: { user: User }) {
   const { userId } = useAuth();
 
   const [followersCount, setFollowersCount] = useState<number>(-1);
@@ -24,7 +24,7 @@ export default function ProfileHeader({ user }: { user: User }) {
   }, [user.id]);
 
   return (
-    <div className="flex items-center space-x-4 p-4">
+    <div className="flex items-center space-x-4 py-4">
       <Avatar className="w-24 h-24">
         <AvatarImage src={user.imageUrl} alt="User Avatar" />
         <AvatarFallback className="text-lg">
@@ -33,8 +33,7 @@ export default function ProfileHeader({ user }: { user: User }) {
       </Avatar>
       <div className="pr-4 flex flex-row gap-6">
         <div className="flex flex-col">
-          <p className="font-semibold text-lg">{user.username}</p>
-          <p className="text-sm text-gray-400">@{user.username}</p>
+          <p className="font-semibold text-lg">@{user.username}</p>
           {followersCount > -1 && followingsCount > -1 ? (
             <p className="text-sm text-gray-400 mt-2">
               {followersCount} Followers · {followingsCount} Following
@@ -51,4 +50,16 @@ export default function ProfileHeader({ user }: { user: User }) {
       </div>
     </div>
   );
+}
+
+export function ProfileHeaderSkeleton() {
+  return <div className="flex items-center space-x-4 py-4">
+    <Avatar className="w-24 h-24">
+      <Skeleton className="w-full h-full" />
+    </Avatar>
+    <div className="pr-4 flex flex-col">
+      <Skeleton className="h-4 w-60" />
+      <Skeleton className="h-4 w-40 mt-2" />
+    </div>
+  </div>;
 }

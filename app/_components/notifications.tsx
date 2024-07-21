@@ -1,8 +1,15 @@
+/**
+ * Renders the notifications dropdown component.
+ *
+ * @param {string} props.userid - The user ID used to fetch notifications
+ */
+
 "use client";
 
 import { useState, useEffect } from "react";
 
-import { Bell } from "lucide-react";
+import { Notifications } from "@prisma/client";
+import { getNotifications, markAllAsRead } from "@/services/notifications";
 
 import {
   DropdownMenu,
@@ -14,20 +21,21 @@ import {
 
 import { Button } from "@/components/ui/button";
 
-import { Notifications } from "@prisma/client";
-import { getNotifications, markAllAsRead } from "@/services/notifications";
+import { Bell } from "lucide-react";
 
 import { toast } from "sonner";
 
 export default function NotificationsDialog({ userid }: { userid: string }) {
   const [data, setData] = useState<Notifications[]>([]);
 
+  // Fetch notifications on component mount and update when userId changes
   useEffect(() => {
     getNotifications({ userId: userid }).then((data) => {
       setData(data);
     });
   }, [userid]);
 
+  // Handles the click event when the "Mark all as read" button is clicked.
   const markAllAsReadClick = async () => {
     if (data.length > 0) {
       await markAllAsRead({ userId: userid });

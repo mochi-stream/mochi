@@ -1,3 +1,8 @@
+/**
+ * Renders the Trending component, which displays a list of trending anime.
+ * Fetches the data from the API and displays a loading skeleton while fetching.
+ */
+
 import { useEffect, useState } from "react";
 
 import Link from "next/link";

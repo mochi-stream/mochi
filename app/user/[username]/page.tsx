@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 
-import ProfileHeader from "./_components/header";
+import { ProfileHeader, ProfileHeaderSkeleton } from "./_components/header";
+import Activity from "./_components/activity";
 
 import { getUserByUsername } from "@/lib/user";
 import { notFound } from "next/navigation";
@@ -39,13 +40,19 @@ export default function UserPage({ params }: UserPageProps) {
     fetchUser();
   }, [params.username]);
 
-  if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
+  if (loading)
+    return (
+      <div className="flex flex-col w-full px-6 lg:px-12 py-6">
+        <ProfileHeaderSkeleton />
+      </div>
+    );
   if (!user) notFound();
 
   return (
-    <div className="flex w-full px-4 lg:px-8 py-6">
+    <div className="flex flex-col w-full px-6 lg:px-12 py-6">
       <ProfileHeader user={user} />
+      <Activity />
     </div>
   );
 }

@@ -1,10 +1,19 @@
-import {
-  CloudIcon,
-  UserCircle,
-  LifeBuoyIcon,
-  LogOutIcon,
-  SettingsIcon,
-} from "lucide-react";
+/**
+ * A component that displays the user's avatar and a dropdown menu with various
+ * actions related to the user.
+ *
+ * @param user - The user object containing the user's information.
+ * @returns The AvatarDialog component.
+ */
+
+"use client";
+
+import Link from "next/link";
+
+import { ClerkUser } from "@/types/user";
+import { useClerk } from "@clerk/nextjs";
+
+import { CloudIcon, UserCircle, LogOutIcon, SettingsIcon } from "lucide-react";
 
 import {
   DropdownMenu,
@@ -20,12 +29,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import { toast } from "sonner";
 
-import { User } from "@prisma/client";
-import Link from "next/link";
-
-import { useClerk } from "@clerk/nextjs";
-
-export default function AvatarDialog({ user }: { user: User }) {
+export default function AvatarDialog({ user }: { user: ClerkUser }) {
   const { signOut } = useClerk();
   const toastShow = () => {
     toast.promise(async () => await signOut(), {
@@ -35,20 +39,19 @@ export default function AvatarDialog({ user }: { user: User }) {
       closeButton: true,
     });
   };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Avatar className="w-8 h-8 cursor-pointer">
           <AvatarImage src={user.imageUrl} alt={`@${user.username}`} />
           <AvatarFallback>
-            {user.username.charAt(0).toUpperCase()}
+            {user.username && user.username.charAt(0).toUpperCase()}
           </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-[250px] p-4 space-y-2 mt-2 mr-4">
-        <DropdownMenuLabel>
-          {user.name ? user.name : `@${user.username}`}
-        </DropdownMenuLabel>
+        <DropdownMenuLabel>{`@${user.username}`}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup className="flex flex-col space-y-2">
           <Link href={`/user/${user.username}`}>
