@@ -17,6 +17,8 @@ import { Button } from "@/components/ui/button";
 import { Notifications } from "@prisma/client";
 import { getNotifications, markAllAsRead } from "@/services/notifications";
 
+import { toast } from "sonner";
+
 export default function NotificationsDialog({ userid }: { userid: string }) {
   const [data, setData] = useState<Notifications[]>([]);
 
@@ -29,6 +31,7 @@ export default function NotificationsDialog({ userid }: { userid: string }) {
   const markAllAsReadClick = async () => {
     if (data.length > 0) {
       await markAllAsRead({ userId: userid });
+      toast.success("All notifications have been read");
       setData([]);
     }
   };
@@ -85,4 +88,3 @@ export default function NotificationsDialog({ userid }: { userid: string }) {
     </DropdownMenu>
   );
 }
-
