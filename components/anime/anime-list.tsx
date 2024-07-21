@@ -37,6 +37,7 @@ export function AnimeList({ type, list }: SearchResultsProps) {
           <Link href={`/anime/${anime.id}`}>
             <div className="relative">
               <Image
+                loading="lazy"
                 src={anime.image || "default.png"}
                 alt={
                   anime.title.english || anime.title.userPreferred || "No Title"

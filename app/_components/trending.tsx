@@ -104,6 +104,7 @@ export default function Trending() {
           >
             <Link href={`/anime/${anime.id}`}>
               <Image
+                loading="lazy"
                 src={anime.image || "default.png"}
                 alt={
                   anime.title.english || anime.title.userPreferred || "No Title"

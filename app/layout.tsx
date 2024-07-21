@@ -11,6 +11,10 @@ import Header from "./_components/header";
 import { Toaster } from "sonner";
 import NextTopLoader from "nextjs-toploader";
 
+import { UserProvider } from "./_components/context";
+
+import { SignedIn, SignedOut } from "@clerk/nextjs";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -37,13 +41,15 @@ export default function RootLayout({
               baseTheme: dark,
             }}
           >
-            <div className="relative">
-              <NextTopLoader color="#ffffff" showSpinner={false} height={2} />
-              <Header />
-              <Toaster />
-              <div className="absolute inset-0 bg-purple-950 bg-[size:20px_20px] opacity-15 blur-[100px] -z-50"></div>
-              {children}
-            </div>
+            <UserProvider>
+              <div className="relative">
+                <NextTopLoader color="#ffffff" showSpinner={false} height={2} />
+                <Header />
+                <Toaster />
+                <div className="absolute inset-0 bg-purple-950 bg-[size:20px_20px] opacity-15 blur-[100px] -z-50"></div>
+                {children}
+              </div>
+            </UserProvider>
           </ClerkProvider>
         </ThemeProvider>
       </body>

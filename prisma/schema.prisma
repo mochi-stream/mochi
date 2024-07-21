@@ -10,19 +10,33 @@ datasource db {
 }
 
 model User {
-  id             String         @id @default(uuid())
-  externalUserId String         @unique
-  email          String         @unique
-  imageUrl       String         @db.Text
-  name           String?        @db.Text
-  username       String         @unique @default(uuid())
-  createdAt      DateTime       @default(now())
-  updatedAt      DateTime       @updatedAt
+  id             String   @id @default(uuid())
+  externalUserId String   @unique
+  email          String   @unique
+  imageUrl       String   @db.Text
+  name           String?  @db.Text
+  username       String   @unique @default(uuid())
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
   bio            String?
-  watchHistory   WatchHistory[]
-  collection     Collection[]
-  following      Follow[]       @relation("Following")
-  followedBy     Follow[]       @relation("FollowedBy")
+
+  notifications Notifications[]
+  watchHistory  WatchHistory[]
+  collection    Collection[]
+  following     Follow[]       @relation("Following")
+  followedBy    Follow[]       @relation("FollowedBy")
+}
+
+model Notifications {
+  id        String   @id @default(cuid())
+  userId    String
+  type      String
+  message   String
+  seen      Boolean  @default(false)
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@index([userId])
 }
 
 model Follow {
@@ -71,7 +85,7 @@ model Collection {
   id        String @id @default(cuid())
   userId    String
   animeId   String
-  episodeId String
+  episodeId Int
   status    Status
 
   user User @relation(fields: [userId], references: [id])
