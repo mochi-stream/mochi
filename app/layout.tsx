@@ -13,8 +13,6 @@ import NextTopLoader from "nextjs-toploader";
 
 import { UserProvider } from "./_components/context";
 
-import { SignedIn, SignedOut } from "@clerk/nextjs";
-
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {

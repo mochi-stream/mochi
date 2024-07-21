@@ -2,30 +2,32 @@
 
 import { toast } from "sonner";
 import { useEffect, useState, useTransition } from "react";
-import { useAuth } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { onFollow, onUnfollow } from "@/actions/follow";
 import { isFollowingUser } from "@/services/follow";
 
+import { useAuth } from "@clerk/nextjs";
+
 interface ActionsProps {
   profileId: string;
 }
 
 export function Actions({ profileId }: ActionsProps) {
+  const { userId } = useAuth();
+
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
-  const { userId } = useAuth();
   const [isFollowing, setIsFollowing] = useState(false);
+
   useEffect(() => {
+    if (userId === profileId) return setIsFollowing(false);
     async function fetchIsFollowing() {
       const isFollowing = await isFollowingUser(profileId);
       setIsFollowing(isFollowing);
     }
-    if (userId) {
-      fetchIsFollowing();
-    }
+    fetchIsFollowing();
   }, [userId, profileId]);
 
   function handleFollow() {
@@ -34,7 +36,7 @@ export function Actions({ profileId }: ActionsProps) {
         .then((data) =>
           toast.success(`You are now following ${data.following.username}`)
         )
-        .catch(() => toast.error("Something went wrong"));
+        .catch((error) => toast.error(error.message));
     });
   }
   function handleUnfollow() {
@@ -43,7 +45,7 @@ export function Actions({ profileId }: ActionsProps) {
         .then((data) =>
           toast.success(`You have unfollowed ${data.following.username}`)
         )
-        .catch(() => toast.error("Something went wrong"));
+        .catch((error) => toast.error(error.message));
     });
   }
   function toggleFollow() {

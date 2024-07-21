@@ -8,11 +8,15 @@ export async function onFollow(id: string) {
     const followedUser = await followUser(id);
     revalidatePath("/");
     if (followedUser) {
-      revalidatePath(`/${followedUser.following.username}`);
+      revalidatePath(`/user/${followedUser.following.username}`);
     }
     return followedUser;
   } catch (error) {
-    throw new Error("Internal Error");
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    } else {
+      throw new Error("An unknown error occurred");
+    }
   }
 }
 
@@ -21,10 +25,14 @@ export async function onUnfollow(id: string) {
     const unfollowedUser = await unfollowUser(id);
     revalidatePath("/");
     if (unfollowedUser) {
-      revalidatePath(`/${unfollowedUser.following.username}`);
+      revalidatePath(`/user/${unfollowedUser.following.username}`);
     }
     return unfollowedUser;
   } catch (error) {
-    throw new Error("Internal Error");
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    } else {
+      throw new Error("An unknown error occurred");
+    }
   }
 }

@@ -4,13 +4,13 @@ import Link from "next/link";
 import SearchDialog from "./search";
 import { SignedIn, SignedOut } from "@clerk/nextjs";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 
 import { Skeleton } from "@/components/ui/skeleton";
 import { useUser } from "./context";
 
 import NotificationsDialog from "./notifications";
+import AvatarDialog from "./avatar";
 
 export default function Header() {
   const me = useUser();
@@ -57,12 +57,7 @@ export default function Header() {
           {me ? (
             <>
               <NotificationsDialog userid={me.id} />
-              <Avatar className="w-8 h-8 cursor-pointer">
-                <AvatarImage src={me.imageUrl} alt={`@${me.username}`} />
-                <AvatarFallback>
-                  {me.username.charAt(0).toUpperCase()}
-                </AvatarFallback>
-              </Avatar>
+              <AvatarDialog user={me} />
             </>
           ) : (
             <>

@@ -9,6 +9,8 @@ import { notFound } from "next/navigation";
 
 import { User } from "@prisma/client";
 
+import { useUser } from "@/app/_components/context";
+
 interface UserPageProps {
   params: {
     username: string;
@@ -16,6 +18,8 @@ interface UserPageProps {
 }
 
 export default function UserPage({ params }: UserPageProps) {
+  const me = useUser();
+
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);

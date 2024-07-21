@@ -1,3 +1,6 @@
+// TODO: Fix type errors
+"use server";
+
 import { db } from "@/lib/db";
 import { getSelf } from "@/services/auth";
 
@@ -28,12 +31,12 @@ export async function isFollowingUser(id: string) {
     if (!otherUser) {
       throw new Error("User not found");
     }
-    if (otherUser.id === self.id) {
+    if (otherUser.id === self?.id) {
       return true;
     }
     const existingFollow = await db.follow.findFirst({
       where: {
-        followerId: self.id,
+        followerId: self?.id,
         followingId: otherUser.id,
       },
     });
@@ -49,23 +52,23 @@ export async function followUser(id: string) {
     where: { id },
   });
   if (!otherUser) {
-    throw new Error("User not found");
+    throw new Error("User you want to follow cannot be found");
   }
-  if (otherUser.id === self.id) {
-    throw new Error("Cannot follow yourself");
+  if (otherUser.id === self?.id) {
+    throw new Error("You cannot follow yourself");
   }
   const existingFollow = await db.follow.findFirst({
     where: {
-      followerId: self.id,
+      followerId: self?.id,
       followingId: otherUser.id,
     },
   });
   if (existingFollow) {
-    throw new Error("Already following");
+    throw new Error("You are already following this user");
   }
   const follow = await db.follow.create({
     data: {
-      followerId: self.id,
+      followerId: self?.id || "",
       followingId: otherUser.id,
     },
     include: {
@@ -84,19 +87,19 @@ export async function unfollowUser(id: string) {
     },
   });
   if (!otherUser) {
-    throw new Error("User not found");
+    throw new Error("User you want to unfollow cannot be found");
   }
-  if (otherUser.id === self.id) {
-    throw new Error("Cannot unfollow yourself");
+  if (otherUser.id === self?.id) {
+    throw new Error("You cannot unfollow yourself");
   }
   const existingFollow = await db.follow.findFirst({
     where: {
-      followerId: self.id,
+      followerId: self?.id,
       followingId: otherUser.id,
     },
   });
   if (!existingFollow) {
-    throw new Error("Not following");
+    throw new Error("You cannot unfollow this user");
   }
   const follow = await db.follow.delete({
     where: {
@@ -107,4 +110,22 @@ export async function unfollowUser(id: string) {
     },
   });
   return follow;
+}
+
+export async function getFollowersCount(id: string) {
+  const count = await db.follow.count({
+    where: {
+      followingId: id,
+    },
+  });
+  return count;
+}
+
+export async function getFollowingsCount(id: string) {
+  const count = await db.follow.count({
+    where: {
+      followerId: id,
+    },
+  });
+  return count;
 }
