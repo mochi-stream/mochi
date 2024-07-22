@@ -3,6 +3,8 @@
 import { db } from "@/lib/db";
 
 import { ProfileUser } from "@/types/user";
+import { User } from "@prisma/client";
+
 
 export async function getUserByUsername(
   username: string
