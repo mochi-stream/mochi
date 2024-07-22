@@ -1,11 +1,6 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
@@ -19,8 +14,83 @@ model User {
   externalUserId String   @unique
   email          String   @unique
   imageUrl       String   @db.Text
-  username       String?  @unique
+  name           String?  @db.Text
+  username       String   @unique @default(uuid())
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
   bio            String?
+
+  notifications Notifications[]
+  watchHistory  WatchHistory[]
+  collection    Collection[]
+  following     Follow[]        @relation("Following")
+  followedBy    Follow[]        @relation("FollowedBy")
+}
+
+model Notifications {
+  id        String   @id @default(cuid())
+  userId    String
+  type      String
+  message   String
+  seen      Boolean  @default(false)
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [externalUserId])
+
+  @@index([userId])
+}
+
+model Follow {
+  id          String   @id @default(cuid())
+  followerId  String
+  followingId String
+  follower    User     @relation(name: "Following", fields: [followerId], references: [id], onDelete: Cascade)
+  following   User     @relation(name: "FollowedBy", fields: [followingId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([followerId, followingId])
+  @@index([followerId])
+  @@index([followingId])
+}
+
+enum Provider {
+  ZORO
+  GOGOANIME
+}
+
+model WatchHistory {
+  id           String   @id @default(cuid())
+  userId       String
+  animeId      String
+  episodeId    String
+  lastWatched  DateTime
+  providerName Provider
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([animeId])
+  @@index([episodeId])
+}
+
+enum Status {
+  WATCHING
+  COMPLETED
+  ON_HOLD
+  DROPPED
+  PLAN_TO_WATCH
+}
+
+model Collection {
+  id        String @id @default(cuid())
+  userId    String
+  animeId   String
+  episodeId Int
+  status    Status
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([animeId])
+  @@index([episodeId])
 }
