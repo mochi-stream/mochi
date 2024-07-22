@@ -21,16 +21,19 @@ import {
 
 import { Button } from "@/components/ui/button";
 
-import { Bell } from "lucide-react";
+import { Bell, Loader } from "lucide-react";
 
 import { toast } from "sonner";
 
 export default function NotificationsDialog({ userid }: { userid: string }) {
   const [data, setData] = useState<Notifications[]>([]);
+  const [isMarkingAllAsRead, setIsMarkingAllAsRead] = useState(false);
 
   // Fetch notifications on component mount and update when userId changes
   useEffect(() => {
     getNotifications({ userId: userid }).then((data) => {
+      console.log(userid);
+      console.log(data);
       setData(data);
     });
   }, [userid]);
@@ -38,8 +41,13 @@ export default function NotificationsDialog({ userid }: { userid: string }) {
   // Handles the click event when the "Mark all as read" button is clicked.
   const markAllAsReadClick = async () => {
     if (data.length > 0) {
+      setIsMarkingAllAsRead(true);
       await markAllAsRead({ userId: userid });
-      toast.success("All notifications have been read");
+      setIsMarkingAllAsRead(false);
+      toast.success("All notifications have been read", {
+        duration: 2000,
+      });
+      setData([]);
       setData([]);
     }
   };
@@ -47,23 +55,30 @@ export default function NotificationsDialog({ userid }: { userid: string }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="relative">
+        <div className="w-8 h-8 relative flex items-center justify-center">
           <Bell className="w-5 h-5 text-primary cursor-pointer" />
           {data.length > 0 && (
             <span className="absolute top-0 right-0 inline-block w-2 h-2 bg-red-500 rounded-full" />
           )}
-        </Button>
+        </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[400px] p-4 space-y-2">
         <DropdownMenuLabel className="flex items-center justify-between">
           <h3 className="text-lg font-medium">Notifications</h3>
           <Button
-            disabled={data.length === 0}
+            disabled={data.length === 0 || isMarkingAllAsRead}
             variant="ghost"
             size="sm"
             onClick={markAllAsReadClick}
           >
-            Mark all as read
+            {isMarkingAllAsRead ? (
+              <>
+                Mark all as read
+                <Loader className="h-4 w-4 animate-spin ml-2" />
+              </>
+            ) : (
+              "Mark all as read"
+            )}
           </Button>
         </DropdownMenuLabel>
         <DropdownMenuSeparator className="" />

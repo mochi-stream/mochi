@@ -8,19 +8,17 @@
 import { useEffect, useState } from "react";
 
 import { ProfileHeader, ProfileHeaderSkeleton } from "./_components/header";
-import Activity from "./_components/activity";
+// import Activity from "./_components/activity";
+import Collection from "./_components/collection";
 
 import { getUserByUsername } from "@/lib/user";
 import { notFound } from "next/navigation";
 
-import { User } from "@prisma/client";
+import { ProfileUser } from "@/types/user";
 
 import { useUser } from "@/app/_components/context";
 
 interface UserPageProps {
-  /**
-   * Object containing the username.
-   */
   params: {
     username: string;
   };
@@ -31,7 +29,7 @@ export default function UserPage({ params }: UserPageProps) {
   const me = useUser();
 
   // State variables to store the user data, loading status, and error
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<ProfileUser | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
@@ -58,7 +56,7 @@ export default function UserPage({ params }: UserPageProps) {
   }
   if (loading) {
     return (
-      <div className="flex flex-col w-full px-6 lg:px-12 py-6">
+      <div className="flex flex-col w-full py-6">
         <ProfileHeaderSkeleton />
       </div>
     );
@@ -68,11 +66,12 @@ export default function UserPage({ params }: UserPageProps) {
   }
 
   return (
-    <div className="flex flex-col w-full px-6 lg:px-12 py-6">
+    <div className="flex flex-col w-full">
       {/* Render the profile header with the user data */}
       <ProfileHeader user={user} />
       {/* Render the activity component */}
-      <Activity />
+      {/* <Activity /> */}
+      <Collection />
     </div>
   );
 }

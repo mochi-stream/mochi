@@ -60,7 +60,7 @@ export default function SearchResults() {
           ...response.results,
         ]);
       } catch (error) {
-        console.error("Error fetching search results:", error);
+        throw new Error("Error fetching search results");
       } finally {
         setIsLoading(false);
       }

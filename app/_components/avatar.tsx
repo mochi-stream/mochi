@@ -36,7 +36,7 @@ export default function AvatarDialog({ user }: { user: ClerkUser }) {
       loading: "You are being signed out",
       success: "You have been signed out",
       error: "Failed to sign out",
-      closeButton: true,
+      duration: 2000,
     });
   };
 

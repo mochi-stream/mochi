@@ -23,8 +23,8 @@ model User {
   notifications Notifications[]
   watchHistory  WatchHistory[]
   collection    Collection[]
-  following     Follow[]       @relation("Following")
-  followedBy    Follow[]       @relation("FollowedBy")
+  following     Follow[]        @relation("Following")
+  followedBy    Follow[]        @relation("FollowedBy")
 }
 
 model Notifications {
@@ -34,7 +34,7 @@ model Notifications {
   message   String
   seen      Boolean  @default(false)
   createdAt DateTime @default(now())
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [externalUserId])
 
   @@index([userId])
 }

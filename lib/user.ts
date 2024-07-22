@@ -2,14 +2,18 @@
 
 import { db } from "@/lib/db";
 
-import { User } from "@prisma/client";
+import { ProfileUser } from "@/types/user";
 
 export async function getUserByUsername(
   username: string
-): Promise<User | null> {
+): Promise<ProfileUser | null> {
   const user = await db.user.findUnique({
     where: {
       username: username,
+    },
+    include: {
+      following: true,
+      followedBy: true,
     },
   });
   return user;

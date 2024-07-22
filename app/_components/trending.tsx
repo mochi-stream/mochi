@@ -28,7 +28,7 @@ export default function Trending() {
         const response = await getTrendingAnime();
         setTrendingAnime(response.results);
       } catch (error) {
-        console.error("Failed to fetch trending anime:", error);
+        throw new Error("Error fetching trending anime");
       } finally {
         setLoading(false);
       }
