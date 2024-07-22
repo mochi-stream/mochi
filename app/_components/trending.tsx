@@ -1,3 +1,8 @@
+/**
+ * Renders the Trending component, which displays a list of trending anime.
+ * Fetches the data from the API and displays a loading skeleton while fetching.
+ */
+
 import { useEffect, useState } from "react";
 
 import Link from "next/link";
@@ -5,7 +10,7 @@ import Image from "next/image";
 
 import { Skeleton } from "@/components/ui/skeleton";
 
-import { getTrendingAnime } from "@/providers/anime";
+import { getTrendingAnime } from "@/lib/anime";
 import { AnilistResult } from "@/types/anime";
 
 import { useKeenSlider } from "keen-slider/react";
@@ -23,7 +28,7 @@ export default function Trending() {
         const response = await getTrendingAnime();
         setTrendingAnime(response.results);
       } catch (error) {
-        console.error("Failed to fetch trending anime:", error);
+        throw new Error("Error fetching trending anime");
       } finally {
         setLoading(false);
       }
@@ -104,6 +109,7 @@ export default function Trending() {
           >
             <Link href={`/anime/${anime.id}`}>
               <Image
+                loading="lazy"
                 src={anime.image || "default.png"}
                 alt={
                   anime.title.english || anime.title.userPreferred || "No Title"
