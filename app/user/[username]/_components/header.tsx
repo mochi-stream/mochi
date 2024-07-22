@@ -1,3 +1,10 @@
+/**
+ * ProfileHeader component displays the user's profile information.
+ *
+ * @param {Object} props - The component props.
+ * @param {User} props.user - The user object containing the user's information.
+ */ 
+
 import { useEffect, useState } from "react";
 
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
@@ -12,17 +19,21 @@ import { getFollowersCount, getFollowingsCount } from "@/services/follow";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export function ProfileHeader({ user }: { user: User }) {
+  // Get the user's ID from Clerk
   const { userId } = useAuth();
 
+  // State variables to store the user's followers and followings counts
   const [followersCount, setFollowersCount] = useState<number>(-1);
   const [followingsCount, setFollowingsCount] = useState<number>(-1);
 
+  // Fetch the followers and followings counts on component mount
   useEffect(() => {
     if (!user.id) return;
     getFollowersCount(user.id).then(setFollowersCount);
     getFollowingsCount(user.id).then(setFollowingsCount);
   }, [user.id]);
 
+  // Render the user's profile information
   return (
     <div className="flex items-center space-x-4 py-4">
       <Avatar className="w-24 h-24">
@@ -52,14 +63,21 @@ export function ProfileHeader({ user }: { user: User }) {
   );
 }
 
+/**
+ * ProfileHeaderSkeleton component displays a skeleton version of the user's profile information.
+ *
+ * @returns {JSX.Element} - The skeleton component.
+ */
 export function ProfileHeaderSkeleton() {
-  return <div className="flex items-center space-x-4 py-4">
-    <Avatar className="w-24 h-24">
-      <Skeleton className="w-full h-full" />
-    </Avatar>
-    <div className="pr-4 flex flex-col">
-      <Skeleton className="h-4 w-60" />
-      <Skeleton className="h-4 w-40 mt-2" />
+  return (
+    <div className="flex items-center space-x-4 py-4">
+      <Avatar className="w-24 h-24">
+        <Skeleton className="w-full h-full" />
+      </Avatar>
+      <div className="pr-4 flex flex-col">
+        <Skeleton className="h-4 w-60" />
+        <Skeleton className="h-4 w-40 mt-2" />
+      </div>
     </div>
-  </div>;
+  );
 }

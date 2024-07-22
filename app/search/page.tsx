@@ -1,3 +1,10 @@
+/**
+ * This component is the main entry point for the search page.
+ *
+ * @param {SearchPageProps} props - The component props.
+ * @returns {JSX.Element} The search page JSX.
+ */
+
 "use client";
 
 import { redirect } from "next/navigation";
@@ -11,6 +18,34 @@ interface SearchPageProps {
   };
 }
 
+export default function SearchPage({ searchParams }: SearchPageProps) {
+  /**
+   * Redirects the user to the home page if no query is provided.
+   */
+  if (!searchParams.query) {
+    redirect("/");
+  }
+
+  return (
+    <>
+      {/* Set the page title based on the query parameter */}
+      <title>{`Search for ${capitalize(searchParams.query)} on Mochi`}</title>
+      <div className="flex w-full px-4 lg:px-8 py-6">
+        {/* Render the search sidebar */}
+        <SearchSidebar />
+        {/* Render the search results */}
+        <SearchResults />
+      </div>
+    </>
+  );
+}
+
+/**
+ * Capitalizes the first letter of a string.
+ *
+ * @param {string} str - The string to capitalize.
+ * @returns {string} The capitalized string.
+ */
 function capitalize(str: string) {
   if (typeof str !== "string" || !str.length) {
     return str;
@@ -18,17 +53,11 @@ function capitalize(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-export default function SearchPage({ searchParams }: SearchPageProps) {
-  if (!searchParams.query) {
-    redirect("/");
-  }
-  return (
-    <>
-      <title>{`Search for ${capitalize(searchParams.query)} on Mochi`}</title>
-      <div className="flex w-full px-4 lg:px-8 py-6">
-        <SearchSidebar />
-        <SearchResults />
-      </div>
-    </>
-  );
+/**
+ * Props for the search page.
+ */
+interface SearchPageProps {
+  searchParams: {
+    query?: string;
+  };
 }

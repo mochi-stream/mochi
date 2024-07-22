@@ -1,3 +1,8 @@
+/**
+ * Activity component that displays the latest activity of a user.
+ *
+ * @returns The Activity component.
+ */
 export default function Activity() {
   return (
     <div className="py-6 flex flex-col space-y-2">
@@ -8,6 +13,11 @@ export default function Activity() {
   );
 }
 
+/**
+ * Skeleton component for the Activity component.
+ *
+ * @returns The ActivitySkeleton component.
+ */
 export function ActivitySkeleton() {
-  return;
+  return <></>;
 }

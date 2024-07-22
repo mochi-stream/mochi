@@ -1,3 +1,10 @@
+/**
+ * Actions component that renders the follow/unfollow button for a user.
+ *
+ * @param profileId - The ID of the user to follow/unfollow.
+ * @returns The Actions component.
+ */
+
 "use client";
 
 import { toast } from "sonner";
@@ -17,10 +24,14 @@ interface ActionsProps {
 export function Actions({ profileId }: ActionsProps) {
   const { userId } = useAuth();
 
+  // Transition state for handling pending API requests
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
+
+  // State for tracking if the user is following the profile
   const [isFollowing, setIsFollowing] = useState(false);
 
+  // Fetch the follow status of the profile when the user changes
   useEffect(() => {
     if (userId === profileId) return setIsFollowing(false);
     async function fetchIsFollowing() {
@@ -30,6 +41,7 @@ export function Actions({ profileId }: ActionsProps) {
     fetchIsFollowing();
   }, [userId, profileId]);
 
+  // Handle follow request
   function handleFollow() {
     startTransition(() => {
       onFollow(profileId)
@@ -39,6 +51,8 @@ export function Actions({ profileId }: ActionsProps) {
         .catch((error) => toast.error(error.message));
     });
   }
+
+  // Handle unfollow request
   function handleUnfollow() {
     startTransition(() => {
       onUnfollow(profileId)
@@ -48,6 +62,8 @@ export function Actions({ profileId }: ActionsProps) {
         .catch((error) => toast.error(error.message));
     });
   }
+
+  // Handle toggle follow/unfollow request
   function toggleFollow() {
     if (!userId) {
       return router.push("/sign-in");
@@ -58,6 +74,7 @@ export function Actions({ profileId }: ActionsProps) {
       handleFollow();
     }
   }
+
   return (
     <Button
       disabled={isPending}
@@ -71,6 +88,11 @@ export function Actions({ profileId }: ActionsProps) {
   );
 }
 
+/**
+ * Skeleton component for the Actions component.
+ *
+ * @returns The ActionsSkeleton component.
+ */
 export function ActionsSkeleton() {
   return <Skeleton className="h-10 w-full lg:w-24" />;
 }
