@@ -1,9 +1,22 @@
+/**
+ * Search dialog component.
+ *
+ * Allows users to search for anime.
+ */
+
 import { useState, useCallback, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 import Link from "next/link";
 
 import { cn } from "@/lib/utils";
+
+import lodash from "lodash";
+
+import { searchAnime } from "@/lib/anime";
+import { AnilistResult } from "@/types/anime";
+
+import qs from "query-string";
 
 import {
   Dialog,
@@ -19,20 +32,19 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 import { Search, X } from "lucide-react";
 
-import lodash from "lodash";
-
-import { searchAnime } from "@/providers/anime";
-import { AnilistResult } from "@/types/anime";
-
-import qs from "query-string";
+import { toast } from "sonner";
 
 export default function SearchDialog() {
   const [searchValue, setSearchValue] = useState("");
   const [results, setResults] = useState<AnilistResult[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  const [error, setError] = useState("");
 
+  /**
+   * Handle input change event and perform search.
+   *
+   * @param {string} userInput - The user input value.
+   */
   const handleInputChange = (userInput: string) => {
     setIsLoading(true);
     setResults([]);
@@ -41,13 +53,16 @@ export default function SearchDialog() {
         setResults(response.results);
       })
       .catch((error) => {
-        setError(error.message);
+        toast.error("Failed to load search results. Please try again later.");
       })
       .finally(() => {
         setIsLoading(false);
       });
   };
 
+  /**
+   * Debounce the handleInputChange function.
+   */
   const handler = useCallback(lodash.debounce(handleInputChange, 500), []);
 
   const onSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,6 +91,9 @@ export default function SearchDialog() {
     router.push(url);
   }
 
+  /**
+   * Handle keydown event and open the search dialog when Ctrl+K is pressed.
+   */
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.ctrlKey && event.key === "k") {
@@ -164,8 +182,6 @@ export default function SearchDialog() {
                     </div>
                   </Link>
                 ))
-              ) : error ? (
-                <div className="text-muted-foreground text-sm">{error}</div>
               ) : null}
             </div>
           </div>

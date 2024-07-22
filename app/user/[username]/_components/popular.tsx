@@ -1,31 +1,18 @@
-/**
- * Component that displays a list of popular anime.
- * Fetches the data from the API and displays a loading skeleton while fetching.
- */
-
 import { useEffect, useState } from "react";
-
-import { AnilistResult } from "@/types/anime";
-
-import { getPopularAnime } from "@/lib/anime";
 
 import { AnimeList, AnimeListSkeleton } from "@/components/anime/anime-list";
 
 import { toast } from "sonner";
 
-export default function Popular() {
-  const [popularAnime, setPopularAnime] = useState<AnilistResult[]>([]);
+export default function Watching() {
+  const [watchingCollection, setWatchingCollection] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
-  /**
-   * Fetches the popular anime data from the API and updates the state.
-   * Shows a toast error if there is an error fetching the data.
-   */
   useEffect(() => {
-    async function fetchPopularAnime() {
+    async function fetchWatchingCollection() {
       try {
-        const response = await getPopularAnime();
-        setPopularAnime(response.results);
+        const response: any = await null;
+        setWatchingCollection(response.results);
       } catch (error) {
         toast.error("Failed to load popular anime. Please try again later.");
       } finally {
@@ -33,7 +20,7 @@ export default function Popular() {
       }
     }
 
-    fetchPopularAnime();
+    fetchWatchingCollection();
   }, []);
 
   return (
@@ -46,7 +33,7 @@ export default function Popular() {
         <AnimeListSkeleton type="default" />
       ) : (
         // Display the list of popular anime
-        <AnimeList type="default" list={popularAnime} />
+        <AnimeList type="default" list={watchingCollection} />
       )}
     </div>
   );

@@ -16,8 +16,7 @@ export async function getTrendingAnime(): Promise<AnilistSearchResult> {
     );
     return response.data;
   } catch (error) {
-    console.error("Error fetching data:", error);
-    throw error;
+    throw new Error("Error fetching trending anime");
   }
 }
 
@@ -28,8 +27,7 @@ export async function getPopularAnime() {
     );
     return response.data;
   } catch (error) {
-    console.error("Error fetching data:", error);
-    throw error;
+    throw new Error("Error fetching popular anime");
   }
 }
 
@@ -40,8 +38,7 @@ export async function getUpcomingAnime() {
     );
     return response.data;
   } catch (error) {
-    console.error("Error fetching data:", error);
-    throw error;
+    throw new Error("Error fetching upcoming anime");
   }
 }
 
@@ -73,8 +70,7 @@ export async function searchAnime(
     );
     return response.data;
   } catch (error) {
-    console.error("Error fetching data:", error);
-    throw error;
+    throw new Error("Error searching anime");
   }
 }
 
@@ -91,7 +87,6 @@ export async function getAnimeDetails(
     );
     return response.data;
   } catch (error) {
-    console.error("Error fetching data:", error);
-    throw error;
+    throw new Error("Error fetching anime details");
   }
 }
