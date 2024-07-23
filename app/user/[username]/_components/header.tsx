@@ -65,8 +65,8 @@ export function ProfileHeader({ user }: { user: ProfileUser }) {
               </TooltipProvider>
             </div>
             <p className="text-sm mt-2">
-              {user.following.length} Followers · {user.followedBy.length}{" "}
-              Followings
+              {user.following.length} Followers • {user.followedBy.length}{" "}
+              Followings • 1 Karma
             </p>
           </div>
           {userId && userId === user.externalUserId ? (

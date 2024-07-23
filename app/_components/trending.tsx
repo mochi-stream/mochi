@@ -99,7 +99,9 @@ export default function Trending() {
     <div className="px-4 lg:px-8 py-6">
       <div>
         <h1 className="text-2xl font-medium">Trending Now</h1>
-        <p className="text-sm text-muted-foreground">Popular animes for you.</p>
+        <p className="text-sm text-muted-foreground">
+          Popular anime this season
+        </p>
       </div>
       <div className="mt-6 keen-slider relative" ref={ref}>
         {trendingAnime.map((anime, index) => (
@@ -153,7 +155,9 @@ function TrendingSkeleton() {
     <div className="px-4 lg:px-8 py-6">
       <div>
         <h1 className="text-2xl font-medium">Trending Now</h1>
-        <p className="text-sm text-muted-foreground">Popular animes for you.</p>
+        <p className="text-sm text-muted-foreground">
+          Popular anime this season
+        </p>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-8 mt-6">
         {Array.from({ length: 5 }).map((_, index) => (

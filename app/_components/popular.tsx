@@ -39,7 +39,7 @@ export default function Popular() {
   return (
     <div className="px-4 lg:px-8 py-6">
       <div>
-        <h1 className="text-2xl font-medium">Popular Animes of All Time</h1>
+        <h1 className="text-2xl font-medium">Popular Anime (All Time)</h1>
       </div>
       {/* Display a loading skeleton if the data is still being loaded */}
       {loading ? (
