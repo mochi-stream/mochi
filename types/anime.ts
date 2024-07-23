@@ -149,5 +149,46 @@ export interface AnimeInfo {
   relations: Relation[];
   mappings: Mapping[];
   artwork: string[];
-  episodes: string[];
+  episodes: Episode[];
+}
+
+export interface Episode {
+  id: string;
+  title: string;
+  description: string | null;
+  number: number;
+  image: string;
+  imageHash: string;
+  airDate: Date | null;
+}
+
+export interface Source {
+  url: string;
+  type: string;
+  isM3U8: boolean;
+}
+
+export interface Subtitle {
+  url: string;
+  lang: string;
+}
+
+export interface PlayerSubtitle {
+  src: string;
+  label: string;
+  language: string;
+  kind: TextTrackKind;
+  default?: boolean;
+}
+
+export interface Intro {
+  start: number;
+  end: number;
+}
+
+export interface Video {
+  sources: Source[];
+  subtitles: Subtitle[];
+  intro: Intro;
+  outro: Intro;
 }

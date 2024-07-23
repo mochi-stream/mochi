@@ -7,7 +7,7 @@ const CONSUMET_URL = process.env.CONSUMET_URL;
 
 import axios from "axios";
 
-import { AnilistSearchResult, AnimeInfo } from "@/types/anime";
+import { AnilistSearchResult, AnimeInfo, Video } from "@/types/anime";
 
 export async function getTrendingAnime(): Promise<AnilistSearchResult> {
   try {
@@ -88,5 +88,25 @@ export async function getAnimeDetails(
     return response.data;
   } catch (error) {
     throw new Error("Error fetching anime details");
+  }
+}
+
+export async function getAnimeEpisodes(
+  animeId: string,
+  watchId: string
+): Promise<Video> {
+  try {
+    const episodeId = `${animeId}$episode$${watchId}$sub`;
+    const response = await axios.get<Video>(
+      `${CONSUMET_URL}/anime/zoro/watch`,
+      {
+        params: {
+          episodeId,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error("Error fetching anime episodes");
   }
 }

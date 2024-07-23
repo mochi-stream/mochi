@@ -1,4 +1,4 @@
-import type { ReactElement } from "react";
+import { ReactNode, SVGProps, ComponentType } from "react";
 
 import {
   Menu,
@@ -58,7 +58,7 @@ function CaptionSubmenu() {
         label="Captions"
         hint={hint}
         disabled={options.disabled}
-        icon={ClosedCaptionsIcon}
+        icon={ClosedCaptionsIcon as ComponentType<SVGProps<SVGSVGElement>>}
       />
       <Menu.Content className={submenuClass}>
         <Menu.RadioGroup
@@ -95,7 +95,7 @@ export interface SubmenuButtonProps {
   label: string;
   hint: string;
   disabled?: boolean;
-  icon: ReactElement;
+  icon: ComponentType<React.SVGProps<SVGSVGElement>>;
 }
 
 function SubmenuButton({

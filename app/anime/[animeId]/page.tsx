@@ -17,11 +17,11 @@ import { AnimeInfo } from "@/types/anime";
 const provider = "ZORO";
 
 interface AnimePageProps {
-  params: { id: string };
+  params: { animeId: string };
 }
 
 export default function AnimePage({ params }: AnimePageProps) {
-  const id = params.id;
+  const id = params.animeId;
 
   // State variables
   const [anime, setAnime] = useState<AnimeInfo | null>(null);
