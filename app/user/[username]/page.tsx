@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 
 import { ProfileHeader, ProfileHeaderSkeleton } from "./_components/header";
 // import Activity from "./_components/activity";
+import Bio from "./_components/bio";
 import Collection from "./_components/collection";
 
 import { getUserByUsername } from "@/lib/user";
@@ -50,6 +51,13 @@ export default function UserPage({ params }: UserPageProps) {
     fetchUser();
   }, [params.username]);
 
+  // Set the page title
+  useEffect(() => {
+    if (user) {
+      document.title = `@${user.username} | Mochi`;
+    }
+  }, [user]);
+
   // Render appropriate content based on the loading, error, and user states
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -66,12 +74,21 @@ export default function UserPage({ params }: UserPageProps) {
   }
 
   return (
-    <div className="flex flex-col w-full">
-      {/* Render the profile header with the user data */}
-      <ProfileHeader user={user} />
-      {/* Render the activity component */}
-      {/* <Activity /> */}
-      <Collection />
-    </div>
+    <>
+      <div className="flex flex-col w-full">
+        {/* Render the profile header with the user data */}
+        <ProfileHeader user={user} />
+        {/* Render the activity component */}
+        {/* <Activity /> */}
+        {user.bio && (
+          <div className="grid grid-cols-12 gap-8 w-full p-8 lg:px-12">
+            <div className="col-span-8">
+              <Bio content={user.bio} />
+            </div>
+          </div>
+        )}
+        <Collection />
+      </div>
+    </>
   );
 }
