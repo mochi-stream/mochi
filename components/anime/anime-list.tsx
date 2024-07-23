@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import Image from "next/image";
 
+import WatchListIcon from "@/components/ui/WatchListIcon";
 import { Skeleton } from "@/components/ui/skeleton";
 
 import { AnilistResult } from "@/types/anime";
@@ -46,6 +47,15 @@ const listVariants = cva("mt-6 grid grid-cols-2 gap-2 lg:gap-4 select-none", {
  * @returns {JSX.Element} - The rendered component.
  */
 export function AnimeList({ type, list }: SearchResultsProps) {
+  const addToWatchListHandler = (
+    e: React.MouseEvent<SVGSVGElement, MouseEvent>,
+    id: string
+  ) => {
+    e.preventDefault();
+    console.log("TODO: Adding", id, "to watch list");
+
+    // TODO: Save watchlist into DB
+  };
   return (
     <div className={cn(listVariants({ type }))}>
       {/* Map over the anime list and render each anime component */}
@@ -68,22 +78,28 @@ export function AnimeList({ type, list }: SearchResultsProps) {
                 className="object-cover w-full h-[300px] lg:h-[370px] rounded-lg transition-all hover:opacity-80"
               />
               {/* Render the anime details */}
-              <div className="absolute flex top-2 left-2">
-                <div
-                  className={`bg-purple-800 text-white text-xs font-semibold  px-2 py-1 ${
-                    anime.totalEpisodes ? "rounded-tl rounded-bl" : "rounded"
-                  }`}
-                >
-                  {/* Render the anime type */}
-                  {(anime.type || "").replace(/_/g, " ")}
-                </div>
-                {/* Render the anime total episodes */}
-                {anime.totalEpisodes && (
-                  <div className="bg-teal-600 text-white text-xs font-semibold rounded-tr rounded-br px-2 py-1 flex items-center">
-                    <TvMinimal className="h-3 w-3 mr-1" />
-                    {anime.totalEpisodes}
+              <div className="absolute flex w-11/12 justify-between top-2 left-2">
+                <div className="flex">
+                  <div
+                    className={`bg-purple-800 text-white text-xs font-semibold  px-2 py-1 ${
+                      anime.totalEpisodes ? "rounded-tl rounded-bl" : "rounded"
+                    }`}
+                  >
+                    {/* Render the anime type */}
+                    {(anime.type || "").replace(/_/g, " ")}
                   </div>
-                )}
+                  {/* Render the anime total episodes */}
+                  {anime.totalEpisodes && (
+                    <div className="bg-teal-600 text-white text-xs font-semibold rounded-tr rounded-br px-2 py-1 flex items-center">
+                      <TvMinimal className="h-3 w-3 mr-1" />
+                      {anime.totalEpisodes}
+                    </div>
+                  )}
+                </div>
+                <WatchListIcon
+                  id={anime.id}
+                  addToWatchList={addToWatchListHandler}
+                ></WatchListIcon>
               </div>
               {/* Render the anime gradient overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-10% from-black via-[transparent] to-transparent opacity-70 rounded-lg pointer-events-none"></div>
