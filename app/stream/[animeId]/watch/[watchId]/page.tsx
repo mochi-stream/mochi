@@ -1,10 +1,17 @@
 "use client";
 
+import { config } from "dotenv";
+config();
+
+const CORS_URL = process.env.CORS_URL;
+
 import { useEffect, useState } from "react";
 
-import { getAnimeEpisodes } from "@/lib/anime";
+import { cn } from "@/lib/utils";
 
-import { Video, PlayerSubtitle } from "@/types/anime";
+import { getAnimeEpisodes, getStreamAnimeDetails } from "@/lib/anime";
+
+import { Video, PlayerSubtitle, StreamAnimeInfo } from "@/types/anime";
 
 import { toast } from "sonner";
 
@@ -12,6 +19,7 @@ import Player from "@/components/anime/player";
 import useNetworkStatus from "@/app/_components/networkstatus";
 
 import { Skeleton } from "@/components/ui/skeleton";
+import Link from "next/link";
 
 interface WatchPageProps {
   params: {
@@ -28,6 +36,7 @@ export default function WatchPage(props: WatchPageProps) {
   }
 
   const [episodes, setEpisodes] = useState<Video>();
+  const [streamAnime, setStreamAnime] = useState<StreamAnimeInfo>();
   const [subtitle, setSubtitle] = useState<PlayerSubtitle[]>();
   const [thumbnail, setThumbnail] = useState<string>();
 
@@ -44,7 +53,7 @@ export default function WatchPage(props: WatchPageProps) {
         const formattedSubtitles = subtitleResponse
           .filter((sub) => sub.lang !== "Thumbnails")
           .map((sub) => ({
-            src: `${sub.url}`,
+            src: `${CORS_URL}+${sub.url}`,
             label: sub.lang,
             language: sub.lang,
             kind: "subtitles" as TextTrackKind,
@@ -57,10 +66,15 @@ export default function WatchPage(props: WatchPageProps) {
           (sub) => sub.lang === "Thumbnails"
         );
         if (thumbnailResponse) {
-          setThumbnail(`${thumbnailResponse.url}`);
+          setThumbnail(`${CORS_URL}+${thumbnailResponse.url}`);
         }
 
         setEpisodes(response);
+
+        const streamAnimeResponse = await getStreamAnimeDetails(
+          props.params.animeId
+        );
+        setStreamAnime(streamAnimeResponse);
       } catch (error) {
         toast.error("Failed to load episodes. Please try again later.");
       }
@@ -74,14 +88,38 @@ export default function WatchPage(props: WatchPageProps) {
         {episodes ? (
           <Player
             title="test"
-            src={episodes?.sources[0].url}
+            src={`${CORS_URL}+${episodes?.sources[0].url}`}
             subtitles={subtitle}
             poster="a"
             thumbnail={thumbnail}
           />
         ) : (
-          <Skeleton className="w-full h-full" />
+          <Skeleton className="" />
         )}
+      </div>
+      <div className="lg:col-span-4 flex-grow">
+        <div className="bg-[#141219] rounded-lg p-2">
+          {streamAnime &&
+            streamAnime.episodes.map((episode) => (
+              <Link
+                key={episode.id}
+                href={`/stream/${props.params.animeId}/watch/${
+                  episode.id.split("$")[2]
+                }`}
+              >
+                <div
+                  className={`px-4 py-4 ${
+                    parseInt(props.params.watchId) ===
+                    parseInt(episode.id.split("$")[2])
+                      ? "bg-[#202020]"
+                      : "hover:bg-[#262626]"
+                  }`}
+                >
+                  {episode.title}
+                </div>
+              </Link>
+            ))}
+        </div>
       </div>
     </div>
   );

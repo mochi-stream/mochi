@@ -69,7 +69,7 @@ export default function Player({
       className="w-full aspect-video bg-slate-900 text-white font-sans overflow-hidden rounded-md ring-media-focus data-[focus]:ring-4"
       title={title}
       poster={poster}
-      src={`${src}`}
+      src={src}
       crossOrigin
       playsInline
       autoPlay
@@ -82,7 +82,6 @@ export default function Player({
           subtitles.length > 0 &&
           subtitles.map((sub, index) => <Track {...sub} key={sub.src} />)}
       </MediaProvider>
-
       <VideoLayout thumbnails={thumbnail} />
     </MediaPlayer>
   );

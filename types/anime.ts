@@ -152,6 +152,28 @@ export interface AnimeInfo {
   episodes: Episode[];
 }
 
+export interface StreamAnimeInfo {
+  id: string;
+  title: string;
+  malId: number;
+  alID: number;
+  image: string;
+  description: string;
+  type: string;
+  subOrDub: string;
+  hasSub: boolean;
+  totalEpisodes: number;
+  episodes: StreamEpisode[];
+}
+
+interface StreamEpisode {
+  id: string;
+  number: number;
+  title: string;
+  isFiller: string;
+  url: string;
+}
+
 export interface Episode {
   id: string;
   title: string;
