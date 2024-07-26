@@ -208,6 +208,11 @@ export interface Intro {
   end: number;
 }
 
+export interface Outro {
+  start: number;
+  end: number;
+}
+
 export interface Video {
   sources: Source[];
   subtitles: Subtitle[];

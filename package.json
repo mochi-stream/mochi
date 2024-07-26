@@ -26,6 +26,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "dotenv": "^16.4.5",
+    "find-config": "^1.0.0",
     "hls.js": "^1.5.13",
     "keen-slider": "^6.8.6",
     "lodash": "^4.17.21",

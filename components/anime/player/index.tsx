@@ -2,9 +2,9 @@
 
 import "@vidstack/react/player/styles/base.css";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
-import { PlayerSubtitle } from "@/types/anime";
+import { PlayerSubtitle, Intro, Outro } from "@/types/anime";
 
 import {
   isHLSProvider,
@@ -27,6 +27,8 @@ interface PlayerProps {
   src: string;
   thumbnail?: string;
   subtitles?: PlayerSubtitle[];
+  intro?: Intro;
+  outro?: Intro;
 }
 
 export default function Player({
@@ -35,6 +37,8 @@ export default function Player({
   src,
   thumbnail,
   subtitles,
+  intro,
+  outro,
 }: PlayerProps) {
   let player = useRef<MediaPlayerInstance>(null);
 
@@ -64,6 +68,16 @@ export default function Player({
     // ...
   }
 
+  const [vttContent, setVttContent] = useState<string>();
+
+  useEffect(() => {
+    if (intro && outro) {
+      const intros: Intro[] = [intro];
+      const outros: Outro[] = [outro];
+      setVttContent(generateVTT(intros, outros));
+    }
+  }, [intro, outro]);
+
   return (
     <MediaPlayer
       className="w-full aspect-video bg-slate-900 text-white font-sans overflow-hidden rounded-md ring-media-focus data-[focus]:ring-4"
@@ -81,8 +95,44 @@ export default function Player({
         {subtitles &&
           subtitles.length > 0 &&
           subtitles.map((sub, index) => <Track {...sub} key={sub.src} />)}
+
+        {vttContent && (
+          <Track
+            content={vttContent}
+            default={true}
+            language="en-US"
+            kind="chapters"
+            data-type="vtt"
+          />
+        )}
       </MediaProvider>
       <VideoLayout thumbnails={thumbnail} />
     </MediaPlayer>
   );
 }
+
+const formatTime = (seconds: number): string => {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const secs = seconds % 60;
+  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
+    2,
+    "0"
+  )}:${String(secs).padStart(2, "0")}.000`;
+};
+
+const generateVTT = (intros: Intro[], outros: Outro[]): string => {
+  let vtt = "WEBVTT\n\n";
+
+  intros.forEach((intro, index) => {
+    vtt += `${formatTime(intro.start)} --> ${formatTime(intro.end)}\n`;
+    vtt += `Intro\n\n`;
+  });
+
+  outros.forEach((outro, index) => {
+    vtt += `${formatTime(outro.start)} --> ${formatTime(outro.end)}\n`;
+    vtt += `Outro\n\n`;
+  });
+
+  return vtt;
+};

@@ -1,13 +1,8 @@
 "use client";
 
-import { config } from "dotenv";
-config();
-
-const CORS_URL = process.env.CORS_URL;
+const CORS_URL = process.env.CORS_URL || "https://cors.j21.dev";
 
 import { useEffect, useState } from "react";
-
-import { cn } from "@/lib/utils";
 
 import { getAnimeEpisodes, getStreamAnimeDetails } from "@/lib/anime";
 
@@ -35,7 +30,7 @@ export default function WatchPage(props: WatchPageProps) {
     toast.error("You are offline. Please connect to the internet.");
   }
 
-  const [episodes, setEpisodes] = useState<Video>();
+  const [video, setVideo] = useState<Video>();
   const [streamAnime, setStreamAnime] = useState<StreamAnimeInfo>();
   const [subtitle, setSubtitle] = useState<PlayerSubtitle[]>();
   const [thumbnail, setThumbnail] = useState<string>();
@@ -53,7 +48,7 @@ export default function WatchPage(props: WatchPageProps) {
         const formattedSubtitles = subtitleResponse
           .filter((sub) => sub.lang !== "Thumbnails")
           .map((sub) => ({
-            src: `${CORS_URL}+${sub.url}`,
+            src: `${CORS_URL}/${sub.url}`,
             label: sub.lang,
             language: sub.lang,
             kind: "subtitles" as TextTrackKind,
@@ -66,10 +61,10 @@ export default function WatchPage(props: WatchPageProps) {
           (sub) => sub.lang === "Thumbnails"
         );
         if (thumbnailResponse) {
-          setThumbnail(`${CORS_URL}+${thumbnailResponse.url}`);
+          setThumbnail(`${CORS_URL}/${thumbnailResponse.url}`);
         }
 
-        setEpisodes(response);
+        setVideo(response);
 
         const streamAnimeResponse = await getStreamAnimeDetails(
           props.params.animeId
@@ -85,12 +80,14 @@ export default function WatchPage(props: WatchPageProps) {
   return (
     <div className="grid lg:grid-cols-12 gap-4 py-6 px-6 lg:px-12">
       <div className="lg:col-span-8">
-        {episodes ? (
+        {video ? (
           <Player
             title="test"
-            src={`${CORS_URL}+${episodes?.sources[0].url}`}
+            src={`${CORS_URL}/${video?.sources[0].url}`}
             subtitles={subtitle}
             poster="a"
+            intro={video.intro}
+            outro={video.outro}
             thumbnail={thumbnail}
           />
         ) : (
