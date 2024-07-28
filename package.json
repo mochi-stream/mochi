@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^5.2.4",
-    "@clerk/themes": "^2.1.12",
+    "@clerk/themes": "^2.1.14",
     "@lucia-auth/adapter-prisma": "^4.0.1",
     "@prisma/client": "^5.16.2",
     "@radix-ui/react-avatar": "^1.1.0",
