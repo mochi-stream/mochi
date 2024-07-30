@@ -6,9 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "https": "next dev --experimental-https"
   },
   "dependencies": {
+    "@apollo/client": "^3.11.1",
     "@clerk/nextjs": "^5.2.4",
     "@clerk/themes": "^2.1.12",
     "@lucia-auth/adapter-prisma": "^4.0.1",
@@ -25,6 +27,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "dotenv": "^16.4.5",
+    "graphql": "^16.9.0",
     "keen-slider": "^6.8.6",
     "lodash": "^4.17.21",
     "lucide-react": "^0.414.0",

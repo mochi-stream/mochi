@@ -151,3 +151,5 @@ export interface AnimeInfo {
   artwork: string[];
   episodes: string[];
 }
+
+export interface HomePageAnime {}

@@ -3,44 +3,12 @@
 import { config } from "dotenv";
 config();
 
-const CONSUMET_URL = process.env.CONSUMET_URL;
+const CONSUMET_URL = process.env.ANILIST_ENDPOINT;
 
 import axios from "axios";
 
 import { AnilistSearchResult, AnimeInfo } from "@/types/anime";
 
-export async function getTrendingAnime(): Promise<AnilistSearchResult> {
-  try {
-    const response = await axios.get<AnilistSearchResult>(
-      `${CONSUMET_URL}/meta/anilist/trending?perPage=25`
-    );
-    return response.data;
-  } catch (error) {
-    throw new Error("Error fetching trending anime");
-  }
-}
-
-export async function getPopularAnime() {
-  try {
-    const response = await axios.get<AnilistSearchResult>(
-      `${CONSUMET_URL}/meta/anilist/popular`
-    );
-    return response.data;
-  } catch (error) {
-    throw new Error("Error fetching popular anime");
-  }
-}
-
-export async function getUpcomingAnime() {
-  try {
-    const response = await axios.get<AnilistSearchResult>(
-      `${CONSUMET_URL}/meta/anilist/trending`
-    );
-    return response.data;
-  } catch (error) {
-    throw new Error("Error fetching upcoming anime");
-  }
-}
 
 export async function getSpotlight() {
   // return await animeProvider.fetchSpotlight();
