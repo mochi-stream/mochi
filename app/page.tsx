@@ -45,21 +45,19 @@ export default function App() {
       ))}
       {/* <Trending />
       <Popular /> */}
-      
     </div>
   );
 }
 
 function getAnimeSeasons() {
   const now = new Date();
-  const month = now.getMonth(); // 0 for January, 1 for February, etc.
+  const month = now.getMonth();
   const year = now.getFullYear();
 
   let currentSeason;
   let nextSeason;
   let nextSeasonYear = year;
 
-  // Determine current season
   if (month >= 3 && month <= 5) {
     currentSeason = "SPRING";
     nextSeason = "SUMMER";
@@ -72,7 +70,7 @@ function getAnimeSeasons() {
   } else {
     currentSeason = "WINTER";
     nextSeason = "SPRING";
-    nextSeasonYear++; // Next season will be in the next year
+    nextSeasonYear++;
   }
 
   return {
