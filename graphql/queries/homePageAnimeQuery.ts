@@ -7,12 +7,12 @@ export const HOME_PAGE_ANIME_QUERY = gql`
     $nextSeason: MediaSeason
     $nextYear: Int
   ) {
-    trending: Page(page: 1, perPage: 6) {
+    trending: Page(page: 1, perPage: 10) {
       media(sort: TRENDING_DESC, type: ANIME, isAdult: false) {
         ...media
       }
     }
-    season: Page(page: 1, perPage: 6) {
+    season: Page(page: 1, perPage: 12) {
       media(
         season: $season
         seasonYear: $seasonYear
@@ -23,7 +23,7 @@ export const HOME_PAGE_ANIME_QUERY = gql`
         ...media
       }
     }
-    nextSeason: Page(page: 1, perPage: 6) {
+    nextSeason: Page(page: 1, perPage: 12) {
       media(
         season: $nextSeason
         seasonYear: $nextYear
@@ -34,7 +34,7 @@ export const HOME_PAGE_ANIME_QUERY = gql`
         ...media
       }
     }
-    popular: Page(page: 1, perPage: 6) {
+    popular: Page(page: 1, perPage: 12) {
       media(sort: POPULARITY_DESC, type: ANIME, isAdult: false) {
         ...media
       }

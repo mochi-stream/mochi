@@ -1,155 +1,55 @@
-interface Title {
-  romaji: string;
-  english: string;
-  native: string;
+export interface AnimeTitle {
   userPreferred: string;
 }
 
-interface Trailer {
-  id: string;
-  site: string;
-  thumbnail: string;
-  thumbnailHash: string;
-}
-
-interface Recommendation {
+export interface Anime {
   id: number;
-  malId: number;
-  title: Title;
-  status: string;
-  episodes: number | null;
-  image: string;
-  imageHash: string;
-  cover: string | null;
-  coverHash: string;
-  rating: number;
-  type: string;
-}
-
-interface Character {
-  id: number;
-  role: string;
-  name: {
-    first: string;
-    last: string;
-    full: string;
-    native: string;
-    userPreferred: string;
+  idMal: number;
+  title: AnimeTitle;
+  coverImage: {
+    extraLarge: string;
+    large: string;
+    color: string;
   };
-  image: string;
-  imageHash: string;
-  voiceActors: {
-    id: number;
-    language: string;
-    name: {
-      first: string;
-      last: string;
-      full: string;
-      native: string;
-      userPreferred: string;
-    };
-    image: string;
-    imageHash: string;
-  }[];
-}
-
-interface Relation {
-  id: number;
-  relationType: string;
-  malId: number;
-  title: Title;
-  status: string;
-  episodes: number | null;
-  image: string;
-  imageHash: string;
-  color: string | null;
-  type: string;
-  cover: string | null;
-  coverHash: string;
-  rating: number;
-}
-
-interface Mapping {
-  id: string;
-  providerId: string;
-  similarity: number;
-  providerType: string;
-}
-
-interface Date {
-  year: number;
-  month: number;
-  day: number;
-}
-
-interface NextAiringEpisode {
-  airingTime: number;
-  timeUntilAiring: number;
-  episode: number;
-}
-
-export interface AnilistResult {
-  id: string;
-  malId: number;
-  title: Title;
-  status: string;
-  image: string;
-  imageHash: string;
-  cover: string | null;
-  coverHash: string;
-  popularity: number;
-  description: string;
-  rating: number | null;
-  genres: string[];
-  color: string;
-  totalEpisodes: number;
-  currentEpisodeCount: number;
-  type: string;
-  releaseDate: string | null;
-}
-
-export interface AnilistSearchResult {
-  currentPage: number;
-  hasNextPage: boolean;
-  results: AnilistResult[];
-}
-
-export interface AnimeInfo {
-  id: string;
-  title: Title;
-  malId: number;
-  synonyms: string[];
-  isLicensed: boolean;
-  isAdult: boolean;
-  countryOfOrigin: string;
-  trailer: Trailer;
-  image: string;
-  imageHash: string;
-  popularity: number;
-  color: string;
-  cover: string;
-  coverHash: string;
-  description: string;
-  status: string;
-  releaseDate: number;
-  startDate: Date;
-  endDate: Date;
-  nextAiringEpisode: NextAiringEpisode;
-  totalEpisodes: number;
-  currentEpisode: number;
-  rating: number;
-  duration: number;
-  genres: string[];
+  startDate: {
+    year: number;
+    month: number;
+    day: number;
+  };
+  endDate: {
+    year: number;
+    month: number;
+    day: number;
+  };
+  bannerImage: string;
   season: string;
-  studios: string[];
-  subOrDub: string;
+  seasonYear: number;
+  description: string;
   type: string;
-  recommendations: Recommendation[];
-  characters: Character[];
-  relations: Relation[];
-  mappings: Mapping[];
-  artwork: string[];
-  episodes: string[];
+  format: string;
+  status: string;
+  episodes: number;
+  duration: number;
+  chapters: number;
+  volumes: number;
+  genres: string[];
+  isAdult: boolean;
+  averageScore: number;
+  popularity: number;
+  mediaListEntry: {
+    id: number;
+    status: string;
+  };
+  nextAiringEpisode: {
+    airingAt: string;
+    timeUntilAiring: number;
+    episode: number;
+  };
+  studios: {
+    edges: {
+      isMain: boolean;
+      node: Studio;
+    }[];
+  };
 }
 
-export interface HomePageAnime {}
