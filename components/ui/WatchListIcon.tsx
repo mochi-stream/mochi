@@ -4,10 +4,10 @@ const WatchListIcon = ({
   id,
   addToWatchList,
 }: {
-  id: string;
+  id: number;
   addToWatchList: (
     e: React.MouseEvent<SVGSVGElement, MouseEvent>,
-    id: string
+    id: number
   ) => void;
 }) => {
   return (

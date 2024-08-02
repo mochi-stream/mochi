@@ -62,10 +62,10 @@ export default function Header() {
           </div>
         </SignedOut>
         <SignedIn>
-          {me ? (
+          {me.user ? (
             <>
-              <NotificationsDialog userid={me.id} />
-              <AvatarDialog user={me} />
+              <NotificationsDialog userid={me.user.id} />
+              <AvatarDialog user={me.user} />
             </>
           ) : (
             <>

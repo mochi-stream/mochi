@@ -3,44 +3,12 @@
 import { config } from "dotenv";
 config();
 
-const CONSUMET_URL = process.env.CONSUMET_URL;
+const CONSUMET_URL =
+  process.env.CONSUMET_URL || "https://consumet-api-dev.vercel.app";
 
 import axios from "axios";
 
-import { AnilistSearchResult, AnimeInfo } from "@/types/anime";
-
-export async function getTrendingAnime(): Promise<AnilistSearchResult> {
-  try {
-    const response = await axios.get<AnilistSearchResult>(
-      `${CONSUMET_URL}/meta/anilist/trending?perPage=25`
-    );
-    return response.data;
-  } catch (error) {
-    throw new Error("Error fetching trending anime");
-  }
-}
-
-export async function getPopularAnime() {
-  try {
-    const response = await axios.get<AnilistSearchResult>(
-      `${CONSUMET_URL}/meta/anilist/popular`
-    );
-    return response.data;
-  } catch (error) {
-    throw new Error("Error fetching popular anime");
-  }
-}
-
-export async function getUpcomingAnime() {
-  try {
-    const response = await axios.get<AnilistSearchResult>(
-      `${CONSUMET_URL}/meta/anilist/trending`
-    );
-    return response.data;
-  } catch (error) {
-    throw new Error("Error fetching upcoming anime");
-  }
-}
+// import { AnilistSearchResult, AnimeInfo } from "@/types/anime";
 
 export async function getSpotlight() {
   // return await animeProvider.fetchSpotlight();
@@ -56,9 +24,9 @@ export async function searchAnime(
   query: string,
   page: number,
   format?: string
-): Promise<AnilistSearchResult> {
+): Promise<any> {
   try {
-    const response = await axios.get<AnilistSearchResult>(
+    const response = await axios.get<any>(
       `${CONSUMET_URL}/meta/anilist/advanced-search`,
       {
         params: {
@@ -77,9 +45,9 @@ export async function searchAnime(
 export async function getAnimeDetails(
   id: string,
   provider: string
-): Promise<AnimeInfo> {
+): Promise<any> {
   try {
-    const response = await axios.get<AnimeInfo>(
+    const response = await axios.get<any>(
       `${CONSUMET_URL}/meta/anilist/info/${id}`,
       {
         params: { provider },
