@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils";
 import lodash from "lodash";
 
 import { searchAnime } from "@/lib/anime";
-import { AnilistResult } from "@/types/anime";
+// import { AnilistResult } from "@/types/anime";
 
 import qs from "query-string";
 
@@ -36,7 +36,7 @@ import { toast } from "sonner";
 
 export default function SearchDialog() {
   const [searchValue, setSearchValue] = useState("");
-  const [results, setResults] = useState<AnilistResult[]>([]);
+  const [results, setResults] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(false);
 

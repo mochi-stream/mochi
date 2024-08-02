@@ -7,7 +7,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 
 import { searchAnime } from "@/lib/anime";
-import { AnilistResult } from "@/types/anime";
+// import { AnilistResult } from "@/types/anime";
 
 import {
   DropdownMenu,
@@ -26,7 +26,7 @@ export default function SearchResults() {
   const searchParams = useSearchParams();
 
   // State to store the search results
-  const [searchResults, setSearchResults] = useState<AnilistResult[]>([]);
+  const [searchResults, setSearchResults] = useState<any[]>([]);
 
   // State to indicate if the search results are being loaded
   const [isLoading, setIsLoading] = useState(false);
