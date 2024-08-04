@@ -89,7 +89,6 @@ export default function App() {
           </div>
           {data && data.top && data.top.media ? (
             <AnimeList list={data.top.media} />
-            // Also add genres sidebar
           ) : (
             <AnimeListSkeleton />
           )}
@@ -97,7 +96,7 @@ export default function App() {
 
         <div className="mt-6">
           <div>
-            <h1 className="text-[1.4rem] font-medium">Upcoming</h1>
+            <h1 className="text-[1.4rem] font-medium">Upcoming This {seasons.nextSeason.season.charAt(0) + seasons.nextSeason.season.slice(1).toLowerCase()}</h1>
           </div>
           {data && data.nextSeason && data.nextSeason.media ? (
             <AnimeList list={data.nextSeason.media} />

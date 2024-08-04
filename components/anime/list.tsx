@@ -7,6 +7,14 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 import { MediaFragment } from "@/graphql/types";
 
+import sanitizeHtml from 'sanitize-html';
+
+import {
+    HoverCard,
+    HoverCardContent,
+    HoverCardTrigger,
+} from "@/components/ui/hover-card"
+
 interface AnimeListProps {
     list: (MediaFragment | null)[];
 }
@@ -18,39 +26,60 @@ export function AnimeList({
     const mediaList =
         list?.filter((item): item is MediaFragment => item !== null) || [];
 
-    return <div className="mt-4 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-6 gap-4 select-none">
+    return <div className="mt-4 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-6 gap-y-6 gap-4 select-none">
         {mediaList.map((anime, index) => (
             <Link key={index} href={`/anime/${anime.id}`}>
-                <div
-                    className="relative overflow-hidden cursor-pointer group"
-                >
-                    <Image
-                        loading="lazy"
-                        src={anime.coverImage?.extraLarge || "default.png"}
-                        alt={anime.title?.userPreferred || "No Title"}
-                        width={460}
-                        height={650}
-                        className="w-full h-[300px] rounded-lg transition-opacity object-cover opacity-80 group-hover:opacity-100"
-                    />
-                    <div className="absolute bottom-0 w-full p-4 z-50 font-aeonik">
-                        <h2 className="font-medium text-md lg:w-[80%] leading-5 text-primary/80">
-                            {(anime.title?.userPreferred || "No Title").length > 40
-                                ? (anime.title?.userPreferred || "No Title").slice(0, 37) + "..."
-                                : anime.title?.userPreferred || "No Title"}
-                        </h2>
-                        <p className="text-[12px] mt-1 text-primary/70">
-                            {anime.seasonYear}, {anime.genres?.[0]}
-                        </p>
-                    </div>
-                    {/* Render the anime gradient overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-10% from-black via-[transparent] to-transparent opacity-70 rounded-lg pointer-events-none"></div>
+                <HoverCard openDelay={250} closeDelay={50}>
+                    <HoverCardTrigger>
+                        <div
+                            className="relative overflow-hidden cursor-pointer group"
+                        >
+                            <Image
+                                loading="lazy"
+                                src={anime.coverImage?.extraLarge || "default.png"}
+                                alt={anime.title?.userPreferred || "No Title"}
+                                width={460}
+                                height={650}
+                                className="w-full h-[300px] rounded-lg transition-opacity object-cover opacity-80 group-hover:opacity-100"
+                            />
+                            <div className="absolute bottom-0 w-full p-4 z-50 font-aeonik">
+                                <h2 className="font-medium text-md lg:w-[80%] leading-5 text-primary/80">
+                                    {(anime.title?.userPreferred || "No Title").length > 40
+                                        ? (anime.title?.userPreferred || "No Title").slice(0, 37) + "..."
+                                        : anime.title?.userPreferred || "No Title"}
+                                </h2>
+                                <p className="text-[12px] mt-1 text-primary/70">
+                                    {anime.seasonYear}, {anime.genres?.[0]}
+                                </p>
+                            </div>
+                            {/* Render the anime gradient overlay */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-10% from-black via-[transparent] to-transparent opacity-70 rounded-lg pointer-events-none"></div>
 
-                    <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <div className="bg-primary rounded-full p-2 shadow-lg hover:bg-secondary-foreground/90 z-50">
-                            <Plus className="text-secondary h-4 w-4" />
+                            <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                <div className="bg-primary rounded-full p-2 shadow-lg hover:bg-secondary-foreground/90 z-50">
+                                    <Plus className="text-secondary h-4 w-4" />
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                    </HoverCardTrigger>
+                    <HoverCardContent>
+                        <h3>Synopsis</h3>
+                        <p className="text-sm mt-1"
+                            dangerouslySetInnerHTML={{
+                                __html: sanitizeHtml(
+                                    (anime.description && anime.description.length > 200
+                                        ? anime.description.slice(0, 200) + '...'
+                                        : anime.description),
+                                    {
+                                        allowedTags: [], // No tags allowed
+                                        allowedAttributes: {},
+                                    }
+                                )
+                            }}
+                        >
+                        </p>
+                    </HoverCardContent>
+                </HoverCard>
             </Link>
         ))}
     </div>;

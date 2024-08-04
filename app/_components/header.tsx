@@ -19,7 +19,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 export default function Header() {
   const me = useUser();
   return (
-    <header className="flex items-center justify-between sticky left-0 right-0 top-0 z-50 bg-gradient-to-b from-background from-5% to-background/0 px-4 lg:px-8 py-6 fade-in">
+    <header className="flex items-center justify-between sticky left-0 right-0 top-0 z-[999] bg-gradient-to-b from-background from-5% to-background/0 px-4 lg:px-8 py-6 fade-in">
       <div className="flex gap-8 items-center">
         {/* Main logo and navigation links */}
         <h1 className="text-2xl select-none">
