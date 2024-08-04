@@ -11,7 +11,7 @@ import { MediaFragment } from "@/graphql/types";
 
 import { TvMinimal } from "lucide-react";
 
-interface SearchResultsProps {
+interface AnimeListProps {
   type: "default" | "search";
   list: (MediaFragment | null)[];
 }
@@ -28,7 +28,7 @@ const listVariants = cva("mt-6 grid grid-cols-2 gap-2 lg:gap-4 select-none", {
   },
 });
 
-export function AnimeList({ type, list }: SearchResultsProps) {
+export function AnimeList({ type, list }: AnimeListProps) {
   const addToWatchListHandler = (
     e: React.MouseEvent<SVGSVGElement, MouseEvent>,
     id: number
@@ -54,7 +54,7 @@ export function AnimeList({ type, list }: SearchResultsProps) {
             <div className="relative">
               <Image
                 loading="lazy"
-                src={anime.coverImage?.large || "default.png"}
+                src={anime.coverImage?.extraLarge || "default.png"}
                 alt={anime.title?.userPreferred || "No Title"}
                 width={460}
                 height={650}
@@ -110,10 +110,10 @@ export function AnimeList({ type, list }: SearchResultsProps) {
 /**
  * Renders a skeleton of anime results.
  * @function AnimeListSkeleton
- * @param {Omit<SearchResultsProps, "list">} props - The component props.
+ * @param {Omit<AnimeListProps, "list">} props - The component props.
  * @returns {JSX.Element} - The rendered component.
  */
-export function AnimeListSkeleton({ type }: Omit<SearchResultsProps, "list">) {
+export function AnimeListSkeleton({ type }: Omit<AnimeListProps, "list">) {
   return (
     <div className={cn(listVariants({ type }))}>
       {/* Map over the number of anime results and render each skeleton */}

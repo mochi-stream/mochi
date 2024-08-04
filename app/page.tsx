@@ -17,7 +17,7 @@ import { MEDIA_FRAGMENT } from "@/graphql/fragments/mediaFragment";
 
 import { toast } from "sonner";
 
-import { AnimeList, AnimeListSkeleton } from "@/components/anime/anime-list";
+import { AnimeList, AnimeListSkeleton } from "@/components/anime/list";
 
 const QUERY = gql`
   ${HOME_PAGE_ANIME_QUERY}
@@ -38,36 +38,77 @@ export default function App() {
     },
   });
 
-  console.log(data?.popular?.media);
-
-  if (loading) {
-    return <div>Loading</div>;
-  }
 
   if (!data || error) {
     toast.error("Failed to load anime data. Please try again later.", {
       duration: 2000,
     });
-    return <div></div>;
   }
 
   return (
     <div>
       <div className="px-4 lg:px-8 py-6">
-        {/* Trending */}
         <div>
           <div>
-            <h1 className="text-2xl font-medium">Popular Anime (All Time)</h1>
+            <h1 className="text-[1.4rem] font-medium">Trending Now</h1>
           </div>
-          {data.popular && data.popular.media ? (
-            <AnimeList type="default" list={data.popular.media} />
+          {data && data.trending && data.trending.media ? (
+            <AnimeList list={data.trending.media} />
+            // TODO: Turl this into a spotlight
           ) : (
-            <AnimeListSkeleton type="default" />
+            <AnimeListSkeleton />
           )}
         </div>
+
+        <div className="mt-6">
+          <div>
+            <h1 className="text-[1.4rem] font-medium">Popular This {seasons.currentSeason.season.charAt(0) + seasons.currentSeason.season.slice(1).toLowerCase()}</h1>
+          </div>
+          {data && data.season && data.season.media ? (
+            <AnimeList list={data.season.media} />
+            // Also add genres sidebar
+          ) : (
+            <AnimeListSkeleton />
+          )}
+        </div>
+
+        <div className="mt-6">
+          <div>
+            <h1 className="text-[1.4rem] font-medium">Most Popular</h1>
+          </div>
+          {data && data.popular && data.popular.media ? (
+            <AnimeList list={data.popular.media} />
+          ) : (
+            <AnimeListSkeleton />
+          )}
+        </div>
+
+        <div className="mt-6">
+          <div>
+            <h1 className="text-[1.4rem] font-medium">Top Animes</h1>
+          </div>
+          {data && data.top && data.top.media ? (
+            <AnimeList list={data.top.media} />
+            // Also add genres sidebar
+          ) : (
+            <AnimeListSkeleton />
+          )}
+        </div>
+
+        <div className="mt-6">
+          <div>
+            <h1 className="text-[1.4rem] font-medium">Upcoming</h1>
+          </div>
+          {data && data.nextSeason && data.nextSeason.media ? (
+            <AnimeList list={data.nextSeason.media} />
+            // Also add genres sidebar
+          ) : (
+            <AnimeListSkeleton />
+          )}
+        </div>
+
+
       </div>
-      {/* <Trending />
-      <Popular /> */}
     </div>
   );
 }
