@@ -37,9 +37,6 @@ export function AnimeList({
                         >
                             <Image
                                 loading="lazy"
-                                layout="responsive"
-                                blurDataURL="/blur.jpg"
-                                placeholder="blur"
                                 src={anime.coverImage?.extraLarge || "default.png"}
                                 alt={anime.title?.userPreferred || "No Title"}
                                 width={460}
@@ -66,13 +63,13 @@ export function AnimeList({
                             </div>
                         </div>
                     </HoverCardTrigger>
-                    <HoverCardContent className="z-[1000]">
+                    <HoverCardContent className="z-[1000] p-5">
                         <span className="font-bold">{(anime.title?.userPreferred || "No Title")}</span>
-                        <p className="text-sm"
+                        <p className="text-sm my-1"
                             dangerouslySetInnerHTML={{
                                 __html: sanitizeHtml(
-                                    (anime.description && anime.description.length > 200
-                                        ? anime.description.slice(0, 200) + '...'
+                                    (anime.description && anime.description.length > 150
+                                        ? anime.description.slice(0, 150) + '...'
                                         : anime.description),
                                     {
                                         allowedTags: [], // No tags allowed
@@ -82,7 +79,7 @@ export function AnimeList({
                             }}
                         >
                         </p>
-                        <div className="mt-1 space-x-1 flex">
+                        <div className="mt-2 space-x-1 flex">
                             <span className="bg-purple-600 py-1 px-2 rounded text-xs">{anime.format}</span>
                             <span className="bg-blue-600 py-1 px-2 rounded text-xs">{anime.seasonYear}</span>
                             <span className="bg-orange-500 py-1 px-2 rounded text-xs flex justify-between gap-1 items-center w-fit"><StarIcon className="h-3 w-3" />{anime.averageScore && (anime.averageScore * 5 / 100).toFixed(1)}</span>

@@ -27,22 +27,28 @@ export default function Header() {
         </h1>
         <div className="hidden lg:flex gap-4">
           <Link
-            href="#"
+            href="search"
             className="transition-colors hover:text-muted-foreground"
           >
-            TV Series
+            Discover
+          </Link>
+          <Link
+            href="search"
+            className="transition-colors hover:text-muted-foreground"
+          >
+            Schedule
+          </Link>
+          <Link
+            href="news"
+            className="transition-colors hover:text-muted-foreground"
+          >
+            News
           </Link>
           <Link
             href="#"
             className="transition-colors hover:text-muted-foreground"
           >
-            Movies
-          </Link>
-          <Link
-            href="#"
-            className="transition-colors hover:text-muted-foreground"
-          >
-            Collections
+            Community
           </Link>
         </div>
       </div>

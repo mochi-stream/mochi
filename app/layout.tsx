@@ -6,6 +6,7 @@
 import "./globals.css";
 
 import { ClerkProvider } from "@clerk/nextjs";
+import { dark } from '@clerk/themes';
 
 import { UserProvider } from "./_components/context";
 
@@ -29,22 +30,24 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="font-aeonik">
-          <ClerkProvider>
-            <ApolloWrapper>
-              <UserProvider>
-                <div className="relative">
-                  <NextTopLoader
-                    color="#ffffff"
-                    showSpinner={false}
-                    height={2}
-                  />
-                  <Header />
-                  <Toaster position="bottom-center" />
-                  {children}
-                </div>
-              </UserProvider>
-            </ApolloWrapper>
-          </ClerkProvider>
+        <ClerkProvider appearance={{
+          baseTheme: dark
+        }}>
+          <ApolloWrapper>
+            <UserProvider>
+              <div className="relative flex flex-col min-h-screen">
+                <NextTopLoader
+                  color="#ffffff"
+                  showSpinner={false}
+                  height={2}
+                />
+                <Header />
+                <Toaster position="bottom-center" />
+                {children}
+              </div>
+            </UserProvider>
+          </ApolloWrapper>
+        </ClerkProvider>
       </body>
     </html>
   );

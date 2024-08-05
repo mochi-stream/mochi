@@ -13,7 +13,7 @@
   "dependencies": {
     "@apollo/client": "^3.11.1",
     "@clerk/nextjs": "^5.2.4",
-    "@clerk/themes": "^2.1.12",
+    "@clerk/themes": "^2.1.17",
     "@graphql-codegen/cli": "^5.0.2",
     "@graphql-codegen/typescript": "^4.0.9",
     "@graphql-codegen/typescript-operations": "^4.2.3",
