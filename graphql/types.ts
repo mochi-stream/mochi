@@ -4673,7 +4673,7 @@ export type YearStats = {
   year?: Maybe<Scalars['Int']['output']>;
 };
 
-export type MediaFragment = { __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, episodes?: number | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null };
+export type MediaFragment = { __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, averageScore?: number | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null };
 
 export type HomePageAnimeQueryVariables = Exact<{
   season?: InputMaybe<MediaSeason>;
@@ -4683,7 +4683,7 @@ export type HomePageAnimeQueryVariables = Exact<{
 }>;
 
 
-export type HomePageAnimeQuery = { __typename?: 'Query', trending?: { __typename?: 'Page', media?: Array<{ __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, episodes?: number | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null> | null } | null, season?: { __typename?: 'Page', media?: Array<{ __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, episodes?: number | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null> | null } | null, nextSeason?: { __typename?: 'Page', media?: Array<{ __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, episodes?: number | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null> | null } | null, popular?: { __typename?: 'Page', media?: Array<{ __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, episodes?: number | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null> | null } | null, top?: { __typename?: 'Page', media?: Array<{ __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, episodes?: number | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null> | null } | null };
+export type HomePageAnimeQuery = { __typename?: 'Query', trending?: { __typename?: 'Page', media?: Array<{ __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, averageScore?: number | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null> | null } | null, season?: { __typename?: 'Page', media?: Array<{ __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, averageScore?: number | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null> | null } | null, nextSeason?: { __typename?: 'Page', media?: Array<{ __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, averageScore?: number | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null> | null } | null, popular?: { __typename?: 'Page', media?: Array<{ __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, averageScore?: number | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null> | null } | null, top?: { __typename?: 'Page', media?: Array<{ __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, averageScore?: number | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null> | null } | null };
 
 export const MediaFragmentDoc = gql`
     fragment media on Media {
@@ -4696,11 +4696,11 @@ export const MediaFragmentDoc = gql`
     extraLarge
   }
   season
+  averageScore
   seasonYear
   description
   type
   format
-  episodes
   genres
   isAdult
 }
@@ -4712,7 +4712,7 @@ export const HomePageAnimeDocument = gql`
       ...media
     }
   }
-  season: Page(page: 1, perPage: 6) {
+  season: Page(page: 1, perPage: 12) {
     media(
       season: $season
       seasonYear: $seasonYear
@@ -4739,7 +4739,7 @@ export const HomePageAnimeDocument = gql`
       ...media
     }
   }
-  top: Page(page: 1, perPage: 6) {
+  top: Page(page: 1, perPage: 12) {
     media(sort: SCORE_DESC, type: ANIME, isAdult: false) {
       ...media
     }

@@ -11,11 +11,11 @@ export const MEDIA_FRAGMENT = gql`
       extraLarge
     }
     season
+    averageScore
     seasonYear
     description
     type
     format
-    episodes
     genres
     isAdult
   }
