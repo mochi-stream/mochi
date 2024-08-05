@@ -47,7 +47,7 @@ export default function Header() {
         </div>
       </div>
       {/* Search and user actions */}
-      <div className="flex gap-5 lg:gap-7 items-center">
+      <div className="flex gap-5 items-center">
         <SearchDialog />
         <SignedOut>
           <div className="gap-2 flex">

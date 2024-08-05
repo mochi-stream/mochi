@@ -63,7 +63,7 @@ export function AnimeList({
                             </div>
                         </div>
                     </HoverCardTrigger>
-                    <HoverCardContent>
+                    <HoverCardContent className="z-[1000]">
                         <span className="font-bold">{(anime.title?.userPreferred || "No Title")}</span>
                         <p className="text-sm"
                             dangerouslySetInnerHTML={{

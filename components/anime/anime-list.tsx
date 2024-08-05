@@ -64,20 +64,18 @@ export function AnimeList({ type, list }: AnimeListProps) {
               <div className="absolute flex w-11/12 justify-between top-2 left-2">
                 <div className="flex">
                   <div
-                    className={`bg-purple-800 text-white text-xs font-semibold  px-2 py-1 ${
-                      anime.episodes ? "rounded-tl rounded-bl" : "rounded"
-                    }`}
+                    className={`bg-purple-800 text-white text-xs font-semibold  px-2 py-1 rounded`}
                   >
                     {/* Render the anime type */}
                     {(anime.type || "").replace(/_/g, " ")}
                   </div>
                   {/* Render the anime total episodes */}
-                  {anime.episodes && (
+                  {/* {anime.episodes && (
                     <div className="bg-teal-600 text-white text-xs font-semibold rounded-tr rounded-br px-2 py-1 flex items-center">
                       <TvMinimal className="h-3 w-3 mr-1" />
                       {anime.episodes}
                     </div>
-                  )}
+                  )} */}
                 </div>
                 <WatchListIcon
                   id={anime.id}
@@ -92,7 +90,7 @@ export function AnimeList({ type, list }: AnimeListProps) {
               <h2 className="text-md lg:text-lg lg:w-[80%] font-semibold leading-5">
                 {(anime.title?.userPreferred || "No Title").length > 40
                   ? (anime.title?.userPreferred || "No Title").slice(0, 37) +
-                    "..."
+                  "..."
                   : anime.title?.userPreferred || "No Title"}
               </h2>
               {/* Render the anime release date and status */}
