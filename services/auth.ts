@@ -8,7 +8,7 @@ import { ClerkUser } from "@/types/user";
 export async function getClerk() {
   const self = await currentUser();
   if (!self || !self.username) {
-    throw new Error("Unauthorized");
+    return null
   }
 
   return {

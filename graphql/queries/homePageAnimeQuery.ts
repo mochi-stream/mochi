@@ -12,7 +12,7 @@ export const HOME_PAGE_ANIME_QUERY = gql`
         ...media
       }
     }
-    season: Page(page: 1, perPage: 6) {
+    season: Page(page: 1, perPage: 12) {
       media(
         season: $season
         seasonYear: $seasonYear
@@ -23,7 +23,7 @@ export const HOME_PAGE_ANIME_QUERY = gql`
         ...media
       }
     }
-    nextSeason: Page(page: 1, perPage: 6) {
+    nextSeason: Page(page: 1, perPage: 12) {
       media(
         season: $nextSeason
         seasonYear: $nextYear
@@ -39,7 +39,7 @@ export const HOME_PAGE_ANIME_QUERY = gql`
         ...media
       }
     }
-    top: Page(page: 1, perPage: 6) {
+    top: Page(page: 1, perPage: 12) {
       media(sort: SCORE_DESC, type: ANIME, isAdult: false) {
         ...media
       }

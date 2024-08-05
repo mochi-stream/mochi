@@ -23,10 +23,13 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     const fetchUser = async () => {
       try {
         const userData = await getClerk();
-        setUser(userData);
-        setIsAuthenticated(true);
+        if (userData) {
+          setUser(userData);
+          setIsAuthenticated(true);
+        } else {
+          setIsAuthenticated(false);
+        }
       } catch (error) {
-        console.error("Failed to fetch user data:", error);
         setIsAuthenticated(false);
       }
     };
