@@ -18,6 +18,9 @@ const config = {
       },
     },
     extend: {
+      fontFamily: {
+        aeonik: ["Aeonik", "sans-serif"],
+      },
       typography: {
         DEFAULT: {
           css: {

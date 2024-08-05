@@ -32,8 +32,6 @@ export default function NotificationsDialog({ userid }: { userid: string }) {
   // Fetch notifications on component mount and update when userId changes
   useEffect(() => {
     getNotifications({ userId: userid }).then((data) => {
-      console.log(userid);
-      console.log(data);
       setData(data);
     });
   }, [userid]);
