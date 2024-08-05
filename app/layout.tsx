@@ -13,6 +13,8 @@ import { UserProvider } from "./_components/context";
 import ApolloWrapper from "./_components/apollo";
 
 import Header from "./_components/header";
+import Footer from "./_components/footer";
+
 import NextTopLoader from "nextjs-toploader";
 
 import { Toaster } from "sonner";
@@ -42,8 +44,9 @@ export default function RootLayout({
                   height={2}
                 />
                 <Header />
-                <Toaster position="bottom-center" />
                 {children}
+                <Toaster position="bottom-center" />
+                <Footer />
               </div>
             </UserProvider>
           </ApolloWrapper>

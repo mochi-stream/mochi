@@ -29,7 +29,12 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import { toast } from "sonner";
 
+import { useUser } from "./context";
+
 export default function AvatarDialog({ user }: { user: ClerkUser }) {
+
+  const { isAuthenticated } = useUser();
+
   const { signOut } = useClerk();
   const toastShow = () => {
     toast.promise(async () => await signOut(), {
@@ -37,7 +42,7 @@ export default function AvatarDialog({ user }: { user: ClerkUser }) {
       success: "You have been signed out",
       error: "Failed to sign out",
       duration: 2000,
-    });
+    }); window.location.reload()
   };
 
   return (

@@ -39,6 +39,7 @@ export default function App() {
   });
 
 
+  // TODO: fix: error variable from other pages are colliding with this resulting to trigger this  
   if (!data || error) {
     toast.error("Failed to load anime data. Please try again later.", {
       duration: 2000,
