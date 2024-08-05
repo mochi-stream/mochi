@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils";
 import lodash from "lodash";
 
 import { searchAnime } from "@/lib/anime";
-import { AnilistResult } from "@/types/anime";
+// import { AnilistResult } from "@/types/anime";
 
 import qs from "query-string";
 
@@ -36,7 +36,7 @@ import { toast } from "sonner";
 
 export default function SearchDialog() {
   const [searchValue, setSearchValue] = useState("");
-  const [results, setResults] = useState<AnilistResult[]>([]);
+  const [results, setResults] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -110,83 +110,68 @@ export default function SearchDialog() {
   }, []);
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Search className="w-5 h-5 text-primary cursor-pointer" />
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[600px]">
-        <DialogHeader>
-          <DialogTitle>Find what you&apos;re looking for.</DialogTitle>
-        </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <form onSubmit={onSubmit}>
-            <div className="flex justify-between">
-              <div className="relative w-full max-w-md">
-                <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                  <Search className="w-5 h-5 text-muted-foreground" />
-                </div>
-                <Input
-                  type="search"
-                  value={searchValue}
-                  onChange={onSearchChange}
-                  placeholder="Search for an anime"
-                  className="w-[95%] md:w-full h-10 pl-10 pr-10 text-sm bg-background border border-input rounded-md shadow-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
-                />
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  type="button"
-                  onClick={() => setSearchValue("")}
-                  className={cn(
-                    "absolute inset-y-0 right-5 md:right-0 flex items-center pr-3",
-                    {
-                      hidden: !searchValue,
-                    }
-                  )}
+    <div className="relative hidden lg:block">
+      <Input
+        className="rounded-full pl-9 pr-4 py-2 z-10 w-[20rem]"
+        value={searchValue}
+        onChange={onSearchChange}
+        placeholder="Search for an anime"
+      />
+      <Search
+        className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-primary/70 cursor-pointer"
+      />
+      <Button
+        variant="ghost"
+        size="icon"
+        type="button"
+        onClick={() => setSearchValue("")}
+        className={cn(
+          "absolute inset-y-0 right-5 md:right-0 flex items-center pr-2",
+          {
+            hidden: !searchValue,
+          }
+        )}
+      >
+        <X className="w-4 h-4 text-muted-foreground" />
+        <span className="sr-only">Clear</span>
+      </Button>
+
+
+      {/* {searchValue && (
+        <div className="absolute top-full left-0 right-0 mt-2 w-[20rem] shadow-lg bg-background rounded-lg z-20 grid gap-1 p-4">
+          {isLoading ? (
+            <>
+              {Array.from({ length: 3 }).map((_, index) => (
+                <Link
+                  href="#"
+                  key={index}
+                  className="block"
+                  prefetch={false}
                 >
-                  <X className="w-5 h-5 text-muted-foreground" />
-                  <span className="sr-only">Clear</span>
-                </Button>
-              </div>
-              <Button type="submit">Search</Button>
-            </div>
-          </form>
-          <div className="max-h-[300px] overflow-auto">
-            <div className="grid gap-3">
-              {isLoading ? (
-                <>
-                  {Array.from({ length: 3 }).map((_, index) => (
-                    <Link
-                      href="#"
-                      key={index}
-                      className="block"
-                      prefetch={false}
-                    >
-                      <Skeleton className="flex items-center gap-3 px-4 py-2 rounded-md transition-colors">
-                        <div className="flex-1 h-5 w-40 rounded bg-muted"></div>
-                      </Skeleton>
-                    </Link>
-                  ))}
-                </>
-              ) : results && results.length > 1 ? (
-                results.map((result, index) => (
-                  <Link
-                    href={`/anime/${result.id}`}
-                    key={index}
-                    onClick={() => setOpen(false)}
-                    className="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-muted/50 transition-colors"
-                    prefetch={false}
-                  >
-                    <div className="flex-1 overflow-hidden text-sm text-muted-foreground text-ellipsis">
-                      {result.title.english || result.title.userPreferred}
-                    </div>
-                  </Link>
-                ))
-              ) : null}
-            </div>
-          </div>
+                  <Skeleton className="flex items-center gap-3 px-4 py-2 rounded-md transition-colors">
+                    <div className="flex-1 h-5 w-40 rounded bg-muted"></div>
+                  </Skeleton>
+                </Link>
+              ))}
+            </>
+          ) : results && results.length > 1 ? (
+            results.slice(0, 10).map((result, index) => (
+              <Link
+                href={`/anime/${result.id}`}
+                key={index}
+                onClick={() => setOpen(false)}
+                className="flex items-center rounded-md hover:bg-muted/50 transition-colors p-2"
+                prefetch={false}
+              >
+                <div className="flex-1 overflow-hidden text-sm text-muted-foreground text-ellipsis">
+                  {result.title.userPreferred}
+                </div>
+              </Link>
+            ))
+          ) : null}
         </div>
-      </DialogContent>
-    </Dialog>
+      )} */}
+    </div>
+
   );
 }

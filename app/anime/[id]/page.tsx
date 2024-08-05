@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 
 import { getAnimeDetails } from "@/lib/anime";
-import { AnimeInfo } from "@/types/anime";
+// import { AnimeInfo } from "@/types/anime";
 
 // Use Zoro as the default provider
 const provider = "ZORO";
@@ -24,7 +24,7 @@ export default function AnimePage({ params }: AnimePageProps) {
   const id = params.id;
 
   // State variables
-  const [anime, setAnime] = useState<AnimeInfo | null>(null);
+  const [anime, setAnime] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
