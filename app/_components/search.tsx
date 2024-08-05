@@ -110,7 +110,7 @@ export default function SearchDialog() {
   }, []);
 
   return (
-    <div className="relative">
+    <div className="relative hidden lg:block">
       <Input
         className="rounded-full pl-9 pr-4 py-2 z-10 w-[20rem]"
         value={searchValue}

@@ -37,6 +37,9 @@ export function AnimeList({
                         >
                             <Image
                                 loading="lazy"
+                                layout="responsive"
+                                blurDataURL="/blur.jpg"
+                                placeholder="blur"
                                 src={anime.coverImage?.extraLarge || "default.png"}
                                 alt={anime.title?.userPreferred || "No Title"}
                                 width={460}

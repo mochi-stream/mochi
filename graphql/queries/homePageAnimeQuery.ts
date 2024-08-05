@@ -23,7 +23,7 @@ export const HOME_PAGE_ANIME_QUERY = gql`
         ...media
       }
     }
-    nextSeason: Page(page: 1, perPage: 6) {
+    nextSeason: Page(page: 1, perPage: 12) {
       media(
         season: $nextSeason
         seasonYear: $nextYear
