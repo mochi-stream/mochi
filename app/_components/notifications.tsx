@@ -60,7 +60,7 @@ export default function NotificationsDialog({ userid }: { userid: string }) {
           )}
         </div>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-[400px] p-4 space-y-2">
+      <DropdownMenuContent align="end" className="w-[400px] p-4 space-y-2 mt-2">
         <DropdownMenuLabel className="flex items-center justify-between">
           <h3 className="text-lg font-medium">Notifications</h3>
           <Button

@@ -15,6 +15,7 @@ import AvatarDialog from "./avatar";
 
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { LibraryBig } from "lucide-react";
 
 export default function Header() {
   const me = useUser();
@@ -71,10 +72,12 @@ export default function Header() {
           {me.user ? (
             <>
               <NotificationsDialog userid={me.user.id} />
+              <LibraryBig strokeWidth={1.5} />
               <AvatarDialog user={me.user} />
             </>
           ) : (
             <>
+              <Skeleton className="w-8 h-8 rounded-full" />
               <Skeleton className="w-8 h-8 rounded-full" />
               <Skeleton className="w-8 h-8 rounded-full" />
             </>
