@@ -1,4 +1,5 @@
 import { gql } from "@apollo/client";
+import { MEDIA_FRAGMENT } from "./mediaFragment";
 
 export const FULL_MEDIA_FRAGMENT = gql`
   fragment fullMedia on Media {
@@ -144,7 +145,7 @@ export const FULL_MEDIA_FRAGMENT = gql`
         }
       }
     }
-    recommendations(perPage: 7, sort: [RATING_DESC, ID]) {
+    recommendations(perPage: 6, sort: [RATING_DESC, ID]) {
       pageInfo {
         total
       }
@@ -153,17 +154,7 @@ export const FULL_MEDIA_FRAGMENT = gql`
         rating
         userRating
         mediaRecommendation {
-          id
-          title {
-            userPreferred
-          }
-          format
-          type
-          status(version: 2)
-          bannerImage
-          coverImage {
-            large
-          }
+          ...media
         }
         user {
           id
@@ -230,4 +221,5 @@ export const FULL_MEDIA_FRAGMENT = gql`
       }
     }
   }
+  ${MEDIA_FRAGMENT}
 `;

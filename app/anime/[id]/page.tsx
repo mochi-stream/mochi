@@ -14,6 +14,8 @@ import { useQuery, gql } from "@apollo/client";
 import { ANIME_PAGE_INFO_QUERY } from "@/graphql/queries/animePageInfoQuery";
 import { FULL_MEDIA_FRAGMENT } from "@/graphql/fragments/fullMediaFragment";
 
+import sanitizeHtml from 'sanitize-html';
+
 interface AnimePageProps {
   params: { id: string };
 }
@@ -27,6 +29,7 @@ import { toast } from "sonner";
 
 import {
   MediaType,
+  MediaFragment,
   AnimeInfoPageQuery,
   AnimeInfoPageQueryVariables
 } from "@/graphql/types";
@@ -34,8 +37,11 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 
+import { AnimeList, AnimeListSkeleton } from "@/components/anime/list";
+
 import Link from "next/link";
 
+import { ArrowUpRight, Check, Plus } from "lucide-react";
 
 export default function AnimePage({ params }: AnimePageProps) {
 
@@ -43,29 +49,39 @@ export default function AnimePage({ params }: AnimePageProps) {
     variables: { id: parseInt(params.id), type: MediaType.Anime, isAdult: false },
   });
 
-  if (!loading && (!data || error || !data?.Media?.title?.userPreferred)) {
+  if (!loading && (error || !data?.Media?.title?.userPreferred)) {
     toast.error("Failed to load anime data. Please try again later.", {
       duration: 2000,
     });
   }
+
+  const recommendationsArray: (MediaFragment | null)[] = data?.Media?.recommendations?.nodes
+    ?.filter(node => node?.mediaRecommendation !== undefined)
+    ?.map(node => node!.mediaRecommendation ?? null) || [];
+
+  const sanitizedDescription = sanitizeHtml(data?.Media?.description || "", {
+    allowedTags: [],
+    allowedAttributes: {},
+  }
+  );
 
   return (
     <div>
       {/* Banner */}
       {data && data.Media && data.Media.bannerImage
         ?
-        <div className="relative h-48 w-full select-none">
+        <div className="relative h-48 w-full px-4 select-none">
           <div className="absolute inset-0">
             <Image
               src={data.Media.bannerImage}
               alt={data.Media.title?.userPreferred || "Cover Image"}
               layout="fill"
-              objectFit="cover"
-              className="w-full h-full z-[-5] select-none"
+              className="w-full object-cover h-full z-[-5] select-none"
             />
           </div>
           <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent z-[-4]"></div>
-          <div className="relative flex justify-end items-end h-full w-full p-4">
+          <div className="relative flex justify-end items-end h-full w-full p-4 gap-2">
+            {/* <Button className="shadow-lg">Create Thread<ArrowUpRight className="h-4 w-4 ml-1" /></Button> */}
             {data.Media.trailer ? (
               <Link
                 href={data.Media.trailer?.site
@@ -75,9 +91,10 @@ export default function AnimePage({ params }: AnimePageProps) {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Button className="shadow-lg">Watch Trailer</Button>
+                <Button className="shadow-lg" variant={"secondary"}>Watch Trailer <ArrowUpRight className="ml-1 h-4 w-4" /></Button>
               </Link>
             ) : null}
+            <Button className="shadow-lg">Add to Collection</Button>
           </div>
         </div>
         : loading ? (
@@ -89,49 +106,51 @@ export default function AnimePage({ params }: AnimePageProps) {
       }
 
       <div className="px-4 lg:px-12 py-6">
-        <div>
+        <div className="flex">
           {data && data.Media && data.Media.coverImage?.extraLarge ? (
-            <Image
-              src={data.Media.coverImage?.extraLarge}
-              alt={data.Media.title?.userPreferred || "Cover Image"}
-              width={1080}
-              height={1080}
-              loading="lazy"
-              className="w-[200px] mt-[-100px] h-[320px] lg:h-[300px] rounded-lg object-cover shadow-lg"
-            />
+            <>
+              <Image
+                src={data.Media.coverImage?.extraLarge}
+                alt={data.Media.title?.userPreferred || "Cover Image"}
+                width={1080}
+                height={1080}
+                loading="lazy"
+                className="w-[200px] mt-[-100px] h-[320px] lg:h-[300px] rounded-lg object-cover shadow-lg"
+              />
+            </>
           ) : loading ? (
             <Skeleton className="w-[200px] mt-[-100px] h-[320px] lg:h-[300px] rounded-lg"></Skeleton>
           ) : (
             <div className="w-[200px] mt-[-100px] h-[320px] lg:h-[300px] rounded-lg bg-muted"></div>
           )}
-        </div>
 
-
-        {/* Content */}
-        {/* <div className="relative z-10 flex flex-col items-start p-8 space-y-4">
-        <div className="flex items-center">
-          <div className="w-32 h-48 relative mr-4">
-            <Image
-              src={anime.image}
-              alt={
-                anime.title.userPreferred ||
-                anime.title.english ||
-                anime.title.romaji
+          <div className="flex flex-col px-8 py-2">
+            {loading ? (
+              <>
+                <Skeleton className="w-[500px] h-[25px] mt-2"></Skeleton>
+                <Skeleton className="w-[300px] h-[15px] mt-1"></Skeleton>
+              </>
+            ) : <>
+              <h1 className="text-2xl font-bold">{data?.Media?.title?.userPreferred}</h1>
+              {data?.Media?.title?.userPreferred === data?.Media?.title?.english
+                ? <p className="text-sm font-bold text-muted-foreground">{data?.Media?.title?.native}</p>
+                : <p className="text-sm font-bold text-muted-foreground">{data?.Media?.title?.userPreferred}</p>
               }
-              layout="fill"
-              objectFit="cover"
-              className="rounded-lg shadow-lg"
-            />
-          </div>
-          <div>
-            <h1 className="text-3xl font-bold text-white">
-              {anime.title.userPreferred ||
-                anime.title.english ||
-                anime.title.romaji}
-            </h1>
+              <p className="text-sm text-muted-foreground mt-2">{sanitizedDescription}</p>
+            </>}
           </div>
         </div>
-      </div> */}
+        <div className="py-8">
+          <div>
+            <h1 className="text-[1.4rem] font-medium">Recommendations</h1>
+          </div>
+          {recommendationsArray ? (
+            <AnimeList list={recommendationsArray} />
+            // TODO: Turl this into a spotlight
+          ) : (
+            <AnimeListSkeleton />
+          )}
+        </div>
       </div>
     </div >
   )
