@@ -59,6 +59,10 @@ export default function AnimePage({ params }: AnimePageProps) {
     ?.filter(node => node?.mediaRecommendation !== undefined)
     ?.map(node => node!.mediaRecommendation ?? null) || [];
 
+  const animeRelations = data?.Media?.relations?.nodes?.filter(
+    (relation) => relation?.type === "ANIME"
+  );
+
   const sanitizedDescription = sanitizeHtml(data?.Media?.description || "", {
     allowedTags: [],
     allowedAttributes: {},
@@ -80,7 +84,7 @@ export default function AnimePage({ params }: AnimePageProps) {
             />
           </div>
           <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent z-[-4]"></div>
-          <div className="relative flex justify-end items-end h-full w-full p-4 gap-2">
+          <div className="relative hidden lg:flex justify-end items-end h-full w-full p-4 gap-2">
             {/* <Button className="shadow-lg">Create Thread<ArrowUpRight className="h-4 w-4 ml-1" /></Button> */}
             {data.Media.trailer ? (
               <Link
@@ -105,8 +109,8 @@ export default function AnimePage({ params }: AnimePageProps) {
         )
       }
 
-      <div className="px-4 lg:px-12 py-6">
-        <div className="flex">
+      <div className="px-2 lg:px-12 py-6">
+        <div className="flex flex-col lg:flex-row items-center lg:items-start text-center lg:text-start">
           {data && data.Media && data.Media.coverImage?.extraLarge ? (
             <>
               <Image
@@ -140,17 +144,22 @@ export default function AnimePage({ params }: AnimePageProps) {
             </>}
           </div>
         </div>
-        <div className="py-8">
-          <div>
-            <h1 className="text-[1.4rem] font-medium">Recommendations</h1>
+        {animeRelations && animeRelations.length > 1 && (
+          <div className="pt-8">
+            <div>
+              <h1 className="text-[1.4rem] font-medium">Relation</h1>
+            </div>
+            <AnimeList list={animeRelations} quantity={6} />
           </div>
-          {recommendationsArray ? (
+        )}
+        {recommendationsArray && recommendationsArray.length > 0 &&
+          <div className="pt-8">
+            <div>
+              <h1 className="text-[1.4rem] font-medium">Recommendations</h1>
+            </div>
             <AnimeList list={recommendationsArray} />
-            // TODO: Turl this into a spotlight
-          ) : (
-            <AnimeListSkeleton />
-          )}
-        </div>
+          </div>
+        }
       </div>
     </div >
   )

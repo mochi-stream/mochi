@@ -58,22 +58,8 @@ export const FULL_MEDIA_FRAGMENT = gql`
       episode
     }
     relations {
-      edges {
-        id
-        relationType(version: 2)
-        node {
-          id
-          title {
-            userPreferred
-          }
-          format
-          type
-          status(version: 2)
-          bannerImage
-          coverImage {
-            large
-          }
-        }
+      nodes {
+          ...media
       }
     }
     characterPreview: characters(perPage: 6, sort: [ROLE, RELEVANCE, ID]) {
@@ -146,35 +132,11 @@ export const FULL_MEDIA_FRAGMENT = gql`
       }
     }
     recommendations(perPage: 6, sort: [RATING_DESC, ID]) {
-      pageInfo {
-        total
-      }
       nodes {
-        id
-        rating
-        userRating
         mediaRecommendation {
           ...media
         }
-        user {
-          id
-          name
-          avatar {
-            large
-          }
-        }
       }
-    }
-    externalLinks {
-      id
-      site
-      url
-      type
-      language
-      color
-      icon
-      notes
-      isDisabled
     }
     streamingEpisodes {
       site
