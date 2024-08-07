@@ -41,8 +41,11 @@ import { AnimeList, AnimeListSkeleton } from "@/components/anime/list";
 
 import Link from "next/link";
 
-import { ArrowUpRight, Check, CirclePlay, Eye, Play, Plus } from "lucide-react";
+import { ArrowUpRight, Check, CirclePlay } from "lucide-react";
+
 import { useState } from "react";
+
+import AnimeInfoTabs from "./components/details-tabs";
 
 export default function AnimePage({ params }: AnimePageProps) {
 
@@ -93,7 +96,7 @@ export default function AnimePage({ params }: AnimePageProps) {
               src={data.Media.bannerImage}
               alt={data.Media.title?.userPreferred || "Cover Image"}
               layout="fill"
-              className="w-full object-cover h-full z-[-5] select-none"
+              className="object-cover z-[-5] select-none"
             />
           </div>
           <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent z-[-4]"></div>
@@ -148,33 +151,56 @@ export default function AnimePage({ params }: AnimePageProps) {
                 <Skeleton className="w-[300px] h-[15px] mt-1"></Skeleton>
               </div>
             ) : <div>
-              <h1 className="text-2xl font-bold">{data?.Media?.title?.userPreferred}</h1>
-              {data?.Media?.title?.userPreferred === data?.Media?.title?.english
-                ? <p className="text-sm font-bold text-muted-foreground">{data?.Media?.title?.native}</p>
-                : <p className="text-sm font-bold text-muted-foreground">{data?.Media?.title?.userPreferred}</p>
-              }
-              <p className="text-sm text-muted-foreground mt-2">
-                <span >
-                  {getTextToShow(sanitizedDescription)}
-                </span>
-
-                {sanitizedDescription.length > 350 && (
-                  <span
-                    onClick={handleToggle}
-                    className="hover:text-primary/70 text-primary cursor-pointer ml-2"
-                  >
-                    {isExpanded ? 'Read less' : 'Read more'}
+              <h1 className="text-2xl font-bold">{data?.Media?.title?.english}</h1>
+              <p className="text-sm font-bold text-muted-foreground">{data?.Media?.title?.romaji} • {data?.Media?.title?.native}</p>
+              {sanitizedDescription &&
+                <p className="text-sm text-muted-foreground mt-2">
+                  <span >
+                    {getTextToShow(sanitizedDescription)}
                   </span>
-                )}
-              </p>
+
+                  {sanitizedDescription.length > 350 && (
+                    <span
+                      onClick={handleToggle}
+                      className="hover:text-primary/70 text-primary cursor-pointer ml-2 select-none"
+                    >
+                      {isExpanded ? 'Read less' : 'Read more'}
+                    </span>
+                  )}
+                </p>}
               <div className="flex lg:justify-start justify-center mt-4 gap-2">
                 <Button className="shadow-lg">Watch Now<CirclePlay className="h-4 w-4 ml-1" /></Button>
-                <Button className="shadow-lg" variant={"secondary"}>View on Threads<ArrowUpRight className="h-4 w-4 ml-1" /></Button>
+                <Button className="shadow-lg" variant={"secondary"}>Start a Thread<ArrowUpRight className="h-4 w-4 ml-1" /></Button>
               </div>
             </div>}
-
           </div>
         </div>
+        {/* Information */}
+        {data &&
+          <div className="flex flex-row gap-4 pt-8">
+            <div className="flex flex-col w-[210px]">
+              <h1 className="text-xl select-none font-semibold">Details</h1>
+              <p className="text-sm font-medium text-muted-foreground mt-2">
+                <span className="text-primary font-semibold">Status:</span> {data?.Media?.status}
+              </p>
+              <p className="text-sm font-medium text-muted-foreground mt-2">
+                <span className="text-primary font-semibold">Genre:</span> {data?.Media?.genres?.join(", ")}
+              </p>
+              <p className="text-sm font-medium text-muted-foreground mt-2">
+                <span className="text-primary font-semibold">Score:</span> {data?.Media?.averageScore}
+              </p>
+              <p className="text-sm font-medium text-muted-foreground mt-2">
+                <span className="text-primary font-semibold">Episodes:</span> {data?.Media?.episodes || "-"}
+              </p>
+              <p className="text-sm font-medium text-muted-foreground mt-2">
+                <span className="text-primary font-semibold">Duration:</span> {data?.Media?.duration || "-"} min
+              </p>
+            </div>
+            <div className="col-span-9 flex flex-col">
+              {data.Media?.characterPreview?.edges && data.Media?.characterPreview?.edges !== null && <AnimeInfoTabs characters={data?.Media?.characterPreview} />}
+            </div>
+          </div>
+        }
         {animeRelations && animeRelations.length > 1 && (
           <div className="pt-8">
             <div>

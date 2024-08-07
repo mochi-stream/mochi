@@ -1,5 +1,6 @@
 import { gql } from "@apollo/client";
 import { MEDIA_FRAGMENT } from "./mediaFragment";
+import { CHARACTER_FRAGMENT } from "./characterFragment";
 
 export const FULL_MEDIA_FRAGMENT = gql`
   fragment fullMedia on Media {
@@ -12,7 +13,6 @@ export const FULL_MEDIA_FRAGMENT = gql`
     }
     coverImage {
       extraLarge
-      large
     }
     bannerImage
     startDate {
@@ -51,7 +51,6 @@ export const FULL_MEDIA_FRAGMENT = gql`
     isFavourite
     isRecommendationBlocked
     isFavouriteBlocked
-    isReviewBlocked
     nextAiringEpisode {
       airingAt
       timeUntilAiring
@@ -59,34 +58,11 @@ export const FULL_MEDIA_FRAGMENT = gql`
     }
     relations {
       nodes {
-          ...media
+        ...media
       }
     }
-    characterPreview: characters(perPage: 6, sort: [ROLE, RELEVANCE, ID]) {
-      edges {
-        id
-        role
-        name
-        voiceActors(language: JAPANESE, sort: [RELEVANCE, ID]) {
-          id
-          name {
-            userPreferred
-          }
-          language: languageV2
-          image {
-            large
-          }
-        }
-        node {
-          id
-          name {
-            userPreferred
-          }
-          image {
-            large
-          }
-        }
-      }
+    characterPreview: characters(sort: [ROLE, RELEVANCE, ID]) {
+      ...character
     }
     staffPreview: staff(perPage: 8, sort: [RELEVANCE, ID]) {
       edges {
@@ -110,24 +86,6 @@ export const FULL_MEDIA_FRAGMENT = gql`
         node {
           id
           name
-        }
-      }
-    }
-    reviewPreview: reviews(perPage: 2, sort: [RATING_DESC, ID]) {
-      pageInfo {
-        total
-      }
-      nodes {
-        id
-        summary
-        rating
-        ratingAmount
-        user {
-          id
-          name
-          avatar {
-            large
-          }
         }
       }
     }
@@ -184,4 +142,5 @@ export const FULL_MEDIA_FRAGMENT = gql`
     }
   }
   ${MEDIA_FRAGMENT}
+  ${CHARACTER_FRAGMENT}
 `;
