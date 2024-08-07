@@ -4,21 +4,21 @@ import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
 
-import { CharacterFragment } from "@/graphql/types";
+import { StaffFragment } from "@/graphql/types";
 
 import { ArrowDown, ArrowUp } from 'lucide-react';
 
-interface CharacterListProps {
+interface StaffListProps {
     quantity?: number;
-    list: CharacterFragment;
+    list: StaffFragment[];
 }
 
-export function CharacterList({ list, quantity }: CharacterListProps) {
+export function StaffList({ list, quantity }: StaffListProps) {
 
-    quantity = quantity || list.edges?.length || 5;
+    quantity = quantity || list?.length || 5;
 
     const [isExpanded, setIsExpanded] = useState(false);
-    const displayedList = isExpanded ? list.edges : list.edges?.slice(0, quantity);
+    const displayedList = isExpanded ? list : list.slice(0, quantity);
 
     const toggleExpanded = () => {
         setIsExpanded(!isExpanded);
@@ -27,7 +27,7 @@ export function CharacterList({ list, quantity }: CharacterListProps) {
     return (
         <>
             <div className="mt-4 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-4 select-none relative">
-                {list.edges && list.edges.length > quantity && !isExpanded && (
+                {list && list.length > quantity && !isExpanded && (
                     <div className="absolute inset-0 bottom-0 bg-gradient-to-t from-background via-transparent to-transparent pointer-events-none z-[81]"></div>
                 )}
                 {displayedList && displayedList.map((character, index) => (<div
@@ -40,7 +40,7 @@ export function CharacterList({ list, quantity }: CharacterListProps) {
                         alt={character?.node?.name?.userPreferred || "No Title"}
                         width={640}
                         height={600}
-                        className="w-full h-full rounded-lg transition-opacity object-cover opacity-80 group-hover:opacity-100"
+                        className="w-full h-full rounded-lg transition-pacity object-cover opacity-80 group-hover:opacity-100"
                     />
 
                     <div className="absolute bottom-0 w-full p-4 z-50 font-aeonik">
@@ -58,7 +58,7 @@ export function CharacterList({ list, quantity }: CharacterListProps) {
                 </div>
                 ))}
             </div>
-            {list.edges && list.edges.length > quantity && (
+            {list && list.length > quantity && (
                 <div className="flex justify-center mt-4 w-full">
                     <Button
                         onClick={toggleExpanded}

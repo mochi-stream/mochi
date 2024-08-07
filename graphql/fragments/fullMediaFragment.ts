@@ -1,6 +1,7 @@
 import { gql } from "@apollo/client";
 import { MEDIA_FRAGMENT } from "./mediaFragment";
 import { CHARACTER_FRAGMENT } from "./characterFragment";
+import { STAFF_FRAGMENT } from "./staffFragment";
 
 export const FULL_MEDIA_FRAGMENT = gql`
   fragment fullMedia on Media {
@@ -64,20 +65,9 @@ export const FULL_MEDIA_FRAGMENT = gql`
     characterPreview: characters(sort: [ROLE, RELEVANCE, ID]) {
       ...character
     }
-    staffPreview: staff(perPage: 8, sort: [RELEVANCE, ID]) {
+    staffPreview: staff(perPage: 20, sort: [RELEVANCE, ID]) {
       edges {
-        id
-        role
-        node {
-          id
-          name {
-            userPreferred
-          }
-          language: languageV2
-          image {
-            large
-          }
-        }
+        ...staff
       }
     }
     studios {
@@ -143,4 +133,5 @@ export const FULL_MEDIA_FRAGMENT = gql`
   }
   ${MEDIA_FRAGMENT}
   ${CHARACTER_FRAGMENT}
+  ${STAFF_FRAGMENT}
 `;

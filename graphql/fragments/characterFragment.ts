@@ -1,3 +1,5 @@
+// TODO: Fix this
+
 import { gql } from "@apollo/client";
 
 export const CHARACTER_FRAGMENT = gql`

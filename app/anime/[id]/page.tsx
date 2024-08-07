@@ -31,13 +31,14 @@ import {
   MediaType,
   MediaFragment,
   AnimeInfoPageQuery,
-  AnimeInfoPageQueryVariables
+  AnimeInfoPageQueryVariables,
+  StaffFragment,
 } from "@/graphql/types";
 
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 
-import { AnimeList, AnimeListSkeleton } from "@/components/anime/list";
+import { AnimeList } from "@/components/anime/list";
 
 import Link from "next/link";
 
@@ -177,8 +178,8 @@ export default function AnimePage({ params }: AnimePageProps) {
         </div>
         {/* Information */}
         {data &&
-          <div className="flex flex-row gap-4 pt-8">
-            <div className="flex flex-col w-[210px]">
+          <div className="grid grid-cols-16 lg:flex-row justify-between pt-8 gap-4">
+            <div className="grid col-span-3 px-6 lg:px-0 h-fit w-[95%]">
               <h1 className="text-xl select-none font-semibold">Details</h1>
               <p className="text-sm font-medium text-muted-foreground mt-2">
                 <span className="text-primary font-semibold">Status:</span> {data?.Media?.status}
@@ -196,8 +197,12 @@ export default function AnimePage({ params }: AnimePageProps) {
                 <span className="text-primary font-semibold">Duration:</span> {data?.Media?.duration || "-"} min
               </p>
             </div>
-            <div className="col-span-9 flex flex-col">
-              {data.Media?.characterPreview?.edges && data.Media?.characterPreview?.edges !== null && <AnimeInfoTabs characters={data?.Media?.characterPreview} />}
+            <div className="col-span-12 flex flex-col flex-grow">
+              {data.Media?.characterPreview?.edges && <AnimeInfoTabs
+                characters={data?.Media?.characterPreview}
+                staff={data?.Media?.staffPreview?.edges}
+              />
+              }
             </div>
           </div>
         }

@@ -4679,6 +4679,8 @@ export type FullMediaFragment = { __typename?: 'Media', id: number, bannerImage?
 
 export type MediaFragment = { __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, averageScore?: number | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null };
 
+export type StaffFragment = { __typename?: 'StaffEdge', id?: number | null, role?: string | null, node?: { __typename?: 'Staff', id: number, language?: string | null, name?: { __typename?: 'StaffName', userPreferred?: string | null } | null, image?: { __typename?: 'StaffImage', large?: string | null } | null } | null };
+
 export type AnimeInfoPageQueryVariables = Exact<{
   id?: InputMaybe<Scalars['Int']['input']>;
   type?: InputMaybe<MediaType>;
@@ -4746,6 +4748,22 @@ export const CharacterFragmentDoc = gql`
   }
 }
     `;
+export const StaffFragmentDoc = gql`
+    fragment staff on StaffEdge {
+  id
+  role
+  node {
+    id
+    name {
+      userPreferred
+    }
+    language: languageV2
+    image {
+      large
+    }
+  }
+}
+    `;
 export const FullMediaFragmentDoc = gql`
     fragment fullMedia on Media {
   id
@@ -4805,23 +4823,12 @@ export const FullMediaFragmentDoc = gql`
       ...media
     }
   }
-  characterPreview: characters(perPage: 18, sort: [ROLE, RELEVANCE, ID]) {
+  characterPreview: characters(sort: [ROLE, RELEVANCE, ID]) {
     ...character
   }
-  staffPreview: staff(perPage: 8, sort: [RELEVANCE, ID]) {
+  staffPreview: staff(perPage: 20, sort: [RELEVANCE, ID]) {
     edges {
-      id
-      role
-      node {
-        id
-        name {
-          userPreferred
-        }
-        language: languageV2
-        image {
-          large
-        }
-      }
+      ...staff
     }
   }
   studios {
@@ -4886,7 +4893,8 @@ export const FullMediaFragmentDoc = gql`
   }
 }
     ${MediaFragmentDoc}
-${CharacterFragmentDoc}`;
+${CharacterFragmentDoc}
+${StaffFragmentDoc}`;
 export const AnimeInfoPageDocument = gql`
     query AnimeInfoPage($id: Int, $type: MediaType, $isAdult: Boolean) {
   Media(id: $id, type: $type, isAdult: $isAdult) {
