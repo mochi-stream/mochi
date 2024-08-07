@@ -41,7 +41,8 @@ import { AnimeList, AnimeListSkeleton } from "@/components/anime/list";
 
 import Link from "next/link";
 
-import { ArrowUpRight, Check, Plus } from "lucide-react";
+import { ArrowUpRight, Check, CirclePlay, Eye, Play, Plus } from "lucide-react";
+import { useState } from "react";
 
 export default function AnimePage({ params }: AnimePageProps) {
 
@@ -63,6 +64,19 @@ export default function AnimePage({ params }: AnimePageProps) {
     (relation) => relation?.type === "ANIME"
   );
 
+  const [isExpanded, setIsExpanded] = useState(false)
+
+  const handleToggle = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  const getTextToShow = (text: string) => {
+    if (isExpanded) {
+      return text;
+    }
+    return text.length > 350 ? text.substring(0, 350).trim() + '…' : text;
+  };
+
   const sanitizedDescription = sanitizeHtml(data?.Media?.description || "", {
     allowedTags: [],
     allowedAttributes: {},
@@ -71,7 +85,6 @@ export default function AnimePage({ params }: AnimePageProps) {
 
   return (
     <div>
-      {/* Banner */}
       {data && data.Media && data.Media.bannerImage
         ?
         <div className="relative h-48 w-full px-4 select-none">
@@ -130,18 +143,36 @@ export default function AnimePage({ params }: AnimePageProps) {
 
           <div className="flex flex-col px-8 py-2">
             {loading ? (
-              <>
+              <div>
                 <Skeleton className="w-[500px] h-[25px] mt-2"></Skeleton>
                 <Skeleton className="w-[300px] h-[15px] mt-1"></Skeleton>
-              </>
-            ) : <>
+              </div>
+            ) : <div>
               <h1 className="text-2xl font-bold">{data?.Media?.title?.userPreferred}</h1>
               {data?.Media?.title?.userPreferred === data?.Media?.title?.english
                 ? <p className="text-sm font-bold text-muted-foreground">{data?.Media?.title?.native}</p>
                 : <p className="text-sm font-bold text-muted-foreground">{data?.Media?.title?.userPreferred}</p>
               }
-              <p className="text-sm text-muted-foreground mt-2">{sanitizedDescription}</p>
-            </>}
+              <p className="text-sm text-muted-foreground mt-2">
+                <span >
+                  {getTextToShow(sanitizedDescription)}
+                </span>
+
+                {sanitizedDescription.length > 350 && (
+                  <span
+                    onClick={handleToggle}
+                    className="hover:text-primary/70 text-primary cursor-pointer ml-2"
+                  >
+                    {isExpanded ? 'Read less' : 'Read more'}
+                  </span>
+                )}
+              </p>
+              <div className="flex lg:justify-start justify-center mt-4 gap-2">
+                <Button className="shadow-lg">Watch Now<CirclePlay className="h-4 w-4 ml-1" /></Button>
+                <Button className="shadow-lg" variant={"secondary"}>View on Threads<ArrowUpRight className="h-4 w-4 ml-1" /></Button>
+              </div>
+            </div>}
+
           </div>
         </div>
         {animeRelations && animeRelations.length > 1 && (
