@@ -139,10 +139,8 @@ export default function AnimePage({ params }: AnimePageProps) {
                 className="w-[200px] mt-[-100px] h-[320px] lg:h-[300px] rounded-lg object-cover shadow-lg"
               />
             </>
-          ) : loading ? (
-            <Skeleton className="w-[200px] mt-[-100px] h-[320px] lg:h-[300px] rounded-lg"></Skeleton>
           ) : (
-            <div className="w-[200px] mt-[-100px] h-[320px] lg:h-[300px] rounded-lg bg-muted"></div>
+            <div className="w-[200px] mt-[-100px] h-[320px] lg:h-[300px] rounded-lg"></div>
           )}
 
           <div className="flex flex-col px-8 py-2">
@@ -170,7 +168,9 @@ export default function AnimePage({ params }: AnimePageProps) {
                   )}
                 </p>}
               <div className="flex lg:justify-start justify-center mt-4 gap-2">
-                <Button className="shadow-lg">Watch Now<CirclePlay className="h-4 w-4 ml-1" /></Button>
+                <Link href={`/stream/${params.id}`}>
+                  <Button className="shadow-lg">Watch Now<CirclePlay className="h-4 w-4 ml-1" /></Button>
+                </Link>
                 <Button className="shadow-lg" variant={"secondary"}>Start a Thread<ArrowUpRight className="h-4 w-4 ml-1" /></Button>
               </div>
             </div>}
@@ -198,7 +198,7 @@ export default function AnimePage({ params }: AnimePageProps) {
               </p>
             </div>
             <div className="col-span-12 flex flex-col flex-grow">
-              {data.Media?.characterPreview?.edges && <AnimeInfoTabs
+              {data.Media?.characterPreview?.edges && data?.Media?.staffPreview?.edges && <AnimeInfoTabs
                 characters={data?.Media?.characterPreview}
                 staff={data?.Media?.staffPreview?.edges}
               />

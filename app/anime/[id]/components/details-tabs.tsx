@@ -2,7 +2,7 @@ import { CharacterFragment, StaffFragment } from "@/graphql/types";
 
 interface DetailedTabsProps {
     characters?: CharacterFragment | null;
-    staff?: StaffFragment[] | null;
+    staff?: (StaffFragment | null)[];
 }
 
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -32,8 +32,8 @@ export default function AnimeInfoTabs({ characters, staff }: DetailedTabsProps) 
                         <CharacterList list={characters} quantity={5} />}
                 </TabsContent>
                 <TabsContent value="staff">
-                    {staff &&
-                        <StaffList list={staff} quantity={5} />}
+                    {staff && staff !== null &&
+                        <StaffList list={staff.filter((s): s is StaffFragment => s !== null)} quantity={5} />}
                 </TabsContent>
                 <TabsContent value="activity">
                     <div className="text-muted-foreground px-2 py-4 w-full h-16 flex text-center">
