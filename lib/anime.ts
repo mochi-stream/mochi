@@ -1,24 +1,8 @@
 "use server";
-
-import { config } from "dotenv";
-config();
-
 const CONSUMET_URL =
   process.env.CONSUMET_URL || "https://consumet-api-dev.vercel.app";
 
 import axios from "axios";
-
-// import { AnilistSearchResult, AnimeInfo } from "@/types/anime";
-
-export async function getSpotlight() {
-  // return await animeProvider.fetchSpotlight();
-}
-
-// Popular This Season
-// Upcoming
-// Airing
-// Genre Search
-// Add MAL Auto Adder
 
 export async function searchAnime(
   query: string,
@@ -58,3 +42,4 @@ export async function getAnimeDetails(
     throw new Error("Error fetching anime details");
   }
 }
+

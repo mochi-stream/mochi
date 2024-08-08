@@ -32,7 +32,6 @@ import {
   MediaFragment,
   AnimeInfoPageQuery,
   AnimeInfoPageQueryVariables,
-  StaffFragment,
 } from "@/graphql/types";
 
 import { Skeleton } from "@/components/ui/skeleton";
@@ -42,7 +41,7 @@ import { AnimeList } from "@/components/anime/list";
 
 import Link from "next/link";
 
-import { ArrowUpRight, Check, CirclePlay } from "lucide-react";
+import { ArrowUpRight, Check, BellPlus, CirclePlay } from "lucide-react";
 
 import { useState } from "react";
 
@@ -59,6 +58,8 @@ export default function AnimePage({ params }: AnimePageProps) {
       duration: 2000,
     });
   }
+
+  console.log(data?.Media);
 
   const recommendationsArray: (MediaFragment | null)[] = data?.Media?.recommendations?.nodes
     ?.filter(node => node?.mediaRecommendation !== undefined)
@@ -91,7 +92,7 @@ export default function AnimePage({ params }: AnimePageProps) {
     <div>
       {data && data.Media && data.Media.bannerImage
         ?
-        <div className="relative h-48 w-full px-4 select-none">
+        <div className="relative h-48 w-full px-2 select-none">
           <div className="absolute inset-0">
             <Image
               src={data.Media.bannerImage}
@@ -116,6 +117,7 @@ export default function AnimePage({ params }: AnimePageProps) {
               </Link>
             ) : null}
             <Button className="shadow-lg">Add to Collection</Button>
+            <Button className="shadow-lg" size={"icon"}><BellPlus className="h-5 w-5" /></Button>
           </div>
         </div>
         : loading ? (
@@ -179,16 +181,30 @@ export default function AnimePage({ params }: AnimePageProps) {
         {/* Information */}
         {data &&
           <div className="grid grid-cols-16 lg:flex-row justify-between pt-8 gap-4">
-            <div className="grid col-span-3 px-6 lg:px-0 h-fit w-[95%]">
+            <div className="grid col-span-4 px-6 lg:px-0 pt-2 h-fit w-[95%]">
               <h1 className="text-xl select-none font-semibold">Details</h1>
               <p className="text-sm font-medium text-muted-foreground mt-2">
-                <span className="text-primary font-semibold">Status:</span> {data?.Media?.status}
+                <span className="text-primary font-semibold">Status:</span> {data?.Media?.status ? data?.Media?.status?.charAt(0) + data?.Media?.status?.slice(1).toLowerCase() : '-'}
               </p>
               <p className="text-sm font-medium text-muted-foreground mt-2">
-                <span className="text-primary font-semibold">Genre:</span> {data?.Media?.genres?.join(", ")}
+                <span className="text-primary font-semibold">Format:</span> {data?.Media?.format || "-"}
               </p>
               <p className="text-sm font-medium text-muted-foreground mt-2">
-                <span className="text-primary font-semibold">Score:</span> {data?.Media?.averageScore}
+                <span className="text-primary font-semibold">Genres:</span> {data?.Media?.genres?.map((name, index) => (
+                  <>
+                    <Link
+                      href={`/search?genre=${name?.toLowerCase()}`}
+                      key={index}
+                      className="hover:text-primary cursor-pointer select-none"
+                    >
+                      {name}
+                      {index < (data?.Media?.genres?.length || 0) - 1 && ', '}
+                    </Link>
+                  </>
+                ))}
+              </p>
+              <p className="text-sm font-medium text-muted-foreground mt-2">
+                <span className="text-primary font-semibold">Score:</span> {data?.Media?.averageScore}%
               </p>
               <p className="text-sm font-medium text-muted-foreground mt-2">
                 <span className="text-primary font-semibold">Episodes:</span> {data?.Media?.episodes || "-"}
@@ -196,13 +212,51 @@ export default function AnimePage({ params }: AnimePageProps) {
               <p className="text-sm font-medium text-muted-foreground mt-2">
                 <span className="text-primary font-semibold">Duration:</span> {data?.Media?.duration || "-"} min
               </p>
+              <p className="text-sm font-medium text-muted-foreground mt-2">
+                <span className="text-primary font-semibold">Season:</span> {data?.Media?.season ? `${data?.Media?.season?.charAt(0) + data?.Media?.season?.slice(1).toLowerCase()} ${data?.Media?.seasonYear || "-"}` : "-"}
+              </p>
+              <p className="text-sm font-medium text-muted-foreground mt-2">
+                {data?.Media?.startDate?.year && (
+                  <span className="text-primary font-semibold">
+                    Start Date:{' '}
+                  </span>
+                )}
+                {data?.Media?.startDate?.year &&
+                  new Date(
+                    data?.Media?.startDate?.year!,
+                    data?.Media?.startDate?.month! - 1 || 0,
+                    data?.Media?.startDate?.day! || 0
+                  ).toLocaleDateString('en-US', {
+                    month: 'long',
+                    day: 'numeric',
+                    year: 'numeric',
+                  })}
+              </p>
+              <p className="text-sm font-medium text-muted-foreground mt-2">
+                {data?.Media?.endDate?.year && (
+                  <span className="text-primary font-semibold">
+                    End Date:{' '}
+                  </span>
+                )}
+                {data?.Media?.endDate?.year &&
+                  new Date(
+                    data?.Media?.endDate?.year!,
+                    data?.Media?.endDate?.month! - 1 || 0,
+                    data?.Media?.endDate?.day! || 0
+                  ).toLocaleDateString('en-US', {
+                    month: 'long',
+                    day: 'numeric',
+                    year: 'numeric',
+                  })}
+              </p>
             </div>
             <div className="col-span-12 flex flex-col flex-grow">
-              {data.Media?.characterPreview?.edges && data?.Media?.staffPreview?.edges && <AnimeInfoTabs
+              <AnimeInfoTabs
+                animeId={data?.Media?.id ?? null}
                 characters={data?.Media?.characterPreview}
                 staff={data?.Media?.staffPreview?.edges}
+                episodes={data?.Media?.streamingEpisodes}
               />
-              }
             </div>
           </div>
         }
