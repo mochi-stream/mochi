@@ -39,7 +39,7 @@ export default function App() {
   });
 
 
-  if (!data || error) {
+  if (!loading && !data) {
     toast.error("Failed to load anime data. Please try again later.", {
       duration: 2000,
     });

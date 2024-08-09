@@ -23,7 +23,7 @@ export const HOME_PAGE_ANIME_QUERY = gql`
         ...media
       }
     }
-    nextSeason: Page(page: 1, perPage: 12) {
+    nextSeason: Page(page: 1, perPage: 6) {
       media(
         season: $nextSeason
         seasonYear: $nextYear
@@ -34,7 +34,7 @@ export const HOME_PAGE_ANIME_QUERY = gql`
         ...media
       }
     }
-    popular: Page(page: 1, perPage: 6) {
+    popular: Page(page: 1, perPage: 12) {
       media(sort: POPULARITY_DESC, type: ANIME, isAdult: false) {
         ...media
       }

@@ -15,6 +15,7 @@ import AvatarDialog from "./avatar";
 
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { LibraryBig } from "lucide-react";
 
 export default function Header() {
   const me = useUser();
@@ -27,22 +28,28 @@ export default function Header() {
         </h1>
         <div className="hidden lg:flex gap-4">
           <Link
-            href="#"
+            href="search"
             className="transition-colors hover:text-muted-foreground"
           >
-            TV Series
+            Discover
+          </Link>
+          <Link
+            href="search"
+            className="transition-colors hover:text-muted-foreground"
+          >
+            Schedule
+          </Link>
+          <Link
+            href="news"
+            className="transition-colors hover:text-muted-foreground"
+          >
+            News
           </Link>
           <Link
             href="#"
             className="transition-colors hover:text-muted-foreground"
           >
-            Movies
-          </Link>
-          <Link
-            href="#"
-            className="transition-colors hover:text-muted-foreground"
-          >
-            Collections
+            Community
           </Link>
         </div>
       </div>
@@ -65,10 +72,12 @@ export default function Header() {
           {me.user ? (
             <>
               <NotificationsDialog userid={me.user.id} />
+              <LibraryBig strokeWidth={1.5} />
               <AvatarDialog user={me.user} />
             </>
           ) : (
             <>
+              <Skeleton className="w-8 h-8 rounded-full" />
               <Skeleton className="w-8 h-8 rounded-full" />
               <Skeleton className="w-8 h-8 rounded-full" />
             </>

@@ -13,7 +13,7 @@ import Link from "next/link";
 import { ClerkUser } from "@/types/user";
 import { useClerk } from "@clerk/nextjs";
 
-import { CloudIcon, UserCircle, LogOutIcon, SettingsIcon } from "lucide-react";
+import { CloudIcon, UserCircle, LogOutIcon, SettingsIcon, ChevronDown } from "lucide-react";
 
 import {
   DropdownMenu,
@@ -29,10 +29,18 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import { toast } from "sonner";
 
+import { useUser } from "./context";
+
 export default function AvatarDialog({ user }: { user: ClerkUser }) {
+
+  const { isAuthenticated } = useUser();
+
   const { signOut } = useClerk();
   const toastShow = () => {
-    toast.promise(async () => await signOut(), {
+    toast.promise(async () => {
+      await signOut();
+      window.location.reload();
+    }, {
       loading: "You are being signed out",
       success: "You have been signed out",
       error: "Failed to sign out",
