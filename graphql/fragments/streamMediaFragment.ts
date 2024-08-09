@@ -44,11 +44,6 @@ export const STREAM_MEDIA_FRAGMENT = gql`
       timeUntilAiring
       episode
     }
-    relations {
-      nodes {
-        ...media
-      }
-    }
     studios {
       edges {
         isMain
@@ -70,10 +65,6 @@ export const STREAM_MEDIA_FRAGMENT = gql`
       title
       thumbnail
       url
-    }
-    trailer {
-      id
-      site
     }
   }
   ${MEDIA_FRAGMENT}

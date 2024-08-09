@@ -1,3 +1,9 @@
+export interface Episode {
+  id: string;
+  title: string;
+  number: number;
+};
+
 export interface PlayerSubtitle {
   src: string;
   label: string;
@@ -5,13 +11,25 @@ export interface PlayerSubtitle {
   kind: TextTrackKind;
   default?: boolean;
 }
+interface Source {
+  url: string;
+  type: string;
+  isM3U8?: boolean;
+};
 
-export interface Intro {
+interface Subtitle {
+  url: string;
+  lang: string;
+};
+
+interface TimeRange {
   start: number;
   end: number;
-}
+};
 
-export interface Outro {
-  start: number;
-  end: number;
-}
+export interface VideoDetails {
+  sources: Source[];
+  subtitles: Subtitle[];
+  intro: TimeRange;
+  outro: TimeRange;
+};

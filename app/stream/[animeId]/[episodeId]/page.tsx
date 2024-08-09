@@ -3,23 +3,27 @@
 import { toast } from "sonner";
 
 import useNetworkStatus from "@/app/_components/networkstatus";
-import { useAnimeInfo } from "../layout";
+import { useAnimeInfo } from "../context";
 
 interface WatchPageProps {
     params: {
         animeId: string;
-        watchId: string;
+        episodeId: string;
     };
 }
 
-export default function WatchPage(props: WatchPageProps) {
+export default function WatchPage({ params }: WatchPageProps) {
     const { isOnline } = useNetworkStatus();
 
     if (!isOnline) {
         toast.error("You are offline. Please connect to the internet.");
     }
 
-    const { info } = useAnimeInfo();
+    const { info, episodes } = useAnimeInfo();
 
-    return <div></div>;
+    const matchingEpisode = episodes.find((episode) => episode.number === parseInt(params.episodeId));
+    if (matchingEpisode) {
+        return <div></div>;
+    }
+
 }

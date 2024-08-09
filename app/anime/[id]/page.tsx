@@ -59,8 +59,6 @@ export default function AnimePage({ params }: AnimePageProps) {
     });
   }
 
-  console.log(data?.Media);
-
   const recommendationsArray: (MediaFragment | null)[] = data?.Media?.recommendations?.nodes
     ?.filter(node => node?.mediaRecommendation !== undefined)
     ?.map(node => node!.mediaRecommendation ?? null) || [];
@@ -172,7 +170,7 @@ export default function AnimePage({ params }: AnimePageProps) {
                   )}
                 </p>}
               <div className="flex lg:justify-start justify-center mt-4 gap-2">
-                <Link href={`/stream/${params.id}`}>
+                <Link href={`/stream/${params.id}/1`}>
                   <Button className="shadow-lg">Watch Now<CirclePlay className="h-4 w-4 ml-1" /></Button>
                 </Link>
                 <Button className="shadow-lg" variant={"secondary"}>Start a Thread<ArrowUpRight className="h-4 w-4 ml-1" /></Button>
