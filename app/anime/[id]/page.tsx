@@ -152,7 +152,9 @@ export default function AnimePage({ params }: AnimePageProps) {
                 <Skeleton className="w-[300px] h-[15px] mt-1"></Skeleton>
               </div>
             ) : <div>
-              <h1 className="text-2xl font-bold">{data?.Media?.title?.english}</h1>
+              <h1 className="text-2xl font-bold">
+                {data?.Media?.title?.english ?? data?.Media?.title?.userPreferred}
+              </h1>
               <p className="text-sm font-bold text-muted-foreground">{data?.Media?.title?.romaji} • {data?.Media?.title?.native}</p>
               {sanitizedDescription &&
                 <p className="text-sm text-muted-foreground mt-2">

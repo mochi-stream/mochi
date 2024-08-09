@@ -1,11 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { PlayerSubtitle } from "@/types/anime";
-
 import { toast } from "sonner";
 
 import useNetworkStatus from "@/app/_components/networkstatus";
+import { useAnimeInfo } from "../layout";
 
 interface WatchPageProps {
     params: {
@@ -20,6 +18,8 @@ export default function WatchPage(props: WatchPageProps) {
     if (!isOnline) {
         toast.error("You are offline. Please connect to the internet.");
     }
+
+    const { info } = useAnimeInfo();
 
     return <div></div>;
 }

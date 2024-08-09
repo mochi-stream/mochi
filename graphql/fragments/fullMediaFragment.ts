@@ -40,18 +40,7 @@ export const FULL_MEDIA_FRAGMENT = gql`
     synonyms
     source(version: 3)
     isAdult
-    isLocked
-    meanScore
     averageScore
-    popularity
-    favourites
-    isFavouriteBlocked
-    hashtag
-    countryOfOrigin
-    isLicensed
-    isFavourite
-    isRecommendationBlocked
-    isFavouriteBlocked
     nextAiringEpisode {
       airingAt
       timeUntilAiring
@@ -95,40 +84,6 @@ export const FULL_MEDIA_FRAGMENT = gql`
     trailer {
       id
       site
-    }
-    rankings {
-      id
-      rank
-      type
-      format
-      year
-      season
-      allTime
-      context
-    }
-    tags {
-      id
-      name
-      description
-      rank
-      isMediaSpoiler
-      isGeneralSpoiler
-      userId
-    }
-    mediaListEntry {
-      id
-      status
-      score
-    }
-    stats {
-      statusDistribution {
-        status
-        amount
-      }
-      scoreDistribution {
-        score
-        amount
-      }
     }
   }
   ${MEDIA_FRAGMENT}

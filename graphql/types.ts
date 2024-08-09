@@ -4675,11 +4675,13 @@ export type YearStats = {
 
 export type CharacterFragment = { __typename?: 'CharacterConnection', edges?: Array<{ __typename?: 'CharacterEdge', id?: number | null, role?: CharacterRole | null, name?: string | null, voiceActors?: Array<{ __typename?: 'Staff', id: number, language?: string | null, name?: { __typename?: 'StaffName', userPreferred?: string | null } | null, image?: { __typename?: 'StaffImage', large?: string | null } | null } | null> | null, node?: { __typename?: 'Character', id: number, name?: { __typename?: 'CharacterName', userPreferred?: string | null } | null, image?: { __typename?: 'CharacterImage', large?: string | null } | null } | null } | null> | null };
 
-export type FullMediaFragment = { __typename?: 'Media', id: number, bannerImage?: string | null, description?: string | null, season?: MediaSeason | null, seasonYear?: number | null, type?: MediaType | null, format?: MediaFormat | null, status?: MediaStatus | null, episodes?: number | null, duration?: number | null, chapters?: number | null, volumes?: number | null, genres?: Array<string | null> | null, synonyms?: Array<string | null> | null, source?: MediaSource | null, isAdult?: boolean | null, isLocked?: boolean | null, meanScore?: number | null, averageScore?: number | null, popularity?: number | null, favourites?: number | null, isFavouriteBlocked: boolean, hashtag?: string | null, countryOfOrigin?: any | null, isLicensed?: boolean | null, isFavourite: boolean, isRecommendationBlocked?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null, romaji?: string | null, english?: string | null, native?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null, startDate?: { __typename?: 'FuzzyDate', year?: number | null, month?: number | null, day?: number | null } | null, endDate?: { __typename?: 'FuzzyDate', year?: number | null, month?: number | null, day?: number | null } | null, nextAiringEpisode?: { __typename?: 'AiringSchedule', airingAt: number, timeUntilAiring: number, episode: number } | null, relations?: { __typename?: 'MediaConnection', nodes?: Array<{ __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, averageScore?: number | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null> | null } | null, characterPreview?: { __typename?: 'CharacterConnection', edges?: Array<{ __typename?: 'CharacterEdge', id?: number | null, role?: CharacterRole | null, name?: string | null, voiceActors?: Array<{ __typename?: 'Staff', id: number, language?: string | null, name?: { __typename?: 'StaffName', userPreferred?: string | null } | null, image?: { __typename?: 'StaffImage', large?: string | null } | null } | null> | null, node?: { __typename?: 'Character', id: number, name?: { __typename?: 'CharacterName', userPreferred?: string | null } | null, image?: { __typename?: 'CharacterImage', large?: string | null } | null } | null } | null> | null } | null, staffPreview?: { __typename?: 'StaffConnection', edges?: Array<{ __typename?: 'StaffEdge', id?: number | null, role?: string | null, node?: { __typename?: 'Staff', id: number, language?: string | null, name?: { __typename?: 'StaffName', userPreferred?: string | null } | null, image?: { __typename?: 'StaffImage', large?: string | null } | null } | null } | null> | null } | null, studios?: { __typename?: 'StudioConnection', edges?: Array<{ __typename?: 'StudioEdge', isMain: boolean, node?: { __typename?: 'Studio', id: number, name: string } | null } | null> | null } | null, recommendations?: { __typename?: 'RecommendationConnection', nodes?: Array<{ __typename?: 'Recommendation', mediaRecommendation?: { __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, averageScore?: number | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null } | null> | null } | null, streamingEpisodes?: Array<{ __typename?: 'MediaStreamingEpisode', site?: string | null, title?: string | null, thumbnail?: string | null, url?: string | null } | null> | null, trailer?: { __typename?: 'MediaTrailer', id?: string | null, site?: string | null } | null, rankings?: Array<{ __typename?: 'MediaRank', id: number, rank: number, type: MediaRankType, format: MediaFormat, year?: number | null, season?: MediaSeason | null, allTime?: boolean | null, context: string } | null> | null, tags?: Array<{ __typename?: 'MediaTag', id: number, name: string, description?: string | null, rank?: number | null, isMediaSpoiler?: boolean | null, isGeneralSpoiler?: boolean | null, userId?: number | null } | null> | null, mediaListEntry?: { __typename?: 'MediaList', id: number, status?: MediaListStatus | null, score?: number | null } | null, stats?: { __typename?: 'MediaStats', statusDistribution?: Array<{ __typename?: 'StatusDistribution', status?: MediaListStatus | null, amount?: number | null } | null> | null, scoreDistribution?: Array<{ __typename?: 'ScoreDistribution', score?: number | null, amount?: number | null } | null> | null } | null };
+export type FullMediaFragment = { __typename?: 'Media', id: number, bannerImage?: string | null, description?: string | null, season?: MediaSeason | null, seasonYear?: number | null, type?: MediaType | null, format?: MediaFormat | null, status?: MediaStatus | null, episodes?: number | null, duration?: number | null, chapters?: number | null, volumes?: number | null, genres?: Array<string | null> | null, synonyms?: Array<string | null> | null, source?: MediaSource | null, isAdult?: boolean | null, averageScore?: number | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null, romaji?: string | null, english?: string | null, native?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null, startDate?: { __typename?: 'FuzzyDate', year?: number | null, month?: number | null, day?: number | null } | null, endDate?: { __typename?: 'FuzzyDate', year?: number | null, month?: number | null, day?: number | null } | null, nextAiringEpisode?: { __typename?: 'AiringSchedule', airingAt: number, timeUntilAiring: number, episode: number } | null, relations?: { __typename?: 'MediaConnection', nodes?: Array<{ __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, averageScore?: number | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null> | null } | null, characterPreview?: { __typename?: 'CharacterConnection', edges?: Array<{ __typename?: 'CharacterEdge', id?: number | null, role?: CharacterRole | null, name?: string | null, voiceActors?: Array<{ __typename?: 'Staff', id: number, language?: string | null, name?: { __typename?: 'StaffName', userPreferred?: string | null } | null, image?: { __typename?: 'StaffImage', large?: string | null } | null } | null> | null, node?: { __typename?: 'Character', id: number, name?: { __typename?: 'CharacterName', userPreferred?: string | null } | null, image?: { __typename?: 'CharacterImage', large?: string | null } | null } | null } | null> | null } | null, staffPreview?: { __typename?: 'StaffConnection', edges?: Array<{ __typename?: 'StaffEdge', id?: number | null, role?: string | null, node?: { __typename?: 'Staff', id: number, language?: string | null, name?: { __typename?: 'StaffName', userPreferred?: string | null } | null, image?: { __typename?: 'StaffImage', large?: string | null } | null } | null } | null> | null } | null, studios?: { __typename?: 'StudioConnection', edges?: Array<{ __typename?: 'StudioEdge', isMain: boolean, node?: { __typename?: 'Studio', id: number, name: string } | null } | null> | null } | null, recommendations?: { __typename?: 'RecommendationConnection', nodes?: Array<{ __typename?: 'Recommendation', mediaRecommendation?: { __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, averageScore?: number | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null } | null> | null } | null, streamingEpisodes?: Array<{ __typename?: 'MediaStreamingEpisode', site?: string | null, title?: string | null, thumbnail?: string | null, url?: string | null } | null> | null, trailer?: { __typename?: 'MediaTrailer', id?: string | null, site?: string | null } | null };
 
 export type MediaFragment = { __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, averageScore?: number | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null };
 
 export type StaffFragment = { __typename?: 'StaffEdge', id?: number | null, role?: string | null, node?: { __typename?: 'Staff', id: number, language?: string | null, name?: { __typename?: 'StaffName', userPreferred?: string | null } | null, image?: { __typename?: 'StaffImage', large?: string | null } | null } | null };
+
+export type StreamMediaFragment = { __typename?: 'Media', id: number, bannerImage?: string | null, description?: string | null, season?: MediaSeason | null, seasonYear?: number | null, type?: MediaType | null, format?: MediaFormat | null, status?: MediaStatus | null, episodes?: number | null, duration?: number | null, chapters?: number | null, volumes?: number | null, genres?: Array<string | null> | null, synonyms?: Array<string | null> | null, source?: MediaSource | null, isAdult?: boolean | null, averageScore?: number | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null, romaji?: string | null, english?: string | null, native?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null, startDate?: { __typename?: 'FuzzyDate', year?: number | null, month?: number | null, day?: number | null } | null, endDate?: { __typename?: 'FuzzyDate', year?: number | null, month?: number | null, day?: number | null } | null, nextAiringEpisode?: { __typename?: 'AiringSchedule', airingAt: number, timeUntilAiring: number, episode: number } | null, relations?: { __typename?: 'MediaConnection', nodes?: Array<{ __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, averageScore?: number | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null> | null } | null, studios?: { __typename?: 'StudioConnection', edges?: Array<{ __typename?: 'StudioEdge', isMain: boolean, node?: { __typename?: 'Studio', id: number, name: string } | null } | null> | null } | null, recommendations?: { __typename?: 'RecommendationConnection', nodes?: Array<{ __typename?: 'Recommendation', mediaRecommendation?: { __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, averageScore?: number | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null } | null> | null } | null, streamingEpisodes?: Array<{ __typename?: 'MediaStreamingEpisode', site?: string | null, title?: string | null, thumbnail?: string | null, url?: string | null } | null> | null, trailer?: { __typename?: 'MediaTrailer', id?: string | null, site?: string | null } | null };
 
 export type AnimeInfoPageQueryVariables = Exact<{
   id?: InputMaybe<Scalars['Int']['input']>;
@@ -4688,7 +4690,7 @@ export type AnimeInfoPageQueryVariables = Exact<{
 }>;
 
 
-export type AnimeInfoPageQuery = { __typename?: 'Query', Media?: { __typename?: 'Media', id: number, bannerImage?: string | null, description?: string | null, season?: MediaSeason | null, seasonYear?: number | null, type?: MediaType | null, format?: MediaFormat | null, status?: MediaStatus | null, episodes?: number | null, duration?: number | null, chapters?: number | null, volumes?: number | null, genres?: Array<string | null> | null, synonyms?: Array<string | null> | null, source?: MediaSource | null, isAdult?: boolean | null, isLocked?: boolean | null, meanScore?: number | null, averageScore?: number | null, popularity?: number | null, favourites?: number | null, isFavouriteBlocked: boolean, hashtag?: string | null, countryOfOrigin?: any | null, isLicensed?: boolean | null, isFavourite: boolean, isRecommendationBlocked?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null, romaji?: string | null, english?: string | null, native?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null, startDate?: { __typename?: 'FuzzyDate', year?: number | null, month?: number | null, day?: number | null } | null, endDate?: { __typename?: 'FuzzyDate', year?: number | null, month?: number | null, day?: number | null } | null, nextAiringEpisode?: { __typename?: 'AiringSchedule', airingAt: number, timeUntilAiring: number, episode: number } | null, relations?: { __typename?: 'MediaConnection', nodes?: Array<{ __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, averageScore?: number | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null> | null } | null, characterPreview?: { __typename?: 'CharacterConnection', edges?: Array<{ __typename?: 'CharacterEdge', id?: number | null, role?: CharacterRole | null, name?: string | null, voiceActors?: Array<{ __typename?: 'Staff', id: number, language?: string | null, name?: { __typename?: 'StaffName', userPreferred?: string | null } | null, image?: { __typename?: 'StaffImage', large?: string | null } | null } | null> | null, node?: { __typename?: 'Character', id: number, name?: { __typename?: 'CharacterName', userPreferred?: string | null } | null, image?: { __typename?: 'CharacterImage', large?: string | null } | null } | null } | null> | null } | null, staffPreview?: { __typename?: 'StaffConnection', edges?: Array<{ __typename?: 'StaffEdge', id?: number | null, role?: string | null, node?: { __typename?: 'Staff', id: number, language?: string | null, name?: { __typename?: 'StaffName', userPreferred?: string | null } | null, image?: { __typename?: 'StaffImage', large?: string | null } | null } | null } | null> | null } | null, studios?: { __typename?: 'StudioConnection', edges?: Array<{ __typename?: 'StudioEdge', isMain: boolean, node?: { __typename?: 'Studio', id: number, name: string } | null } | null> | null } | null, recommendations?: { __typename?: 'RecommendationConnection', nodes?: Array<{ __typename?: 'Recommendation', mediaRecommendation?: { __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, averageScore?: number | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null } | null> | null } | null, streamingEpisodes?: Array<{ __typename?: 'MediaStreamingEpisode', site?: string | null, title?: string | null, thumbnail?: string | null, url?: string | null } | null> | null, trailer?: { __typename?: 'MediaTrailer', id?: string | null, site?: string | null } | null, rankings?: Array<{ __typename?: 'MediaRank', id: number, rank: number, type: MediaRankType, format: MediaFormat, year?: number | null, season?: MediaSeason | null, allTime?: boolean | null, context: string } | null> | null, tags?: Array<{ __typename?: 'MediaTag', id: number, name: string, description?: string | null, rank?: number | null, isMediaSpoiler?: boolean | null, isGeneralSpoiler?: boolean | null, userId?: number | null } | null> | null, mediaListEntry?: { __typename?: 'MediaList', id: number, status?: MediaListStatus | null, score?: number | null } | null, stats?: { __typename?: 'MediaStats', statusDistribution?: Array<{ __typename?: 'StatusDistribution', status?: MediaListStatus | null, amount?: number | null } | null> | null, scoreDistribution?: Array<{ __typename?: 'ScoreDistribution', score?: number | null, amount?: number | null } | null> | null } | null } | null };
+export type AnimeInfoPageQuery = { __typename?: 'Query', Media?: { __typename?: 'Media', id: number, bannerImage?: string | null, description?: string | null, season?: MediaSeason | null, seasonYear?: number | null, type?: MediaType | null, format?: MediaFormat | null, status?: MediaStatus | null, episodes?: number | null, duration?: number | null, chapters?: number | null, volumes?: number | null, genres?: Array<string | null> | null, synonyms?: Array<string | null> | null, source?: MediaSource | null, isAdult?: boolean | null, averageScore?: number | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null, romaji?: string | null, english?: string | null, native?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null, startDate?: { __typename?: 'FuzzyDate', year?: number | null, month?: number | null, day?: number | null } | null, endDate?: { __typename?: 'FuzzyDate', year?: number | null, month?: number | null, day?: number | null } | null, nextAiringEpisode?: { __typename?: 'AiringSchedule', airingAt: number, timeUntilAiring: number, episode: number } | null, relations?: { __typename?: 'MediaConnection', nodes?: Array<{ __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, averageScore?: number | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null> | null } | null, characterPreview?: { __typename?: 'CharacterConnection', edges?: Array<{ __typename?: 'CharacterEdge', id?: number | null, role?: CharacterRole | null, name?: string | null, voiceActors?: Array<{ __typename?: 'Staff', id: number, language?: string | null, name?: { __typename?: 'StaffName', userPreferred?: string | null } | null, image?: { __typename?: 'StaffImage', large?: string | null } | null } | null> | null, node?: { __typename?: 'Character', id: number, name?: { __typename?: 'CharacterName', userPreferred?: string | null } | null, image?: { __typename?: 'CharacterImage', large?: string | null } | null } | null } | null> | null } | null, staffPreview?: { __typename?: 'StaffConnection', edges?: Array<{ __typename?: 'StaffEdge', id?: number | null, role?: string | null, node?: { __typename?: 'Staff', id: number, language?: string | null, name?: { __typename?: 'StaffName', userPreferred?: string | null } | null, image?: { __typename?: 'StaffImage', large?: string | null } | null } | null } | null> | null } | null, studios?: { __typename?: 'StudioConnection', edges?: Array<{ __typename?: 'StudioEdge', isMain: boolean, node?: { __typename?: 'Studio', id: number, name: string } | null } | null> | null } | null, recommendations?: { __typename?: 'RecommendationConnection', nodes?: Array<{ __typename?: 'Recommendation', mediaRecommendation?: { __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, averageScore?: number | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null } | null> | null } | null, streamingEpisodes?: Array<{ __typename?: 'MediaStreamingEpisode', site?: string | null, title?: string | null, thumbnail?: string | null, url?: string | null } | null> | null, trailer?: { __typename?: 'MediaTrailer', id?: string | null, site?: string | null } | null } | null };
 
 export type HomePageAnimeQueryVariables = Exact<{
   season?: InputMaybe<MediaSeason>;
@@ -4699,6 +4701,15 @@ export type HomePageAnimeQueryVariables = Exact<{
 
 
 export type HomePageAnimeQuery = { __typename?: 'Query', trending?: { __typename?: 'Page', media?: Array<{ __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, averageScore?: number | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null> | null } | null, season?: { __typename?: 'Page', media?: Array<{ __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, averageScore?: number | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null> | null } | null, nextSeason?: { __typename?: 'Page', media?: Array<{ __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, averageScore?: number | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null> | null } | null, popular?: { __typename?: 'Page', media?: Array<{ __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, averageScore?: number | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null> | null } | null, top?: { __typename?: 'Page', media?: Array<{ __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, averageScore?: number | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null> | null } | null };
+
+export type StreamPageAnimeQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['Int']['input']>;
+  type?: InputMaybe<MediaType>;
+  isAdult?: InputMaybe<Scalars['Boolean']['input']>;
+}>;
+
+
+export type StreamPageAnimeQuery = { __typename?: 'Query', Media?: { __typename?: 'Media', id: number, bannerImage?: string | null, description?: string | null, season?: MediaSeason | null, seasonYear?: number | null, type?: MediaType | null, format?: MediaFormat | null, status?: MediaStatus | null, episodes?: number | null, duration?: number | null, chapters?: number | null, volumes?: number | null, genres?: Array<string | null> | null, synonyms?: Array<string | null> | null, source?: MediaSource | null, isAdult?: boolean | null, averageScore?: number | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null, romaji?: string | null, english?: string | null, native?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null, startDate?: { __typename?: 'FuzzyDate', year?: number | null, month?: number | null, day?: number | null } | null, endDate?: { __typename?: 'FuzzyDate', year?: number | null, month?: number | null, day?: number | null } | null, nextAiringEpisode?: { __typename?: 'AiringSchedule', airingAt: number, timeUntilAiring: number, episode: number } | null, relations?: { __typename?: 'MediaConnection', nodes?: Array<{ __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, averageScore?: number | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null> | null } | null, studios?: { __typename?: 'StudioConnection', edges?: Array<{ __typename?: 'StudioEdge', isMain: boolean, node?: { __typename?: 'Studio', id: number, name: string } | null } | null> | null } | null, recommendations?: { __typename?: 'RecommendationConnection', nodes?: Array<{ __typename?: 'Recommendation', mediaRecommendation?: { __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, averageScore?: number | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null } | null> | null } | null, streamingEpisodes?: Array<{ __typename?: 'MediaStreamingEpisode', site?: string | null, title?: string | null, thumbnail?: string | null, url?: string | null } | null> | null, trailer?: { __typename?: 'MediaTrailer', id?: string | null, site?: string | null } | null } | null };
 
 export const MediaFragmentDoc = gql`
     fragment media on Media {
@@ -4801,18 +4812,7 @@ export const FullMediaFragmentDoc = gql`
   synonyms
   source(version: 3)
   isAdult
-  isLocked
-  meanScore
   averageScore
-  popularity
-  favourites
-  isFavouriteBlocked
-  hashtag
-  countryOfOrigin
-  isLicensed
-  isFavourite
-  isRecommendationBlocked
-  isFavouriteBlocked
   nextAiringEpisode {
     airingAt
     timeUntilAiring
@@ -4857,44 +4857,86 @@ export const FullMediaFragmentDoc = gql`
     id
     site
   }
-  rankings {
-    id
-    rank
-    type
-    format
-    year
-    season
-    allTime
-    context
-  }
-  tags {
-    id
-    name
-    description
-    rank
-    isMediaSpoiler
-    isGeneralSpoiler
-    userId
-  }
-  mediaListEntry {
-    id
-    status
-    score
-  }
-  stats {
-    statusDistribution {
-      status
-      amount
-    }
-    scoreDistribution {
-      score
-      amount
-    }
-  }
 }
     ${MediaFragmentDoc}
 ${CharacterFragmentDoc}
 ${StaffFragmentDoc}`;
+export const StreamMediaFragmentDoc = gql`
+    fragment streamMedia on Media {
+  id
+  title {
+    userPreferred
+    romaji
+    english
+    native
+  }
+  coverImage {
+    extraLarge
+  }
+  bannerImage
+  startDate {
+    year
+    month
+    day
+  }
+  endDate {
+    year
+    month
+    day
+  }
+  description
+  season
+  seasonYear
+  type
+  format
+  status(version: 2)
+  episodes
+  duration
+  chapters
+  volumes
+  genres
+  synonyms
+  source(version: 3)
+  isAdult
+  averageScore
+  nextAiringEpisode {
+    airingAt
+    timeUntilAiring
+    episode
+  }
+  relations {
+    nodes {
+      ...media
+    }
+  }
+  studios {
+    edges {
+      isMain
+      node {
+        id
+        name
+      }
+    }
+  }
+  recommendations(perPage: 6, sort: [RATING_DESC, ID]) {
+    nodes {
+      mediaRecommendation {
+        ...media
+      }
+    }
+  }
+  streamingEpisodes {
+    site
+    title
+    thumbnail
+    url
+  }
+  trailer {
+    id
+    site
+  }
+}
+    ${MediaFragmentDoc}`;
 export const AnimeInfoPageDocument = gql`
     query AnimeInfoPage($id: Int, $type: MediaType, $isAdult: Boolean) {
   Media(id: $id, type: $type, isAdult: $isAdult) {
@@ -5014,3 +5056,45 @@ export type HomePageAnimeQueryHookResult = ReturnType<typeof useHomePageAnimeQue
 export type HomePageAnimeLazyQueryHookResult = ReturnType<typeof useHomePageAnimeLazyQuery>;
 export type HomePageAnimeSuspenseQueryHookResult = ReturnType<typeof useHomePageAnimeSuspenseQuery>;
 export type HomePageAnimeQueryResult = Apollo.QueryResult<HomePageAnimeQuery, HomePageAnimeQueryVariables>;
+export const StreamPageAnimeDocument = gql`
+    query StreamPageAnime($id: Int, $type: MediaType, $isAdult: Boolean) {
+  Media(id: $id, type: $type, isAdult: $isAdult) {
+    ...streamMedia
+  }
+}
+    ${StreamMediaFragmentDoc}`;
+
+/**
+ * __useStreamPageAnimeQuery__
+ *
+ * To run a query within a React component, call `useStreamPageAnimeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useStreamPageAnimeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useStreamPageAnimeQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      type: // value for 'type'
+ *      isAdult: // value for 'isAdult'
+ *   },
+ * });
+ */
+export function useStreamPageAnimeQuery(baseOptions?: Apollo.QueryHookOptions<StreamPageAnimeQuery, StreamPageAnimeQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<StreamPageAnimeQuery, StreamPageAnimeQueryVariables>(StreamPageAnimeDocument, options);
+      }
+export function useStreamPageAnimeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<StreamPageAnimeQuery, StreamPageAnimeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<StreamPageAnimeQuery, StreamPageAnimeQueryVariables>(StreamPageAnimeDocument, options);
+        }
+export function useStreamPageAnimeSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<StreamPageAnimeQuery, StreamPageAnimeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<StreamPageAnimeQuery, StreamPageAnimeQueryVariables>(StreamPageAnimeDocument, options);
+        }
+export type StreamPageAnimeQueryHookResult = ReturnType<typeof useStreamPageAnimeQuery>;
+export type StreamPageAnimeLazyQueryHookResult = ReturnType<typeof useStreamPageAnimeLazyQuery>;
+export type StreamPageAnimeSuspenseQueryHookResult = ReturnType<typeof useStreamPageAnimeSuspenseQuery>;
+export type StreamPageAnimeQueryResult = Apollo.QueryResult<StreamPageAnimeQuery, StreamPageAnimeQueryVariables>;
