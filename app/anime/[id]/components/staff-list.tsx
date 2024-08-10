@@ -35,7 +35,7 @@ export function StaffList({ list, quantity }: StaffListProps) {
                     className="relative overflow-hidden cursor-pointer group"
                 >
                     <Image
-                        loading="lazy"
+
                         src={character?.node?.image?.large || "/default.png"}
                         alt={character?.node?.name?.userPreferred || "No Title"}
                         width={640}

@@ -18,15 +18,34 @@ export function EpisodeList({ list, animeId, quantity }: EpisodeListProps) {
 
     const regex = /Episode (\d+) - (.+)/;
 
+    let previousEpisodeNumber = 0;
+
+    const processedEpisodes = list
+        .map((episode) => {
+            const match = (episode.title as string).match(/Episode (\d+) - (.+)/);
+            let episodeNumber = previousEpisodeNumber + 0.5; // Default to previous + 0.5 if no match
+            let title = episode.title as string; // Default to the original title if match[2] doesn't exist
+
+            if (match) {
+                episodeNumber = match[1] ? parseInt(match[1], 10) : episodeNumber;
+                title = match[2] || title;
+            }
+
+            previousEpisodeNumber = episodeNumber; // Update previous episode number
+
+            return { title, number: episodeNumber, thumbnail: episode.thumbnail };
+        })
+        .sort((a, b) => a.number - b.number); // Sort by episode number
+
     return (
         <>
             <div className="mt-4 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 select-none relative">
-                {list &&
-                    list.slice(0, quantity).map((episode, index) => (
-                        <Link href={`/map/${animeId}/${episode.url}`} key={index}>
+                {processedEpisodes &&
+                    processedEpisodes.slice(0, quantity).map((episode, index) => (
+                        <Link href={`/stream/${animeId}/${episode.number}`} key={index}>
                             <div className="relative overflow-hidden cursor-pointer group h-[150px]">
                                 <Image
-                                    loading="lazy"
+
                                     src={episode.thumbnail || "/default.png"}
                                     alt={episode.title || "No Title"}
                                     width={1080}
@@ -36,12 +55,10 @@ export function EpisodeList({ list, animeId, quantity }: EpisodeListProps) {
 
                                 <div className="absolute bottom-0 w-full p-4 z-50 font-aeonik">
                                     <h2 className="font-medium text-md lg:w-[80%] leading-5 text-primary/80">
-                                        {episode.title?.match(regex)?.[2] || episode.title}
+                                        {episode.title}
                                     </h2>
                                     <p className="text-[12px] mt-1 text-primary/70">
-                                        {
-                                            (episode.title?.match(regex) ? "Episode " + episode.title?.match(regex)?.[1] : episode.title) || ""
-                                        }
+                                        Episode {episode.number}
                                     </p>
                                 </div>
                                 {/* Render the anime gradient overlay */}

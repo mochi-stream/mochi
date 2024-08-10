@@ -1,16 +1,13 @@
 "use client";
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import WatchPage from './[episodeId]/page';
 
 interface StreamPageProps {
-    params: { animeId: string };
+    params: {
+        animeId: string;
+    }
 }
 
 export default function StreamPage({ params }: StreamPageProps) {
-    const router = useRouter();
-
-    useEffect(() => {
-        router.push(`/stream/${params.animeId}/1`);
-    }, [router, params.animeId]);
+    return <WatchPage params={{ animeId: params.animeId, episodeId: "1" }} />
 }

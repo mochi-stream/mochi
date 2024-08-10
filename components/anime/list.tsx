@@ -63,7 +63,7 @@ export function AnimeList({
                 >
                     <Link key={index} href={`/anime/${anime.id}`} className="z-[80]">
                         <Image
-                            loading="lazy"
+
                             src={anime.coverImage?.extraLarge || "default.png"}
                             alt={anime.title?.userPreferred || "No Title"}
                             width={460}

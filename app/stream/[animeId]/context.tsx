@@ -42,34 +42,33 @@ interface AnimeInfoProviderProps {
 }
 
 export default function AnimeInfoProvider({ children, animeId }: AnimeInfoProviderProps) {
+    const [episodes, setEpisodes] = useState<Episode[]>([]);
+    const [isLoadingEpisodes, setIsLoadingEpisodes] = useState(true);
+
     // Using useQuery to fetch anime info
-    const { loading, error, data } = useQuery<StreamPageAnimeQuery, StreamPageAnimeQueryVariables>(QUERY, {
+    const { loading: isLoadingInfo, data: animeInfo } = useQuery<StreamPageAnimeQuery, StreamPageAnimeQueryVariables>(QUERY, {
         variables: { id: parseInt(animeId), type: MediaType.Anime, isAdult: false },
     });
 
-    // State to store episodes
-    const [episodes, setEpisodes] = useState<Episode[]>([]);
-
     useEffect(() => {
-        // Fetch episodes once data is available
         const fetchEpisodes = async () => {
-            if (data) {
-                try {
-                    const data = await getAnimeDetails(animeId);
-                    setEpisodes(data);
-                } catch (err) {
-                    console.error("Failed to fetch episodes:", err);
-                }
+            try {
+                const episodesData = await getAnimeDetails(animeId);
+                setEpisodes(episodesData);
+            } catch (err) {
+                console.error("Failed to fetch episodes:", err);
+            } finally {
+                setIsLoadingEpisodes(false);
             }
         };
 
         fetchEpisodes();
-    }, [data, animeId]);
+    }, [animeId]);
 
     const animeInfoContextValue: AnimeInfoContextValue = {
-        info: data || null,
+        info: animeInfo || null,
         episodes,
-        isLoading: loading
+        isLoading: isLoadingInfo || isLoadingEpisodes
     };
 
     return (

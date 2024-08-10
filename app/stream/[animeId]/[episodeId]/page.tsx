@@ -1,9 +1,14 @@
 "use client";
 
 import { toast } from "sonner";
-
 import useNetworkStatus from "@/app/_components/networkstatus";
+
 import { useAnimeInfo } from "../context";
+
+import { Skeleton } from "@/components/ui/skeleton";
+import Link from "next/link";
+import PlayerContainer from "./player";
+
 
 interface WatchPageProps {
     params: {
@@ -22,8 +27,8 @@ export default function WatchPage({ params }: WatchPageProps) {
     const { info, episodes } = useAnimeInfo();
 
     const matchingEpisode = episodes.find((episode) => episode.number === parseInt(params.episodeId));
-    if (matchingEpisode) {
-        return <div></div>;
-    }
 
+    if (matchingEpisode) {
+        return <><PlayerContainer episodeId={matchingEpisode.id} /></>
+    }
 }

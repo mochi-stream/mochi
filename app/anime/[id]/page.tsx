@@ -135,7 +135,7 @@ export default function AnimePage({ params }: AnimePageProps) {
                 alt={data.Media.title?.userPreferred || "Cover Image"}
                 width={1080}
                 height={1080}
-                loading="lazy"
+
                 className="w-[200px] mt-[-100px] h-[320px] lg:h-[300px] rounded-lg object-cover shadow-lg"
               />
             </>

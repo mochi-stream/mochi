@@ -4,7 +4,7 @@ import "@vidstack/react/player/styles/base.css";
 
 import { useEffect, useRef, useState } from "react";
 
-import { PlayerSubtitle, Intro, Outro } from "@/types/anime";
+import { PlayerSubtitle, TimeRange } from "@/types/anime";
 
 import {
   isHLSProvider,
@@ -27,8 +27,8 @@ interface PlayerProps {
   src: string;
   thumbnail?: string;
   subtitles?: PlayerSubtitle[];
-  intro?: Intro;
-  outro?: Intro;
+  intro?: TimeRange;
+  outro?: TimeRange;
 }
 
 export default function Player({
@@ -72,8 +72,8 @@ export default function Player({
 
   useEffect(() => {
     if (intro && outro) {
-      const intros: Intro[] = [intro];
-      const outros: Outro[] = [outro];
+      const intros: TimeRange[] = [intro];
+      const outros: TimeRange[] = [outro];
       setVttContent(generateVTT(intros, outros));
     }
   }, [intro, outro]);
@@ -121,7 +121,7 @@ const formatTime = (seconds: number): string => {
   )}:${String(secs).padStart(2, "0")}.000`;
 };
 
-const generateVTT = (intros: Intro[], outros: Outro[]): string => {
+const generateVTT = (intros: TimeRange[], outros: TimeRange[]): string => {
   let vtt = "WEBVTT\n\n";
 
   intros.forEach((intro, index) => {

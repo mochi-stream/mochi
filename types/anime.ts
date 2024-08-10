@@ -22,7 +22,7 @@ interface Subtitle {
   lang: string;
 };
 
-interface TimeRange {
+export interface TimeRange {
   start: number;
   end: number;
 };
