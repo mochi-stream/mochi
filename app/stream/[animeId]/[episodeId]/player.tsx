@@ -1,3 +1,5 @@
+const CORS_URL = process.env.NEXT_PUBLIC_CORS_URL;
+
 import { useEffect, useState } from "react";
 
 import { getStreamingLinks } from "@/lib/anime";
@@ -28,5 +30,14 @@ export default function PlayerContainer({
         }
         fetchEpisodes();
     }, [episodeId]);
-    return <></>
+    return <div>
+        {videoDetails && (
+            <Player
+                title="Anime"
+                src={`${CORS_URL}/${videoDetails?.sources[0].url}`}
+                intro={videoDetails.intro}
+                outro={videoDetails.outro}
+            />
+        )}
+    </div>
 }

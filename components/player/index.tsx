@@ -80,7 +80,7 @@ export default function Player({
 
   return (
     <MediaPlayer
-      className="w-full aspect-video bg-slate-900 text-white font-sans overflow-hidden rounded-md ring-media-focus data-[focus]:ring-4"
+      className="w-full aspect-video bg-slate-900 text-white font-sans overflow-hidden rounded-sm z-[5] ring-media-focus data-[focus]:ring-4"
       title={title}
       poster={poster}
       src={src}
