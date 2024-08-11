@@ -9,6 +9,7 @@ import Player from "@/components/player";
 import { toast } from "sonner";
 
 import { VideoDetails } from "@/types/anime";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function PlayerContainer({
     episodeId,
@@ -30,15 +31,17 @@ export default function PlayerContainer({
         }
         fetchEpisodes();
     }, [episodeId]);
-    return <div>
-        {videoDetails && (
+    return <div className="relative aspect-video w-full">
+        {videoDetails ? (
             <Player
                 title="Anime"
                 src={`${CORS_URL}/${videoDetails?.sources[0].url}`}
                 intro={videoDetails.intro}
                 outro={videoDetails.outro}
             />
+        ) : (
+            <Skeleton className="aspect-video" />
         )}
-        <div className="h-16 bg-accent mt-2 rounded-sm"></div>
+        {/* <div className="h-16 bg-accent mt-2 rounded-sm"></div> */}
     </div>
 }
