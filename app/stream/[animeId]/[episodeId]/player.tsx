@@ -39,5 +39,6 @@ export default function PlayerContainer({
                 outro={videoDetails.outro}
             />
         )}
+        <div className="h-16 bg-accent mt-2 rounded-sm"></div>
     </div>
 }
