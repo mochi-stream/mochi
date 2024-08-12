@@ -89,7 +89,7 @@ export default function WatchPage({ params }: WatchPageProps) {
                 </div>
                 <div className="pt-8 grid grid-cols-6">
                     <div className="col-span-4">
-                        <Comments />
+                        <Comments animeId={params.animeId} episodeId={params.episodeId} />
                     </div>
                 </div>
                 <div className="pt-6">

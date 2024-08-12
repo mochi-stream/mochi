@@ -10,8 +10,7 @@ datasource db {
 }
 
 model User {
-  id             String   @id @default(uuid())
-  externalUserId String   @unique
+  id             String   @unique @id
   email          String   @unique
   imageUrl       String   @db.Text
   name           String?  @db.Text
@@ -98,7 +97,7 @@ model Notifications {
   message   String
   seen      Boolean  @default(false)
   createdAt DateTime @default(now())
-  user      User     @relation(fields: [userId], references: [externalUserId])
+  user      User     @relation(fields: [userId], references: [id])
 
   @@index([userId])
 }

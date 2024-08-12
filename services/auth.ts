@@ -8,7 +8,7 @@ import { ClerkUser } from "@/types/user";
 export async function getClerk() {
   const self = await currentUser();
   if (!self || !self.username) {
-    return null
+    return null;
   }
 
   return {
@@ -25,7 +25,7 @@ export async function getSelf() {
     throw new Error("Unauthorized");
   }
   const user = await db.user.findUnique({
-    where: { externalUserId: self.id },
+    where: { id: self.id },
   });
   if (!user) {
     throw new Error("User not found");

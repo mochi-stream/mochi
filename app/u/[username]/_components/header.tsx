@@ -69,7 +69,7 @@ export function ProfileHeader({ user }: { user: ProfileUser }) {
               Followings • 1 Karma
             </p>
           </div>
-          {userId && userId === user.externalUserId ? (
+          {userId && userId === user.id ? (
             <Link href={`/settings/profile`}>
               <Button variant="default" size="sm" className="w-full lg:w-auto">
                 Edit Profile
