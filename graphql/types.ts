@@ -4702,6 +4702,52 @@ export type HomePageAnimeQueryVariables = Exact<{
 
 export type HomePageAnimeQuery = { __typename?: 'Query', trending?: { __typename?: 'Page', media?: Array<{ __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, averageScore?: number | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null> | null } | null, season?: { __typename?: 'Page', media?: Array<{ __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, averageScore?: number | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null> | null } | null, nextSeason?: { __typename?: 'Page', media?: Array<{ __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, averageScore?: number | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null> | null } | null, popular?: { __typename?: 'Page', media?: Array<{ __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, averageScore?: number | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null> | null } | null, top?: { __typename?: 'Page', media?: Array<{ __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, averageScore?: number | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null> | null } | null };
 
+export type AutocompleteSearchQueryVariables = Exact<{
+  search?: InputMaybe<Scalars['String']['input']>;
+  isAdult?: InputMaybe<Scalars['Boolean']['input']>;
+  sort?: InputMaybe<Array<InputMaybe<MediaSort>> | InputMaybe<MediaSort>>;
+}>;
+
+
+export type AutocompleteSearchQuery = { __typename?: 'Query', Page?: { __typename?: 'Page', media?: Array<{ __typename?: 'Media', id: number, description?: string | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null> | null } | null };
+
+export type SearchPageQueryVariables = Exact<{
+  page?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  type?: InputMaybe<MediaType>;
+  isAdult?: InputMaybe<Scalars['Boolean']['input']>;
+  search?: InputMaybe<Scalars['String']['input']>;
+  format?: InputMaybe<Array<InputMaybe<MediaFormat>> | InputMaybe<MediaFormat>>;
+  status?: InputMaybe<MediaStatus>;
+  countryOfOrigin?: InputMaybe<Scalars['CountryCode']['input']>;
+  source?: InputMaybe<MediaSource>;
+  season?: InputMaybe<MediaSeason>;
+  seasonYear?: InputMaybe<Scalars['Int']['input']>;
+  year?: InputMaybe<Scalars['String']['input']>;
+  onList?: InputMaybe<Scalars['Boolean']['input']>;
+  yearLesser?: InputMaybe<Scalars['FuzzyDateInt']['input']>;
+  yearGreater?: InputMaybe<Scalars['FuzzyDateInt']['input']>;
+  episodeLesser?: InputMaybe<Scalars['Int']['input']>;
+  episodeGreater?: InputMaybe<Scalars['Int']['input']>;
+  durationLesser?: InputMaybe<Scalars['Int']['input']>;
+  durationGreater?: InputMaybe<Scalars['Int']['input']>;
+  chapterLesser?: InputMaybe<Scalars['Int']['input']>;
+  chapterGreater?: InputMaybe<Scalars['Int']['input']>;
+  volumeLesser?: InputMaybe<Scalars['Int']['input']>;
+  volumeGreater?: InputMaybe<Scalars['Int']['input']>;
+  licensedBy?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>> | InputMaybe<Scalars['Int']['input']>>;
+  isLicensed?: InputMaybe<Scalars['Boolean']['input']>;
+  genres?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>> | InputMaybe<Scalars['String']['input']>>;
+  excludedGenres?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>> | InputMaybe<Scalars['String']['input']>>;
+  tags?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>> | InputMaybe<Scalars['String']['input']>>;
+  excludedTags?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>> | InputMaybe<Scalars['String']['input']>>;
+  minimumTagRank?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<Array<InputMaybe<MediaSort>> | InputMaybe<MediaSort>>;
+}>;
+
+
+export type SearchPageQuery = { __typename?: 'Query', Page?: { __typename?: 'Page', pageInfo?: { __typename?: 'PageInfo', total?: number | null, perPage?: number | null, currentPage?: number | null, lastPage?: number | null, hasNextPage?: boolean | null } | null, media?: Array<{ __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, averageScore?: number | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null> | null } | null };
+
 export type StreamPageAnimeQueryVariables = Exact<{
   id?: InputMaybe<Scalars['Int']['input']>;
   type?: InputMaybe<MediaType>;
@@ -5047,6 +5093,167 @@ export type HomePageAnimeQueryHookResult = ReturnType<typeof useHomePageAnimeQue
 export type HomePageAnimeLazyQueryHookResult = ReturnType<typeof useHomePageAnimeLazyQuery>;
 export type HomePageAnimeSuspenseQueryHookResult = ReturnType<typeof useHomePageAnimeSuspenseQuery>;
 export type HomePageAnimeQueryResult = Apollo.QueryResult<HomePageAnimeQuery, HomePageAnimeQueryVariables>;
+export const AutocompleteSearchDocument = gql`
+    query AutocompleteSearch($search: String, $isAdult: Boolean = false, $sort: [MediaSort] = [POPULARITY_DESC, SCORE_DESC]) {
+  Page(page: 1, perPage: 10) {
+    media(search: $search, isAdult: $isAdult, sort: $sort) {
+      id
+      title {
+        userPreferred
+      }
+      coverImage {
+        extraLarge
+      }
+      description
+    }
+  }
+}
+    `;
+
+/**
+ * __useAutocompleteSearchQuery__
+ *
+ * To run a query within a React component, call `useAutocompleteSearchQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAutocompleteSearchQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAutocompleteSearchQuery({
+ *   variables: {
+ *      search: // value for 'search'
+ *      isAdult: // value for 'isAdult'
+ *      sort: // value for 'sort'
+ *   },
+ * });
+ */
+export function useAutocompleteSearchQuery(baseOptions?: Apollo.QueryHookOptions<AutocompleteSearchQuery, AutocompleteSearchQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AutocompleteSearchQuery, AutocompleteSearchQueryVariables>(AutocompleteSearchDocument, options);
+      }
+export function useAutocompleteSearchLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AutocompleteSearchQuery, AutocompleteSearchQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AutocompleteSearchQuery, AutocompleteSearchQueryVariables>(AutocompleteSearchDocument, options);
+        }
+export function useAutocompleteSearchSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<AutocompleteSearchQuery, AutocompleteSearchQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<AutocompleteSearchQuery, AutocompleteSearchQueryVariables>(AutocompleteSearchDocument, options);
+        }
+export type AutocompleteSearchQueryHookResult = ReturnType<typeof useAutocompleteSearchQuery>;
+export type AutocompleteSearchLazyQueryHookResult = ReturnType<typeof useAutocompleteSearchLazyQuery>;
+export type AutocompleteSearchSuspenseQueryHookResult = ReturnType<typeof useAutocompleteSearchSuspenseQuery>;
+export type AutocompleteSearchQueryResult = Apollo.QueryResult<AutocompleteSearchQuery, AutocompleteSearchQueryVariables>;
+export const SearchPageDocument = gql`
+    query SearchPage($page: Int = 1, $id: Int, $type: MediaType, $isAdult: Boolean = false, $search: String, $format: [MediaFormat], $status: MediaStatus, $countryOfOrigin: CountryCode, $source: MediaSource, $season: MediaSeason, $seasonYear: Int, $year: String, $onList: Boolean, $yearLesser: FuzzyDateInt, $yearGreater: FuzzyDateInt, $episodeLesser: Int, $episodeGreater: Int, $durationLesser: Int, $durationGreater: Int, $chapterLesser: Int, $chapterGreater: Int, $volumeLesser: Int, $volumeGreater: Int, $licensedBy: [Int], $isLicensed: Boolean, $genres: [String], $excludedGenres: [String], $tags: [String], $excludedTags: [String], $minimumTagRank: Int, $sort: [MediaSort] = [POPULARITY_DESC, SCORE_DESC]) {
+  Page(page: $page, perPage: 20) {
+    pageInfo {
+      total
+      perPage
+      currentPage
+      lastPage
+      hasNextPage
+    }
+    media(
+      id: $id
+      type: $type
+      season: $season
+      format_in: $format
+      status: $status
+      countryOfOrigin: $countryOfOrigin
+      source: $source
+      search: $search
+      onList: $onList
+      seasonYear: $seasonYear
+      startDate_like: $year
+      startDate_lesser: $yearLesser
+      startDate_greater: $yearGreater
+      episodes_lesser: $episodeLesser
+      episodes_greater: $episodeGreater
+      duration_lesser: $durationLesser
+      duration_greater: $durationGreater
+      chapters_lesser: $chapterLesser
+      chapters_greater: $chapterGreater
+      volumes_lesser: $volumeLesser
+      volumes_greater: $volumeGreater
+      licensedById_in: $licensedBy
+      isLicensed: $isLicensed
+      genre_in: $genres
+      genre_not_in: $excludedGenres
+      tag_in: $tags
+      tag_not_in: $excludedTags
+      minimumTagRank: $minimumTagRank
+      sort: $sort
+      isAdult: $isAdult
+    ) {
+      ...media
+    }
+  }
+}
+    ${MediaFragmentDoc}`;
+
+/**
+ * __useSearchPageQuery__
+ *
+ * To run a query within a React component, call `useSearchPageQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchPageQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchPageQuery({
+ *   variables: {
+ *      page: // value for 'page'
+ *      id: // value for 'id'
+ *      type: // value for 'type'
+ *      isAdult: // value for 'isAdult'
+ *      search: // value for 'search'
+ *      format: // value for 'format'
+ *      status: // value for 'status'
+ *      countryOfOrigin: // value for 'countryOfOrigin'
+ *      source: // value for 'source'
+ *      season: // value for 'season'
+ *      seasonYear: // value for 'seasonYear'
+ *      year: // value for 'year'
+ *      onList: // value for 'onList'
+ *      yearLesser: // value for 'yearLesser'
+ *      yearGreater: // value for 'yearGreater'
+ *      episodeLesser: // value for 'episodeLesser'
+ *      episodeGreater: // value for 'episodeGreater'
+ *      durationLesser: // value for 'durationLesser'
+ *      durationGreater: // value for 'durationGreater'
+ *      chapterLesser: // value for 'chapterLesser'
+ *      chapterGreater: // value for 'chapterGreater'
+ *      volumeLesser: // value for 'volumeLesser'
+ *      volumeGreater: // value for 'volumeGreater'
+ *      licensedBy: // value for 'licensedBy'
+ *      isLicensed: // value for 'isLicensed'
+ *      genres: // value for 'genres'
+ *      excludedGenres: // value for 'excludedGenres'
+ *      tags: // value for 'tags'
+ *      excludedTags: // value for 'excludedTags'
+ *      minimumTagRank: // value for 'minimumTagRank'
+ *      sort: // value for 'sort'
+ *   },
+ * });
+ */
+export function useSearchPageQuery(baseOptions?: Apollo.QueryHookOptions<SearchPageQuery, SearchPageQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SearchPageQuery, SearchPageQueryVariables>(SearchPageDocument, options);
+      }
+export function useSearchPageLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchPageQuery, SearchPageQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SearchPageQuery, SearchPageQueryVariables>(SearchPageDocument, options);
+        }
+export function useSearchPageSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<SearchPageQuery, SearchPageQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<SearchPageQuery, SearchPageQueryVariables>(SearchPageDocument, options);
+        }
+export type SearchPageQueryHookResult = ReturnType<typeof useSearchPageQuery>;
+export type SearchPageLazyQueryHookResult = ReturnType<typeof useSearchPageLazyQuery>;
+export type SearchPageSuspenseQueryHookResult = ReturnType<typeof useSearchPageSuspenseQuery>;
+export type SearchPageQueryResult = Apollo.QueryResult<SearchPageQuery, SearchPageQueryVariables>;
 export const StreamPageAnimeDocument = gql`
     query StreamPageAnime($id: Int, $type: MediaType, $isAdult: Boolean) {
   Media(id: $id, type: $type, isAdult: $isAdult) {

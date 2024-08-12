@@ -53,11 +53,11 @@ export function AnimeList({ type, list }: AnimeListProps) {
           <Link href={`/anime/${anime.id}`}>
             <div className="relative">
               <Image
-
                 src={anime.coverImage?.extraLarge || "default.png"}
                 alt={anime.title?.userPreferred || "No Title"}
                 width={460}
                 height={650}
+                loading="lazy"
                 className="object-cover w-full h-[300px] lg:h-[370px] rounded-lg transition-all hover:opacity-80"
               />
               {/* Render the anime details */}

@@ -19,6 +19,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { MediaFragment } from "@/graphql/types";
 import { useUser } from "@/app/_components/context";
 import { Button } from "@/components/ui/button";
+import CustomImage from "../ui/custom-image";
 
 interface AnimeListProps {
     quantity?: number;
@@ -62,8 +63,8 @@ export function AnimeList({
                     className="relative overflow-hidden cursor-pointer group"
                 >
                     <Link key={index} href={`/anime/${anime.id}`} className="z-[80]">
-                        <Image
-
+                        <CustomImage
+                            index={index}
                             src={anime.coverImage?.extraLarge || "default.png"}
                             alt={anime.title?.userPreferred || "No Title"}
                             width={460}

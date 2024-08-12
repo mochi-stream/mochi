@@ -53,6 +53,7 @@ interface Reply {
   content: string;
   createdAt: Date; // Adjusted to Date
   updatedAt: Date; // Added updatedAt if needed
+  userId: string;
   commentId: string;
 }
 
@@ -65,6 +66,6 @@ export interface Comment {
   createdAt: Date; // Adjusted to Date
   updatedAt: Date; // Added updatedAt if needed
   userId: string;
-  user: User
+  user: User;
   // Add any other properties as needed
 }

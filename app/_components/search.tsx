@@ -14,7 +14,6 @@ import { cn } from "@/lib/utils";
 import lodash from "lodash";
 
 import { searchAnime } from "@/lib/anime";
-// import { AnilistResult } from "@/types/anime";
 
 import qs from "query-string";
 
@@ -137,7 +136,7 @@ export default function SearchDialog() {
       </Button>
 
 
-      {/* {searchValue && (
+      {searchValue && (
         <div className="absolute top-full left-0 right-0 mt-2 w-[20rem] shadow-lg bg-background rounded-lg z-20 grid gap-1 p-4">
           {isLoading ? (
             <>
@@ -170,7 +169,7 @@ export default function SearchDialog() {
             ))
           ) : null}
         </div>
-      )} */}
+      )}
     </div>
 
   );
