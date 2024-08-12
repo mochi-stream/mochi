@@ -20,13 +20,76 @@ model User {
   updatedAt      DateTime @updatedAt
   bio            String?
 
-  notifications Notifications[]
-  watchHistory  WatchHistory[]
-  collection    Collection[]
+  notifications  Notifications[]
+  watchHistory   WatchHistory[]
+  collection     Collection[]
 
   following  Follow[] @relation("Following")
   followedBy Follow[] @relation("FollowedBy")
+
+  comments   Comment[]
+  likes      Like[]
+  dislikes   Dislike[]
+  replies    Reply[]
 }
+
+model Comment {
+  id        String   @id @default(uuid())
+  content   String   @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  animeId   String
+  episodeId String
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  likes     Like[]
+  dislikes  Dislike[]
+  replies   Reply[]
+
+  @@index([animeId, episodeId])
+}
+
+model Like {
+  id        String   @id @default(uuid())
+  userId    String
+  commentId String?  @map("comment_id")
+  replyId   String?  @map("reply_id")
+
+  user      User     @relation(fields: [userId], references: [id])
+  comment   Comment? @relation(fields: [commentId], references: [id], map: "Like_comment_fk")
+  reply     Reply?   @relation(fields: [replyId], references: [id], map: "Like_reply_fk")
+}
+
+model Dislike {
+  id        String   @id @default(uuid())
+  userId    String
+  commentId String?  @map("comment_id")
+  replyId   String?  @map("reply_id")
+
+  user      User     @relation(fields: [userId], references: [id])
+  comment   Comment? @relation(fields: [commentId], references: [id], map: "Dislike_comment_fk")
+  reply     Reply?   @relation(fields: [replyId], references: [id], map: "Dislike_reply_fk")
+}
+
+model Reply {
+  id         String   @id @default(uuid())
+  content    String   @db.Text
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  userId     String
+  commentId  String
+
+  user       User     @relation(fields: [userId], references: [id])
+  comment    Comment  @relation(fields: [commentId], references: [id])
+  likes      Like[]
+  dislikes   Dislike[]
+
+  @@index([commentId])
+}
+
 
 model Notifications {
   id        String   @id @default(cuid())

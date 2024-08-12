@@ -33,6 +33,7 @@
     "axios": "^1.7.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "date-fns": "^3.6.0",
     "dotenv": "^16.4.5",
     "graphql": "^16.9.0",
     "hls.js": "^1.5.14",
