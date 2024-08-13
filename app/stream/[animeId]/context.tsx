@@ -10,7 +10,7 @@ import { createContext, useContext, ReactNode } from "react";
 import {
     MediaType,
     StreamPageAnimeQuery,
-    StreamPageAnimeQueryVariables
+    StreamPageAnimeQueryVariables, MediaStreamingEpisode,
 } from "@/graphql/types";
 import { Episode } from "@/types/anime";
 import { getAnimeDetails } from "@/lib/anime";
@@ -19,6 +19,7 @@ import { getAnimeDetails } from "@/lib/anime";
 interface AnimeInfoContextValue {
     info: StreamPageAnimeQuery | null;
     episodes: Episode[];
+    episodesParsed: ProcessedEpisode[];
     isLoading: boolean;
 }
 
@@ -67,9 +68,20 @@ export default function AnimeInfoProvider({ children, animeId }: AnimeInfoProvid
         fetchEpisodes();
     }, [animeId]);
 
+    const initialPreviousEpisodeNumber = 0;
+
+    const streamingEpisodes = animeInfo?.Media?.streamingEpisodes || [];
+    const filteredEpisodes = streamingEpisodes.filter(
+        (episode): episode is MediaStreamingEpisode => episode !== null
+    );
+
+    const episodesParsed = processEpisodes(filteredEpisodes, initialPreviousEpisodeNumber);
+
+
     const animeInfoContextValue: AnimeInfoContextValue = {
         info: animeInfo || null,
         episodes,
+        episodesParsed: processEpisodes(episodesParsed, initialPreviousEpisodeNumber),
         isLoading: isLoadingInfo || isLoadingEpisodes
     };
 
@@ -78,4 +90,36 @@ export default function AnimeInfoProvider({ children, animeId }: AnimeInfoProvid
             {children}
         </AnimeInfoContext.Provider>
     );
+}
+
+interface ProcessedEpisode {
+    title: string;
+    number: number;
+    thumbnail: string;
+}
+
+function processEpisodes(list: MediaStreamingEpisode[], initialPreviousEpisodeNumber: number): ProcessedEpisode[] {
+    let previousEpisodeNumber = initialPreviousEpisodeNumber;
+
+    return list
+        .map((episode) => {
+            // Attempt to match the episode title with the regex pattern
+            const match = episode.title?.match(/Episode (\d+)( - (.+))?/);
+            let episodeNumber = previousEpisodeNumber + 0.5; // Default to previous + 0.5 if no match
+            let title = episode.title; // Default to the original title if match[3] doesn't exist
+
+            if (match) {
+                // Extract episode number and title if available
+                episodeNumber = match[1] ? parseInt(match[1], 10) : episodeNumber;
+                title = match[3] || title;
+            }
+
+            previousEpisodeNumber = episodeNumber; // Update previous episode number
+
+            // Return an object with the episode details
+            return {
+                title: title || "Unknown", number: episodeNumber || 0, thumbnail: episode.thumbnail || ""
+            };
+        })
+        .sort((a, b) => a.number - b.number); // Sort by episode number
 }

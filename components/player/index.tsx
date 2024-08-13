@@ -105,6 +105,8 @@ export default function Player({
             data-type="vtt"
           />
         )}
+
+        <Poster src={poster} className="absolute inset-0 top-0 left-0 w-full h-fit -z-[4] aspect-video" />
       </MediaProvider>
       <VideoLayout thumbnails={thumbnail} />
     </MediaPlayer>

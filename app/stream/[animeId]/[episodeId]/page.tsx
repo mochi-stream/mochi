@@ -27,7 +27,7 @@ interface WatchPageProps {
 
 export default function WatchPage({ params }: WatchPageProps) {
     const { isOnline } = useNetworkStatus();
-    const { info, isLoading, episodes } = useAnimeInfo();
+    const { info, isLoading, episodes, episodesParsed } = useAnimeInfo();
     const [matchingEpisode, setMatchingEpisode] = useState<Episode>();
 
     useEffect(() => {
@@ -74,7 +74,7 @@ export default function WatchPage({ params }: WatchPageProps) {
                 <div className="grid grid-cols-12 gap-4">
                     <div className="col-span-12 lg:col-span-8 aspect-video">
                         {matchingEpisode ? (
-                            <PlayerContainer episodeId={matchingEpisode.id} />
+                            <PlayerContainer episodeId={matchingEpisode.id} poster={episodesParsed?.find((episodeParsed) => episodeParsed.number === parseInt(params.episodeId))?.thumbnail} />
                         ) : (
                             <Skeleton className="aspect-video" />
                         )}

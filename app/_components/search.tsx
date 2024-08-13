@@ -1,3 +1,5 @@
+// TODO: Getting Rate Limited easily. If cause much issue we will move to consumet.
+
 import { useState, useCallback, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 
@@ -51,6 +53,8 @@ export default function SearchDialog() {
     refetch({ search: userInput })
       .then((response) => {
         setResults(response.data.Page);
+        console.log("Old REsults", results)
+        console.log("New REsults", response.data.Page)
       })
       .catch((error) => {
         toast.error("Failed to load search results. Please try again later.");
@@ -90,9 +94,11 @@ export default function SearchDialog() {
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.ctrlKey && event.key === "k") {
+      if (inputRef.current && event.ctrlKey && event.key === "k") {
         event.preventDefault();
-        inputRef.current?.focus();
+        inputRef.current.focus();
+        const length = inputRef.current.value.length;
+        inputRef.current.setSelectionRange(length, length);
         setOpen(true);
       }
     };
@@ -175,8 +181,8 @@ export default function SearchDialog() {
                 </div>
               ))}
             </>
-          ) : results?.media && results?.media.length > 1 ? (
-            results?.media.slice(0, 4).map((result, index: number) => (
+          ) : results?.media && results?.media.length > 0 ? (
+            results?.media.slice(0, 3).map((result, index: number) => (
               <Link
                 href={`/anime/${result?.id}`}
                 key={index}
@@ -214,7 +220,10 @@ export default function SearchDialog() {
                 </div>
               </Link>
             ))
-          ) : null}
+          ) : <div className="text-center text-sm text-muted-foreground">
+            No results found {results?.media && results?.media.length > 0 ? 'for "' + searchValue + '"' : ''}
+          </div>
+          }
         </div>
       )}
     </div>

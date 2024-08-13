@@ -13,8 +13,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export default function PlayerContainer({
     episodeId,
+    poster
 }: {
     episodeId: string;
+    poster?: string;
 }) {
     const [videoDetails, setVideoDetails] = useState<VideoDetails>();
 
@@ -35,6 +37,7 @@ export default function PlayerContainer({
         {videoDetails ? (
             <Player
                 title="Anime"
+                poster={poster}
                 src={`${CORS_URL}/${videoDetails?.sources[0].url}`}
                 intro={videoDetails.intro}
                 outro={videoDetails.outro}

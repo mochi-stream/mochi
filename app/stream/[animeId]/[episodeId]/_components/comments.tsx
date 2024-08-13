@@ -1,3 +1,5 @@
+// TODO: Sort from DB
+
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,8 +11,8 @@ import {
   ThumbsUpIcon,
   ArrowDown,
   ArrowUp,
-  DeleteIcon,
   TrashIcon,
+  ArrowDownUp,
   PencilIcon,
 } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
@@ -28,6 +30,13 @@ import { Comment } from "@/types/anime";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 import { onDeleteComment } from "@/actions/comment";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+} from "@/components/ui/dropdown-menu";
 
 export default function Comments({
   animeId,
@@ -38,6 +47,7 @@ export default function Comments({
 }) {
   const quantity = 3;
 
+  const [sortOption, setSortOption] = useState<'newest' | 'oldest'>('newest');
   const [comments, setComments] = useState<Comment[]>([]);
   const [loading, setLoading] = useState(true);
   const [commentContent, setCommentContent] = useState("");
@@ -49,6 +59,23 @@ export default function Comments({
   const displayedList = isExpanded ? comments : comments?.slice(0, quantity);
   const toggleExpanded = () => {
     setIsExpanded(!isExpanded);
+  };
+
+  const handleSortChange = (value: string) => {
+    // Use a type assertion to safely cast the value
+    const sortOption = value as 'newest' | 'oldest';
+
+    if (sortOption === 'newest' || sortOption === 'oldest') {
+      setSortOption(sortOption);
+      const sortedComments = [...comments].sort((a, b) => {
+        if (sortOption === 'newest') {
+          return b.createdAt.getTime() - a.createdAt.getTime();
+        } else {
+          return a.createdAt.getTime() - b.createdAt.getTime();
+        }
+      });
+      setComments(sortedComments);
+    }
   };
 
   useEffect(() => {
@@ -125,6 +152,13 @@ export default function Comments({
     if (e.key === "Escape" && showEmojiPicker) {
       setShowEmojiPicker(false);
     }
+
+
+    if (e.ctrlKey && e.key === "e") {
+      e.preventDefault();
+      setShowEmojiPicker(!showEmojiPicker);
+    }
+
   };
 
   const onEmojiClick = (e: { native: string }) => {
@@ -158,7 +192,27 @@ export default function Comments({
 
   return (
     <div className="grid gap-6">
-      <h2 className="text-[1.4rem]">Comments</h2>
+      <div className="flex items-center justify-between">
+        <h2 className="text-[1.4rem]">Comments</h2>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="shrink-0">
+              <ArrowDownUp className="w-4 h-4 mr-2" />
+              Sort by
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-[200px]" align="end">
+            <DropdownMenuRadioGroup value={sortOption} onValueChange={handleSortChange}>
+              <DropdownMenuRadioItem value="newest">
+                Newest
+              </DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="oldest">
+                Oldest
+              </DropdownMenuRadioItem>
+            </DropdownMenuRadioGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
       {isAuthenticated && (
         <div className="flex gap-4">
           <Avatar className="w-10 h-10 border">
