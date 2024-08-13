@@ -1,11 +1,3 @@
-/**
- * A component that displays the user's avatar and a dropdown menu with various
- * actions related to the user.
- *
- * @param user - The user object containing the user's information.
- * @returns The AvatarDialog component.
- */
-
 "use client";
 
 import Link from "next/link";
@@ -32,8 +24,6 @@ import { toast } from "sonner";
 import { useUser } from "./context";
 
 export default function AvatarDialog({ user }: { user: ClerkUser }) {
-
-  const { isAuthenticated } = useUser();
 
   const { signOut } = useClerk();
   const toastShow = () => {

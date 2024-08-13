@@ -1,13 +1,7 @@
-/**
- * Component that displays the search results.
- * Fetches the data from the API and displays a loading skeleton while fetching.
- */
-
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 
 import { searchAnime } from "@/lib/anime";
-// import { AnilistResult } from "@/types/anime";
 
 import {
   DropdownMenu,
@@ -18,39 +12,38 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { Button } from "@/components/ui/button";
-import { AnimeList, AnimeListSkeleton } from "@/components/anime/anime-list";
+import { AnimeList, AnimeListSkeleton } from "@/components/anime/list";
 
 import { ArrowDownUp } from "lucide-react";
 
+import { useQuery } from "@apollo/client";
+import {
+  SearchPageQuery,
+  SearchPageQueryVariables
+} from "@/graphql/types";
+
+import { SEARCH_PAGE_QUERY } from "@/graphql/queries/searchPageQuery";
+
+
 export default function SearchResults() {
-  // Get the search parameters from the URL
   const searchParams = useSearchParams();
 
-  // State to store the search results
   const [searchResults, setSearchResults] = useState<any[]>([]);
 
-  // State to indicate if the search results are being loaded
   const [isLoading, setIsLoading] = useState(false);
 
-  // State to indicate if there are more pages of search results to load
   const [hasNextPage, setHasNextPage] = useState(false);
 
-  // State to keep track of the current page of search results being loaded
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Ref to the IntersectionObserver instance
   const observer = useRef<IntersectionObserver | null>(null);
 
-  // Extract and capitalize format from query
   const format = searchParams.get("format")?.toUpperCase() || "";
 
-  /**
-   * Fetches the search results from the API.
-   * @param page - The page number of the search results to fetch.
-   */
   const fetchSearchResults = useCallback(
     async (page: number) => {
-      const query = searchParams.get("query") || undefined; // Ensure query is fetched from params
+      const query = searchParams.get("query") || undefined;
+
       if (!query) return;
       setIsLoading(true);
       try {
@@ -136,21 +129,18 @@ export default function SearchResults() {
         </DropdownMenu>
       </div>
 
-      {/* Display the search results */}
       {isLoading && currentPage === 1 ? (
-        <AnimeListSkeleton type="search" />
+        <AnimeListSkeleton />
       ) : (
-        <AnimeList type="search" list={searchResults} />
+        <AnimeList list={searchResults} />
       )}
 
-      {/* Display a message if there are no search results */}
       {!isLoading && searchResults.length === 0 && (
         <div className="text-center mt-6">
           <p className="text-muted-foreground">No results found</p>
         </div>
       )}
 
-      {/* Display a sentinel element to load more results */}
       {hasNextPage && (
         <div id="sentinel" className="flex justify-center mt-4"></div>
       )}

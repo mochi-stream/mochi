@@ -1,7 +1,3 @@
-/**
- * Renders the main application component.
- */
-
 "use client";
 
 import { useQuery, gql } from "@apollo/client";
@@ -54,11 +50,12 @@ export default function App() {
           </div>
           {data && data.trending && data.trending.media ? (
             <AnimeList list={data.trending.media} />
-            // TODO: Turl this into a spotlight
           ) : (
             <AnimeListSkeleton />
           )}
         </div>
+
+        {/* FEAT: Show Recommended Anime Based on MAL History */}
 
         <div className="mt-6">
           <div>
@@ -66,7 +63,6 @@ export default function App() {
           </div>
           {data && data.season && data.season.media ? (
             <AnimeList list={data.season.media} />
-            // Also add genres sidebar
           ) : (
             <AnimeListSkeleton />
           )}
@@ -100,7 +96,6 @@ export default function App() {
           </div>
           {data && data.nextSeason && data.nextSeason.media ? (
             <AnimeList list={data.nextSeason.media} />
-            // Also add genres sidebar
           ) : (
             <AnimeListSkeleton />
           )}

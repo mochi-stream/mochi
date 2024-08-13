@@ -1,9 +1,10 @@
-// TODO: Getting Rate Limited easily. If cause much issue we will move to consumet.
+// FIXME: Getting Rate Limited easily. If cause much issue we will move to consumet.
 
 import { useState, useCallback, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 
 import Link from "next/link";
+import Image from "next/image";
 
 import { cn } from "@/lib/utils";
 
@@ -28,7 +29,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Search, X } from "lucide-react";
 
 import { toast } from "sonner";
-import Image from "next/image";
 
 export default function SearchDialog() {
   const [searchValue, setSearchValue] = useState("");
@@ -53,8 +53,6 @@ export default function SearchDialog() {
     refetch({ search: userInput })
       .then((response) => {
         setResults(response.data.Page);
-        console.log("Old REsults", results)
-        console.log("New REsults", response.data.Page)
       })
       .catch((error) => {
         toast.error("Failed to load search results. Please try again later.");
@@ -169,10 +167,8 @@ export default function SearchDialog() {
                   key={index}
                   className="flex items-center rounded-md p-2 space-x-4 animate-pulse"
                 >
-                  {/* Skeleton for Image on the left */}
                   <Skeleton className="w-20 h-28 rounded-md"></Skeleton>
 
-                  {/* Skeleton for Title and Description on the right */}
                   <div className="flex-1 space-y-2">
                     <Skeleton className="w-3/4 h-4 rounded"></Skeleton>
                     <Skeleton className="w-full h-3 rounded"></Skeleton>
@@ -190,7 +186,6 @@ export default function SearchDialog() {
                 className="flex items-center rounded-md hover:bg-muted/50 transition-colors p-2"
                 prefetch={false}
               >
-                {/* Image on the left */}
                 <div className="w-20 h-28 mr-4">
                   <Image
                     src={result?.coverImage?.extraLarge || '/default-cover-image.jpg'}
@@ -201,7 +196,6 @@ export default function SearchDialog() {
                   />
                 </div>
 
-                {/* Title and Description on the right */}
                 <div className="flex-1">
                   <div className="text-sm font-semibold text-muted-foreground mb-1">
                     {result?.title?.userPreferred || 'Untitled'}

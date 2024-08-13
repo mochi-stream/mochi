@@ -16,6 +16,8 @@ import { FULL_MEDIA_FRAGMENT } from "@/graphql/fragments/fullMediaFragment";
 
 import sanitizeHtml from 'sanitize-html';
 
+import Head from 'next/head';
+
 interface AnimePageProps {
   params: { id: string };
 }
@@ -88,6 +90,9 @@ export default function AnimePage({ params }: AnimePageProps) {
 
   return (
     <div>
+      <title>{`Stream ${data?.Media?.title?.userPreferred || "Anime"} on Mochi.`}</title>
+      <meta name="description" content={sanitizedDescription.length > 150 ? sanitizedDescription.substring(0, 150).trim() + '…' : sanitizedDescription} />
+      <meta property="og:title" content={`Stream ${data?.Media?.title?.userPreferred || "Anime"} on Mochi.`} />
       {data && data.Media && data.Media.bannerImage
         ?
         <div className="relative h-48 w-full px-2 select-none">

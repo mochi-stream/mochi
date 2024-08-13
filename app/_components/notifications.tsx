@@ -1,9 +1,3 @@
-/**
- * Renders the notifications dropdown component.
- *
- * @param {string} props.userid - The user ID used to fetch notifications
- */
-
 "use client";
 
 import { useState, useEffect } from "react";

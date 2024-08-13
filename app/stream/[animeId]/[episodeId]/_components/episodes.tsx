@@ -80,9 +80,6 @@ function mapEpisodesToProcessedEpisodes(
     anilistEpisodes: ProcessedEpisode[]
 ): ProcessedEpisode[] {
 
-    console.log(episodes);
-    console.log(anilistEpisodes);
-
     return episodes
         .map((episode) => {
             const matchedAnilistEpisode = anilistEpisodes.find(

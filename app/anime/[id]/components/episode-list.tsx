@@ -6,6 +6,7 @@ import { MediaStreamingEpisode } from "@/graphql/types";
 
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import CustomImage from "@/components/ui/custom-image";
 
 interface EpisodeListProps {
     quantity?: number;
@@ -55,8 +56,8 @@ export function EpisodeList({ list, animeId, quantity }: EpisodeListProps) {
                     processedEpisodes.slice(0, quantity).map((episode, index) => (
                         <Link href={`/stream/${animeId}/${episode.number}`} key={index}>
                             <div className="relative overflow-hidden cursor-pointer group h-[150px]">
-                                <Image
-
+                                <CustomImage
+                                    index={index}
                                     src={episode.thumbnail || "/default.png"}
                                     alt={episode.title || "No Title"}
                                     width={1080}

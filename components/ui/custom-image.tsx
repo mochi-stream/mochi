@@ -23,7 +23,7 @@ export default function CustomImage({ onLoad, index = 0, ...props }: CustomImage
     }, [index]);
 
     return (
-        <div ref={ref} className="relative group rounded-lg">
+        <div ref={ref} className="relative group rounded-lg h-full overflow-hidden">
             <Image
                 {...props}
                 style={{

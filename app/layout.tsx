@@ -1,8 +1,3 @@
-/**
- * The root layout for the application. This wraps all pages in a global
- * theme provider, clerk provider, and header.
- */
-
 import "./globals.css";
 
 import { ClerkProvider } from "@clerk/nextjs";

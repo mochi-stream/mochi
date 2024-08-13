@@ -15,6 +15,7 @@ import {
 } from "@/graphql/types";
 import { Episode } from "@/types/anime";
 import { getAnimeDetails } from "@/lib/anime";
+import { toast } from "sonner";
 
 // Define the context value type
 interface AnimeInfoContextValue {
@@ -70,7 +71,7 @@ export default function AnimeInfoProvider({
         const episodesData = await getAnimeDetails(animeId);
         setEpisodes(episodesData);
       } catch (err) {
-        console.error("Failed to fetch episodes:", err);
+        toast.error("Failed to load episodes. Please try again later.");
       } finally {
         setIsLoadingEpisodes(false);
       }

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { StaffFragment } from "@/graphql/types";
 
 import { ArrowDown, ArrowUp } from 'lucide-react';
+import CustomImage from "@/components/ui/custom-image";
 
 interface StaffListProps {
     quantity?: number;
@@ -34,8 +35,9 @@ export function StaffList({ list, quantity }: StaffListProps) {
                     key={index}
                     className="relative overflow-hidden cursor-pointer group"
                 >
-                    <Image
+                    <CustomImage
 
+                        index={index}
                         src={character?.node?.image?.large || "/default.png"}
                         alt={character?.node?.name?.userPreferred || "No Title"}
                         width={640}

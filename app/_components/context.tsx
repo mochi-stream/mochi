@@ -1,10 +1,3 @@
-/**
- * UserProvider is a React context provider that fetches the user data from
- * the clerk and provides it to its descendants.
- *
- * @returns The UserProvider component.
- */
-
 "use client";
 
 import { createContext, useContext, useState, useEffect } from "react";
@@ -40,9 +33,6 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   return <UserContext.Provider value={{ user, isAuthenticated }}>{children}</UserContext.Provider>;
 };
 
-/**
- * Custom hook to access the user data from the UserContext.
- */
 export const useUser = () => {
   return useContext(UserContext);
 };

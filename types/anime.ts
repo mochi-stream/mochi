@@ -51,8 +51,8 @@ interface Reply {
   dislikes: LikeDislike[];
   id: string;
   content: string;
-  createdAt: Date; // Adjusted to Date
-  updatedAt: Date; // Added updatedAt if needed
+  createdAt: Date;
+  updatedAt: Date;
   userId: string;
   commentId: string;
 }
@@ -63,9 +63,8 @@ export interface Comment {
   replies: Reply[];
   id: string;
   content: string;
-  createdAt: Date; // Adjusted to Date
-  updatedAt: Date; // Added updatedAt if needed
+  createdAt: Date;
+  updatedAt: Date;
   userId: string;
   user: User;
-  // Add any other properties as needed
 }
