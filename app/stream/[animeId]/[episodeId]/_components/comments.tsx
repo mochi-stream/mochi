@@ -27,6 +27,7 @@ import { toast } from "sonner";
 import { Comment } from "@/types/anime";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
+import { onDeleteComment } from "@/actions/comment";
 
 export default function Comments({
   animeId,
@@ -130,6 +131,31 @@ export default function Comments({
     setCommentContent((prev) => prev + e.native);
   };
 
+  const handleDeleteComment = async (commentId: string) => {
+    try {
+
+      if (!isAuthenticated || !user?.id) {
+        toast.error("Action Forbidden");
+        return;
+      }
+
+      // Call the deleteComment service
+      toast.promise(
+        onDeleteComment({ commentId, userId: user.id })
+          .then(() =>
+            setComments(comments.filter((comment) => comment.id !== commentId))
+          ),
+        {
+          loading: 'Deleting...',
+          success: () => "Comment deleted successfully!",
+          error: "Failed to delete comment. Please try again.",
+        }
+      );
+    } catch (error) {
+      toast.error("Failed to delete comment. Please try again.");
+    }
+  };
+
   return (
     <div className="grid gap-6">
       <h2 className="text-[1.4rem]">Comments</h2>
@@ -228,9 +254,8 @@ export default function Comments({
                   <div className="flex items-center gap-2">
                     <div className="font-semibold">
                       <Link
-                        href={`/u/${
-                          comment.user ? comment.user.username : "u/unknown"
-                        }`}
+                        href={`/u/${comment.user ? comment.user.username : "u/unknown"
+                          }`}
                       >
                         @{comment.user ? comment.user.username : "unknown"}
                       </Link>
@@ -242,7 +267,7 @@ export default function Comments({
                       })}
                     </div>
                     {new Date(comment.updatedAt) >
-                    new Date(comment.createdAt) ? (
+                      new Date(comment.createdAt) ? (
                       <span className="text-gray-500 text-xs dark:text-gray-400">
                         Edited
                       </span>
@@ -272,6 +297,7 @@ export default function Comments({
                           variant="ghost"
                           className="text-red-400"
                           size="sm"
+                          onClick={() => handleDeleteComment(comment.id)}
                         >
                           <TrashIcon className="w-4 h-4 mr-1" />
                           Delete
@@ -312,11 +338,10 @@ export default function Comments({
                             <div className="flex items-center gap-2">
                               <div className="font-semibold inline-flex items-center">
                                 <Link
-                                  href={`/u/${
-                                    reply.user
-                                      ? reply.user.username
-                                      : "u/unknown"
-                                  }`}
+                                  href={`/u/${reply.user
+                                    ? reply.user.username
+                                    : "u/unknown"
+                                    }`}
                                 >
                                   @
                                   {reply.user ? reply.user.username : "unknown"}
@@ -334,7 +359,7 @@ export default function Comments({
                                 )}
                               </div>
                               {new Date(reply.updatedAt) >
-                              new Date(reply.createdAt) ? (
+                                new Date(reply.createdAt) ? (
                                 <span className="text-gray-500 text-xs dark:text-gray-400">
                                   Edited
                                 </span>

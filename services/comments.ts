@@ -122,7 +122,19 @@ export async function createComment({
 
     return formattedComment;
   } catch (error) {
-    console.log(error);
     throw new Error("Could not create comment");
+  }
+}
+
+export async function deleteComment(commentId: string, userId: string) {
+  try {
+    await db.comment.delete({
+      where: {
+        id: commentId,
+        userId: userId,
+      },
+    });
+  } catch (error) {
+    throw new Error("Could not delete comment");
   }
 }

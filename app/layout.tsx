@@ -45,7 +45,7 @@ export default function RootLayout({
                 />
                 <Header />
                 {children}
-                <Toaster position="bottom-center" />
+                <Toaster position="bottom-center" duration={3000} />
                 <Footer />
               </div>
             </UserProvider>

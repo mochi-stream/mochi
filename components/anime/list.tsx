@@ -60,16 +60,16 @@ export function AnimeList({
             {displayedList.map((anime, index) => (
                 <div
                     key={index}
-                    className="relative overflow-hidden cursor-pointer group"
+                    className="relative overflow-hidden cursor-pointer rounded-lg group"
                 >
                     <Link key={index} href={`/anime/${anime.id}`} className="z-[80]">
                         <CustomImage
                             index={index}
-                            src={anime.coverImage?.extraLarge || "default.png"}
+                            src={anime.coverImage?.extraLarge || "/default.png"}
                             alt={anime.title?.userPreferred || "No Title"}
                             width={460}
                             height={650}
-                            className="w-full h-[320px] lg:h-[300px] rounded-lg transition-opacity object-cover opacity-80 group-hover:opacity-100"
+                            className="w-full h-[320px] lg:h-[300px] rounded-lg object-cover scale-100 group-hover:scale-105"
                         />
                     </Link>
 

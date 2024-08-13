@@ -1,3 +1,5 @@
+// TODO: REMOVE GRAPHQL IN STREAM PAGE
+
 "use client";
 
 import { useEffect, useState } from "react";

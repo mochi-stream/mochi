@@ -1,6 +1,6 @@
 // actions/comments.ts
 
-import { createComment as createCommentService } from "@/services/comments";
+import { createComment, deleteComment } from "@/services/comments";
 import { toast } from "sonner";
 
 export async function onCreateComment({
@@ -26,7 +26,7 @@ export async function onCreateComment({
     }
 
     // Call the createComment service
-    const newComment = await createCommentService({
+    const newComment = await createComment({
       animeId,
       episodeId,
       content,
@@ -39,6 +39,22 @@ export async function onCreateComment({
     return newComment;
   } catch (error) {
     toast.error("Failed to post comment. Please try again later.");
+    throw error; // Re-throw the error to be handled by the caller if needed
+  }
+}
+
+export async function onDeleteComment({
+  commentId,
+  userId,
+}: {
+  commentId: string;
+  userId: string;
+}) {
+  try {
+    // Call the deleteComment service
+    await deleteComment(commentId, userId);
+  } catch (error) {
+    toast.error("Failed to delete comment. Please try again later.");
     throw error; // Re-throw the error to be handled by the caller if needed
   }
 }

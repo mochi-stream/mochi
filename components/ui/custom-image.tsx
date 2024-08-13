@@ -23,12 +23,12 @@ export default function CustomImage({ onLoad, index = 0, ...props }: CustomImage
     }, [index]);
 
     return (
-        <div ref={ref} className="relative bg-secondary rounded-md">
+        <div ref={ref} className="relative group rounded-lg">
             <Image
                 {...props}
                 style={{
                     opacity: inView ? 1 : 0,
-                    transition: `opacity 0.2s cubic-bezier(0.3, 0.2, 0.2, 0.8) ${staggerDelay}ms`,
+                    transition: `opacity 0.2s cubic-bezier(0.3, 0.2, 0.2, 0.8) ${staggerDelay}ms, transform 0.2s ease`,
                 }}
             />
         </div>
