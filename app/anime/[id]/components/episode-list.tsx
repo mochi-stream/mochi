@@ -17,6 +17,7 @@ export function EpisodeList({ list, animeId, quantity }: EpisodeListProps) {
     quantity = quantity || 4;
 
     let previousEpisodeNumber = 0;
+    let firstEpisodeProcessed = false;
 
     const processedEpisodes = list
         .map((episode) => {
@@ -29,12 +30,21 @@ export function EpisodeList({ list, animeId, quantity }: EpisodeListProps) {
                 // Extract episode number and title if available
                 episodeNumber = match[1] ? parseInt(match[1], 10) : episodeNumber;
                 title = match[3] || title;
+                firstEpisodeProcessed = true; // Mark that we've processed an episode with a valid number
+            } else if (!firstEpisodeProcessed) {
+                // Add 1 if the first episode does not have a match
+                episodeNumber = previousEpisodeNumber + 1;
+                firstEpisodeProcessed = true; // Mark that the first episode is processed
             }
 
             previousEpisodeNumber = episodeNumber; // Update previous episode number
 
             // Return an object with the episode details
-            return { title, number: episodeNumber, thumbnail: episode.thumbnail };
+            return {
+                title,
+                number: episodeNumber,
+                thumbnail: episode.thumbnail || ""
+            };
         })
         .sort((a, b) => a.number - b.number); // Sort by episode number
 

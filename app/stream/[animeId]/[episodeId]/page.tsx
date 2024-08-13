@@ -71,7 +71,7 @@ export default function WatchPage({ params }: WatchPageProps) {
     return (
         <div>
             <div className="px-2 lg:px-12 pt-6">
-                <div className="grid grid-cols-12 gap-4">
+                <div className="grid grid-cols-12 gap-4 auto-rows-fr">
                     <div className="col-span-12 lg:col-span-8 aspect-video">
                         {matchingEpisode ? (
                             <PlayerContainer episodeId={matchingEpisode.id} poster={episodesParsed?.find((episodeParsed) => episodeParsed.number === parseInt(params.episodeId))?.thumbnail} />
@@ -81,7 +81,7 @@ export default function WatchPage({ params }: WatchPageProps) {
                     </div>
                     <div className="col-span-12 lg:col-span-4">
                         {matchingEpisode ? (
-                            <Episodes episodes={episodes} />
+                            <Episodes episodes={episodes} anilistEpisodes={episodesParsed} currentEpisodeNumber={matchingEpisode.number} />
                         ) : (
                             <Skeleton className="h-full" />
                         )}

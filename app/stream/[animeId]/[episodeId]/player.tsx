@@ -1,3 +1,5 @@
+// TODO: fix poster
+
 const CORS_URL = process.env.NEXT_PUBLIC_CORS_URL;
 
 import { useEffect, useState } from "react";

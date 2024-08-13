@@ -80,7 +80,7 @@ export default function Player({
 
   return (
     <MediaPlayer
-      className="w-full aspect-video text-white font-sans overflow-hidden rounded-sm z-[5] ring-media-focus data-[focus]:ring-4"
+      className="w-full aspect-video text-white font-sans overflow-hidden rounded-sm z-[5] ring-media-focus data-[focus]:ring-4 border border-primary/5"
       title={title}
       poster={poster}
       src={src}
@@ -106,7 +106,7 @@ export default function Player({
           />
         )}
 
-        <Poster src={poster} className="absolute inset-0 top-0 left-0 w-full h-fit -z-[4] aspect-video" />
+        {/* <Poster src={poster} className="w-full h-fit -z-[5] aspect-video" /> */}
       </MediaProvider>
       <VideoLayout thumbnails={thumbnail} />
     </MediaPlayer>
