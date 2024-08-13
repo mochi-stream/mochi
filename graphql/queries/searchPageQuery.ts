@@ -1,4 +1,5 @@
 import { gql } from "@apollo/client";
+import { MEDIA_FRAGMENT } from "../fragments/mediaFragment";
 
 export const SEARCH_PAGE_QUERY = gql`
   query SearchPage(
@@ -78,4 +79,6 @@ export const SEARCH_PAGE_QUERY = gql`
       }
     }
   }
+
+  ${MEDIA_FRAGMENT}
 `;

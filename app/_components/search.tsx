@@ -42,6 +42,7 @@ export default function SearchDialog() {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const { data, loading, error, refetch } = useQuery<AutocompleteSearchQuery, AutocompleteSearchQueryVariables>(AUTOCOMPLETE_SEARCH_QUERY, {
+    skip: !debouncedSearchValue,
     variables: { search: debouncedSearchValue },
   });
 

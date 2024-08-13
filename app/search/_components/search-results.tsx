@@ -1,8 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 
-import { searchAnime } from "@/lib/anime";
-
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -18,71 +16,73 @@ import { ArrowDownUp } from "lucide-react";
 
 import { useQuery } from "@apollo/client";
 import {
+  MediaType,
   SearchPageQuery,
   SearchPageQueryVariables
 } from "@/graphql/types";
 
 import { SEARCH_PAGE_QUERY } from "@/graphql/queries/searchPageQuery";
 
-
 export default function SearchResults() {
   const searchParams = useSearchParams();
 
   const [searchResults, setSearchResults] = useState<any[]>([]);
 
-  const [isLoading, setIsLoading] = useState(false);
-
-  const [hasNextPage, setHasNextPage] = useState(false);
-
   const [currentPage, setCurrentPage] = useState(1);
 
   const observer = useRef<IntersectionObserver | null>(null);
 
-  const format = searchParams.get("format")?.toUpperCase() || "";
+  const query = searchParams.get("query") || undefined;
 
-  const fetchSearchResults = useCallback(
-    async (page: number) => {
-      const query = searchParams.get("query") || undefined;
-
-      if (!query) return;
-      setIsLoading(true);
-      try {
-        const response = await searchAnime(query, page, format);
-        setHasNextPage(response.hasNextPage || false);
-        setSearchResults((prevResults) => [
-          ...prevResults,
-          ...response.results,
-        ]);
-      } catch (error) {
-        throw new Error("Error fetching search results");
-      } finally {
-        setIsLoading(false);
-      }
+  const { data, loading, fetchMore } = useQuery<
+    SearchPageQuery,
+    SearchPageQueryVariables
+  >(SEARCH_PAGE_QUERY, {
+    variables: {
+      page: currentPage,
+      search: query,
+      type: MediaType.Anime,
     },
-    [format, searchParams]
-  );
+    skip: !query, // Skip query if no search term is provided
+    notifyOnNetworkStatusChange: true, // Allow refetching with fetchMore
+  });
 
-  // Fetch the first page of search results when the component mounts
+  const searchResultsData = data?.Page?.media || [];
+  const hasNextPage = data?.Page?.pageInfo?.hasNextPage || false;
+
   useEffect(() => {
     setSearchResults([]); // Clear previous results
     setCurrentPage(1); // Reset to the first page
-    fetchSearchResults(1);
-  }, [fetchSearchResults]);
+  }, [query]);
 
-  /**
-   * Loads the next page of search results when the sentinel element is visible in the viewport.
-   */
+  // Update search results when data changes
+  useEffect(() => {
+    if (currentPage === 1) {
+      setSearchResults(searchResultsData);
+    } else {
+      setSearchResults((prevResults) => [
+        ...prevResults,
+        ...searchResultsData,
+      ]);
+    }
+  }, [searchResultsData, currentPage]);
+
   const loadMoreResults = useCallback(() => {
-    const nextPage = currentPage + 1;
-    setCurrentPage(nextPage);
-    fetchSearchResults(nextPage);
-  }, [currentPage, fetchSearchResults]);
+    if (hasNextPage) {
+      setCurrentPage((prevPage) => prevPage + 1);
+      fetchMore({
+        variables: {
+          page: currentPage + 1,
+        },
+      });
+    }
+  }, [currentPage, hasNextPage, fetchMore]);
 
   // Set up the IntersectionObserver to load more results when the sentinel element is visible
   useEffect(() => {
     const handleObserver = (entries: IntersectionObserverEntry[]) => {
       const target = entries[0];
-      if (target.isIntersecting && hasNextPage && !isLoading) {
+      if (target.isIntersecting && hasNextPage && !loading) {
         loadMoreResults();
       }
     };
@@ -98,7 +98,7 @@ export default function SearchResults() {
         observer.current.unobserve(sentinel);
       }
     };
-  }, [loadMoreResults, hasNextPage, isLoading]);
+  }, [loadMoreResults, hasNextPage, loading]);
 
   return (
     <div className="flex-1 overflow-auto">
@@ -129,13 +129,13 @@ export default function SearchResults() {
         </DropdownMenu>
       </div>
 
-      {isLoading && currentPage === 1 ? (
+      {loading && currentPage === 1 ? (
         <AnimeListSkeleton />
       ) : (
         <AnimeList list={searchResults} />
       )}
 
-      {!isLoading && searchResults.length === 0 && (
+      {!loading && searchResults.length === 0 && (
         <div className="text-center mt-6">
           <p className="text-muted-foreground">No results found</p>
         </div>
