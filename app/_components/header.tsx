@@ -29,20 +29,20 @@ export default function Header() {
             Discover
           </Link>
           <Link
-            href="/search"
-            className="transition-colors hover:text-muted-foreground"
+            href="#"
+            className="transition-colors text-muted-foreground cursor-not-allowed hover:text-muted-foreground"
           >
             Schedule
           </Link>
           <Link
             href="#"
-            className="transition-colors hover:text-muted-foreground"
+            className="transition-colors text-muted-foreground cursor-not-allowed hover:text-muted-foreground"
           >
             News
           </Link>
           <Link
             href="#"
-            className="transition-colors hover:text-muted-foreground"
+            className="transition-colors text-muted-foreground cursor-not-allowed hover:text-muted-foreground"
           >
             Community
           </Link>

@@ -4692,6 +4692,15 @@ export type AnimeInfoPageQueryVariables = Exact<{
 
 export type AnimeInfoPageQuery = { __typename?: 'Query', Media?: { __typename?: 'Media', id: number, bannerImage?: string | null, description?: string | null, season?: MediaSeason | null, seasonYear?: number | null, type?: MediaType | null, format?: MediaFormat | null, status?: MediaStatus | null, episodes?: number | null, duration?: number | null, chapters?: number | null, volumes?: number | null, genres?: Array<string | null> | null, synonyms?: Array<string | null> | null, source?: MediaSource | null, isAdult?: boolean | null, averageScore?: number | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null, romaji?: string | null, english?: string | null, native?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null, startDate?: { __typename?: 'FuzzyDate', year?: number | null, month?: number | null, day?: number | null } | null, endDate?: { __typename?: 'FuzzyDate', year?: number | null, month?: number | null, day?: number | null } | null, nextAiringEpisode?: { __typename?: 'AiringSchedule', airingAt: number, timeUntilAiring: number, episode: number } | null, relations?: { __typename?: 'MediaConnection', nodes?: Array<{ __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, averageScore?: number | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null> | null } | null, characterPreview?: { __typename?: 'CharacterConnection', edges?: Array<{ __typename?: 'CharacterEdge', id?: number | null, role?: CharacterRole | null, name?: string | null, voiceActors?: Array<{ __typename?: 'Staff', id: number, language?: string | null, name?: { __typename?: 'StaffName', userPreferred?: string | null } | null, image?: { __typename?: 'StaffImage', large?: string | null } | null } | null> | null, node?: { __typename?: 'Character', id: number, name?: { __typename?: 'CharacterName', userPreferred?: string | null } | null, image?: { __typename?: 'CharacterImage', large?: string | null } | null } | null } | null> | null } | null, staffPreview?: { __typename?: 'StaffConnection', edges?: Array<{ __typename?: 'StaffEdge', id?: number | null, role?: string | null, node?: { __typename?: 'Staff', id: number, language?: string | null, name?: { __typename?: 'StaffName', userPreferred?: string | null } | null, image?: { __typename?: 'StaffImage', large?: string | null } | null } | null } | null> | null } | null, studios?: { __typename?: 'StudioConnection', edges?: Array<{ __typename?: 'StudioEdge', isMain: boolean, node?: { __typename?: 'Studio', id: number, name: string } | null } | null> | null } | null, recommendations?: { __typename?: 'RecommendationConnection', nodes?: Array<{ __typename?: 'Recommendation', mediaRecommendation?: { __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, averageScore?: number | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null } | null> | null } | null, streamingEpisodes?: Array<{ __typename?: 'MediaStreamingEpisode', site?: string | null, title?: string | null, thumbnail?: string | null, url?: string | null } | null> | null, trailer?: { __typename?: 'MediaTrailer', id?: string | null, site?: string | null } | null } | null };
 
+export type AutocompleteSearchQueryVariables = Exact<{
+  search?: InputMaybe<Scalars['String']['input']>;
+  isAdult?: InputMaybe<Scalars['Boolean']['input']>;
+  sort?: InputMaybe<Array<InputMaybe<MediaSort>> | InputMaybe<MediaSort>>;
+}>;
+
+
+export type AutocompleteSearchQuery = { __typename?: 'Query', Page?: { __typename?: 'Page', media?: Array<{ __typename?: 'Media', id: number, description?: string | null, seasonYear?: number | null, genres?: Array<string | null> | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null> | null } | null };
+
 export type HomePageAnimeQueryVariables = Exact<{
   season?: InputMaybe<MediaSeason>;
   seasonYear?: InputMaybe<Scalars['Int']['input']>;
@@ -4701,15 +4710,6 @@ export type HomePageAnimeQueryVariables = Exact<{
 
 
 export type HomePageAnimeQuery = { __typename?: 'Query', trending?: { __typename?: 'Page', media?: Array<{ __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, averageScore?: number | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null> | null } | null, season?: { __typename?: 'Page', media?: Array<{ __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, averageScore?: number | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null> | null } | null, nextSeason?: { __typename?: 'Page', media?: Array<{ __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, averageScore?: number | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null> | null } | null, popular?: { __typename?: 'Page', media?: Array<{ __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, averageScore?: number | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null> | null } | null, top?: { __typename?: 'Page', media?: Array<{ __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, averageScore?: number | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null> | null } | null };
-
-export type AutocompleteSearchQueryVariables = Exact<{
-  search?: InputMaybe<Scalars['String']['input']>;
-  isAdult?: InputMaybe<Scalars['Boolean']['input']>;
-  sort?: InputMaybe<Array<InputMaybe<MediaSort>> | InputMaybe<MediaSort>>;
-}>;
-
-
-export type AutocompleteSearchQuery = { __typename?: 'Query', Page?: { __typename?: 'Page', media?: Array<{ __typename?: 'Media', id: number, description?: string | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null> | null } | null };
 
 export type SearchPageQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Int']['input']>;
@@ -5016,6 +5016,59 @@ export type AnimeInfoPageQueryHookResult = ReturnType<typeof useAnimeInfoPageQue
 export type AnimeInfoPageLazyQueryHookResult = ReturnType<typeof useAnimeInfoPageLazyQuery>;
 export type AnimeInfoPageSuspenseQueryHookResult = ReturnType<typeof useAnimeInfoPageSuspenseQuery>;
 export type AnimeInfoPageQueryResult = Apollo.QueryResult<AnimeInfoPageQuery, AnimeInfoPageQueryVariables>;
+export const AutocompleteSearchDocument = gql`
+    query AutocompleteSearch($search: String, $isAdult: Boolean = false, $sort: [MediaSort] = [POPULARITY_DESC, SCORE_DESC]) {
+  Page(page: 1, perPage: 3) {
+    media(search: $search, isAdult: $isAdult, sort: $sort, type: ANIME) {
+      id
+      title {
+        userPreferred
+      }
+      coverImage {
+        extraLarge
+      }
+      description
+      seasonYear
+      genres
+    }
+  }
+}
+    `;
+
+/**
+ * __useAutocompleteSearchQuery__
+ *
+ * To run a query within a React component, call `useAutocompleteSearchQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAutocompleteSearchQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAutocompleteSearchQuery({
+ *   variables: {
+ *      search: // value for 'search'
+ *      isAdult: // value for 'isAdult'
+ *      sort: // value for 'sort'
+ *   },
+ * });
+ */
+export function useAutocompleteSearchQuery(baseOptions?: Apollo.QueryHookOptions<AutocompleteSearchQuery, AutocompleteSearchQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AutocompleteSearchQuery, AutocompleteSearchQueryVariables>(AutocompleteSearchDocument, options);
+      }
+export function useAutocompleteSearchLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AutocompleteSearchQuery, AutocompleteSearchQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AutocompleteSearchQuery, AutocompleteSearchQueryVariables>(AutocompleteSearchDocument, options);
+        }
+export function useAutocompleteSearchSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<AutocompleteSearchQuery, AutocompleteSearchQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<AutocompleteSearchQuery, AutocompleteSearchQueryVariables>(AutocompleteSearchDocument, options);
+        }
+export type AutocompleteSearchQueryHookResult = ReturnType<typeof useAutocompleteSearchQuery>;
+export type AutocompleteSearchLazyQueryHookResult = ReturnType<typeof useAutocompleteSearchLazyQuery>;
+export type AutocompleteSearchSuspenseQueryHookResult = ReturnType<typeof useAutocompleteSearchSuspenseQuery>;
+export type AutocompleteSearchQueryResult = Apollo.QueryResult<AutocompleteSearchQuery, AutocompleteSearchQueryVariables>;
 export const HomePageAnimeDocument = gql`
     query HomePageAnime($season: MediaSeason, $seasonYear: Int, $nextSeason: MediaSeason, $nextYear: Int) {
   trending: Page(page: 1, perPage: 6) {
@@ -5093,57 +5146,6 @@ export type HomePageAnimeQueryHookResult = ReturnType<typeof useHomePageAnimeQue
 export type HomePageAnimeLazyQueryHookResult = ReturnType<typeof useHomePageAnimeLazyQuery>;
 export type HomePageAnimeSuspenseQueryHookResult = ReturnType<typeof useHomePageAnimeSuspenseQuery>;
 export type HomePageAnimeQueryResult = Apollo.QueryResult<HomePageAnimeQuery, HomePageAnimeQueryVariables>;
-export const AutocompleteSearchDocument = gql`
-    query AutocompleteSearch($search: String, $isAdult: Boolean = false, $sort: [MediaSort] = [POPULARITY_DESC, SCORE_DESC]) {
-  Page(page: 1, perPage: 10) {
-    media(search: $search, isAdult: $isAdult, sort: $sort) {
-      id
-      title {
-        userPreferred
-      }
-      coverImage {
-        extraLarge
-      }
-      description
-    }
-  }
-}
-    `;
-
-/**
- * __useAutocompleteSearchQuery__
- *
- * To run a query within a React component, call `useAutocompleteSearchQuery` and pass it any options that fit your needs.
- * When your component renders, `useAutocompleteSearchQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useAutocompleteSearchQuery({
- *   variables: {
- *      search: // value for 'search'
- *      isAdult: // value for 'isAdult'
- *      sort: // value for 'sort'
- *   },
- * });
- */
-export function useAutocompleteSearchQuery(baseOptions?: Apollo.QueryHookOptions<AutocompleteSearchQuery, AutocompleteSearchQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<AutocompleteSearchQuery, AutocompleteSearchQueryVariables>(AutocompleteSearchDocument, options);
-      }
-export function useAutocompleteSearchLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AutocompleteSearchQuery, AutocompleteSearchQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<AutocompleteSearchQuery, AutocompleteSearchQueryVariables>(AutocompleteSearchDocument, options);
-        }
-export function useAutocompleteSearchSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<AutocompleteSearchQuery, AutocompleteSearchQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<AutocompleteSearchQuery, AutocompleteSearchQueryVariables>(AutocompleteSearchDocument, options);
-        }
-export type AutocompleteSearchQueryHookResult = ReturnType<typeof useAutocompleteSearchQuery>;
-export type AutocompleteSearchLazyQueryHookResult = ReturnType<typeof useAutocompleteSearchLazyQuery>;
-export type AutocompleteSearchSuspenseQueryHookResult = ReturnType<typeof useAutocompleteSearchSuspenseQuery>;
-export type AutocompleteSearchQueryResult = Apollo.QueryResult<AutocompleteSearchQuery, AutocompleteSearchQueryVariables>;
 export const SearchPageDocument = gql`
     query SearchPage($page: Int = 1, $id: Int, $type: MediaType, $isAdult: Boolean = false, $search: String, $format: [MediaFormat], $status: MediaStatus, $countryOfOrigin: CountryCode, $source: MediaSource, $season: MediaSeason, $seasonYear: Int, $year: String, $onList: Boolean, $yearLesser: FuzzyDateInt, $yearGreater: FuzzyDateInt, $episodeLesser: Int, $episodeGreater: Int, $durationLesser: Int, $durationGreater: Int, $chapterLesser: Int, $chapterGreater: Int, $volumeLesser: Int, $volumeGreater: Int, $licensedBy: [Int], $isLicensed: Boolean, $genres: [String], $excludedGenres: [String], $tags: [String], $excludedTags: [String], $minimumTagRank: Int, $sort: [MediaSort] = [POPULARITY_DESC, SCORE_DESC]) {
   Page(page: $page, perPage: 20) {

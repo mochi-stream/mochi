@@ -86,7 +86,7 @@ export function AnimeList({
                     {/* Render the anime gradient overlay */}
                     <div className="absolute inset-0 bg-gradient-to-t from-10% from-black via-[transparent] to-transparent opacity-70 rounded-lg pointer-events-none"></div>
 
-                    <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity z-[1000]" onClick={handleAddToCollection}>
+                    <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity z-[100]" onClick={handleAddToCollection}>
                         <div className="bg-primary rounded-full p-2 shadow-lg hover:bg-secondary-foreground/90 z-50">
                             <Plus className="text-secondary h-4 w-4" />
                         </div>

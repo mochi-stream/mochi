@@ -1,5 +1,3 @@
-// actions/comments.ts
-
 import { createComment, deleteComment } from "@/services/comments";
 import { toast } from "sonner";
 

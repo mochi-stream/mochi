@@ -42,7 +42,7 @@ export default function SearchDialog() {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const { data, loading, error, refetch } = useQuery<AutocompleteSearchQuery, AutocompleteSearchQueryVariables>(AUTOCOMPLETE_SEARCH_QUERY, {
-    skip: !debouncedSearchValue,
+    skip: !(debouncedSearchValue.trim()),
     variables: { search: debouncedSearchValue },
   });
 
@@ -159,7 +159,7 @@ export default function SearchDialog() {
       {searchValue && open && (
         <div
           ref={resultsRef}
-          className="absolute top-full left-0 right-0 mt-2 w-[20rem] shadow-lg bg-background rounded-lg z-20 grid gap-1 p-4 border border-input"
+          className="absolute top-full left-0 right-0 mt-2 w-[20rem] shadow-lg bg-background rounded-lg z-[ grid gap-1 p-4 border border-input"
         >
           {isLoading ? (
             <>
@@ -178,7 +178,7 @@ export default function SearchDialog() {
                 </div>
               ))}
             </>
-          ) : results?.media && results?.media.length > 0 ? (
+          ) : searchValue && results?.media && results?.media.length > 0 ? (
             results?.media.slice(0, 3).map((result, index: number) => (
               <Link
                 href={`/anime/${result?.id}`}
@@ -203,14 +203,17 @@ export default function SearchDialog() {
                   </div>
                   <div className="text-xs text-muted-foreground">
                     {result?.description && sanitizeHtml(
-                      result.description.length > 100
-                        ? `${result.description.substring(0, 100)}...`
+                      result.description.length > 80
+                        ? `${result.description.substring(0, 80)}...`
                         : result.description || 'No description provided',
                       {
                         allowedTags: [],
                         allowedAttributes: {},
                       }
                     )}
+                    <div className="mt-1">
+                      {result?.seasonYear || "Unknown"}, {result?.genres?.[0] || "Unknown"}
+                    </div>
                   </div>
                 </div>
               </Link>

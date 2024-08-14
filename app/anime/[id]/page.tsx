@@ -1,22 +1,30 @@
-/**
- * AnimePage component.
- * Renders the details of a specific anime.
- *
- * @param {AnimePageProps} props - The props object containing the id of the anime.
- */
-
 "use client";
 
-import Image from "next/image";
-
 import { useQuery, gql } from "@apollo/client";
+import Image from "next/image";
+import Link from "next/link";
+import { useState, useEffect } from "react";
+import { toast } from "sonner";
+import { ArrowUpRight, BellPlus, BellRing, CirclePlay } from "lucide-react";
+import sanitizeHtml from 'sanitize-html';
 
 import { ANIME_PAGE_INFO_QUERY } from "@/graphql/queries/animePageInfoQuery";
 import { FULL_MEDIA_FRAGMENT } from "@/graphql/fragments/fullMediaFragment";
+import {
+  MediaType,
+  MediaFragment,
+  AnimeInfoPageQuery,
+  AnimeInfoPageQueryVariables,
+} from "@/graphql/types";
 
-import sanitizeHtml from 'sanitize-html';
+import { Skeleton } from "@/components/ui/skeleton";
+import { Button } from "@/components/ui/button";
+import { AnimeList } from "@/components/anime/list";
+import AnimeInfoTabs from "./components/details-tabs";
 
-import Head from 'next/head';
+import { subscribe, unsubscribe } from "@/actions/subscribe";
+import { useUser } from "@/app/_components/context";
+import { getSubscription } from "@/services/subscriptions";
 
 interface AnimePageProps {
   params: { id: string };
@@ -27,30 +35,7 @@ const QUERY = gql`
   ${FULL_MEDIA_FRAGMENT}
 `;
 
-import { toast } from "sonner";
-
-import {
-  MediaType,
-  MediaFragment,
-  AnimeInfoPageQuery,
-  AnimeInfoPageQueryVariables,
-} from "@/graphql/types";
-
-import { Skeleton } from "@/components/ui/skeleton";
-import { Button } from "@/components/ui/button";
-
-import { AnimeList } from "@/components/anime/list";
-
-import Link from "next/link";
-
-import { ArrowUpRight, Check, BellPlus, CirclePlay } from "lucide-react";
-
-import { useState } from "react";
-
-import AnimeInfoTabs from "./components/details-tabs";
-
 export default function AnimePage({ params }: AnimePageProps) {
-
   const { loading, error, data } = useQuery<AnimeInfoPageQuery, AnimeInfoPageQueryVariables>(QUERY, {
     variables: { id: parseInt(params.id), type: MediaType.Anime, isAdult: false },
   });
@@ -69,7 +54,11 @@ export default function AnimePage({ params }: AnimePageProps) {
     (relation) => relation?.type === "ANIME"
   );
 
-  const [isExpanded, setIsExpanded] = useState(false)
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [isSubscribed, setIsSubscribed] = useState(false);
+  const [isSubscribing, setIsSubscribing] = useState(false);
+
+  const { user, isAuthenticated } = useUser();
 
   const handleToggle = () => {
     setIsExpanded(!isExpanded);
@@ -85,8 +74,39 @@ export default function AnimePage({ params }: AnimePageProps) {
   const sanitizedDescription = sanitizeHtml(data?.Media?.description || "", {
     allowedTags: [],
     allowedAttributes: {},
+  });
+
+  useEffect(() => {
+    async function fetchSubscription() {
+      if (user && data?.Media?.id) {
+        const subscription = await getSubscription({ animeId: data.Media.id.toString(), userId: user.id });
+        setIsSubscribed(subscription !== null);
+      }
+    }
+    fetchSubscription();
+  }, [user, data]);
+
+  async function handleSubscribeToggle() {
+    if (!isAuthenticated || !user) {
+      toast.error("Please log in to manage subscriptions.");
+      return;
+    }
+
+    if (!data?.Media?.id) {
+      toast.error("Failed to subscribe. Please try again later.");
+      return;
+    }
+
+    setIsSubscribing(true);
+    if (isSubscribed) {
+      await unsubscribe({ animeId: data?.Media?.id.toString(), userId: user?.id });
+      setIsSubscribed(false);
+    } else {
+      await subscribe({ animeId: data?.Media?.id.toString(), userId: user?.id });
+      setIsSubscribed(true);
+    }
+    setIsSubscribing(false);
   }
-  );
 
   return (
     <div>
@@ -106,7 +126,6 @@ export default function AnimePage({ params }: AnimePageProps) {
           </div>
           <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent z-[-4]"></div>
           <div className="relative hidden lg:flex justify-end items-end h-full w-full p-4 gap-2">
-            {/* <Button className="shadow-lg">Create Thread<ArrowUpRight className="h-4 w-4 ml-1" /></Button> */}
             {data.Media.trailer ? (
               <Link
                 href={data.Media.trailer?.site
@@ -120,7 +139,11 @@ export default function AnimePage({ params }: AnimePageProps) {
               </Link>
             ) : null}
             <Button className="shadow-lg">Add to Collection</Button>
-            <Button className="shadow-lg" size={"icon"}><BellPlus className="h-5 w-5" /></Button>
+            <Button className={`shadow-lg ${isSubscribing ? "opacity-75" : "opacity-100"}`} size={"icon"} onClick={handleSubscribeToggle}>
+              <div className={`opacity-${isSubscribing ? "50" : "100"}`}>
+                {isSubscribed ? <BellRing className="h-5 w-5" /> : <BellPlus className="h-5 w-5" />}
+              </div>
+            </Button>
           </div>
         </div>
         : loading ? (

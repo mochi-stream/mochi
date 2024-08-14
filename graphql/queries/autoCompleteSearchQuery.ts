@@ -16,6 +16,8 @@ export const AUTOCOMPLETE_SEARCH_QUERY = gql`
           extraLarge
         }
         description
+        seasonYear
+        genres
       }
     }
   }
