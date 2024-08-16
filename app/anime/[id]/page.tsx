@@ -65,7 +65,7 @@ export default function AnimePage({ params }: AnimePageProps) {
       <Banner data={data} loading={loading} />
       
       <div className="px-2 lg:px-12 py-6">
-        <AnimeInformation data={data} id={params.id} />
+        <AnimeInformation data={data} id={params.id} loading={loading} />
 
         {animeRelations && animeRelations.length > 1 && (
           <div className="pt-8">

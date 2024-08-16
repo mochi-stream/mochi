@@ -6,7 +6,7 @@ import { subscribe, unsubscribe } from "@/actions/subscribe";
 import { useUser } from "@/app/_components/context";
 import { getSubscription } from "@/services/subscriptions";
 
-import { BellPlus, BellRing } from "lucide-react";
+import { BellPlus, BellRing, Loader } from "lucide-react";
 
 import { toast } from "sonner";
 
@@ -16,7 +16,7 @@ export default function Subscriptions({
     animeId: number;
 }) {
 
-    const [isSubscribed, setIsSubscribed] = useState(false);
+    const [isSubscribed, setIsSubscribed] = useState<boolean | null>(null);
     const [isSubscribing, setIsSubscribing] = useState(false);
 
     const { user, isAuthenticated } = useUser();
@@ -63,18 +63,34 @@ export default function Subscriptions({
         setIsSubscribing(false);
     }
 
-    return <Button
-        className={`shadow-lg ${isSubscribing ? "opacity-75" : "opacity-100"
-            }`}
-        size={"icon"}
-        onClick={handleSubscribeToggle}
-    >
-        <div className={`opacity-${isSubscribing ? "50" : "100"}`}>
-            {isSubscribed ? (
-                <BellRing className="h-5 w-5" />
-            ) : (
-                <BellPlus className="h-5 w-5" />
-            )}
-        </div>
-    </Button>;
+    return (<>
+        {isSubscribed === null ? (
+            <Button
+                className={`shadow-lg ${isSubscribing ? "opacity-75" : "opacity-100"
+                    }`}
+                size={"icon"}
+                onClick={handleSubscribeToggle}
+                disabled={isSubscribing || isSubscribed === null}
+            >
+                <Loader className="h-4 w-4 animate-spin" />
+
+            </Button>
+        ) : (
+            <Button
+                className={`shadow-lg ${isSubscribing ? "opacity-75" : "opacity-100"
+                    }`}
+                size={"icon"}
+                onClick={handleSubscribeToggle}
+                disabled={isSubscribing || isSubscribed === null}
+            >
+                <div>
+                    {isSubscribed ? (
+                        <BellRing className="h-5 w-5" />
+                    ) : (
+                        <BellPlus className="h-5 w-5" />
+                    )}
+                </div>
+            </Button>
+        )}
+    </>);
 }

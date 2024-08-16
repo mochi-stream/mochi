@@ -50,7 +50,7 @@ export default function NotificationsDialog({ userid }: { userid: string }) {
         <div className="w-8 h-8 relative flex items-center justify-center">
           <Bell className="w-5 h-5 text-primary cursor-pointer" />
           {data.length > 0 && (
-            <span className="absolute top-0 right-0 inline-block w-2 h-2 bg-red-500 rounded-full" />
+            <span className="absolute top-0 right-0 inline-block w-[0.35rem] h-[0.35rem] bg-red-500 rounded-full" />
           )}
         </div>
       </DropdownMenuTrigger>

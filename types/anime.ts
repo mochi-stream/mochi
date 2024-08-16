@@ -68,3 +68,10 @@ export interface Comment {
   userId: string;
   user: User;
 }
+
+export interface AddToCollection {
+  id: string;
+  title: string;
+  description: string;
+  coverImage: string;
+}

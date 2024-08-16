@@ -11,6 +11,9 @@ import { Button } from "@/components/ui/button";
 import CustomImage from "../ui/custom-image";
 import AddToCollection from "./add-to-collection";
 
+import { AddToCollection as AddToCollectionType } from "@/types/anime";
+
+
 interface AnimeListProps {
     quantity?: number;
     list: (MediaFragment | null)[];
@@ -32,6 +35,20 @@ export function AnimeList({
     const toggleExpanded = () => {
         setIsExpanded(!isExpanded);
     };
+
+    const [shownAddToCollection, setShownAddToCollection] = useState(false);
+    const [selectedAnime, setSelectedAnime] = useState<AddToCollectionType | null>(null);
+
+    const handleAddToCollection = (anime: any) => {
+        setSelectedAnime({
+            id: anime.id.toString(),
+            title: anime.title?.userPreferred || "No Title",
+            description: anime.description || "No Description",
+            coverImage: anime.coverImage?.extraLarge || "/default.png",
+        } as AddToCollectionType);
+        setShownAddToCollection(true);
+    };
+
 
     return (<>
         <div className="mt-4 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-6 gap-y-6 gap-4 select-none relative">
@@ -68,11 +85,9 @@ export function AnimeList({
                     <div className="absolute inset-0 bg-gradient-to-t from-10% from-black via-[transparent] to-transparent opacity-70 rounded-lg pointer-events-none"></div>
 
                     <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity z-[100]">
-                        <AddToCollection>
-                            <div className="bg-primary rounded-full p-2 shadow-lg hover:bg-secondary-foreground/90 z-50">
-                                <Plus className="text-secondary h-4 w-4" />
-                            </div>
-                        </AddToCollection>
+                        <div className="bg-primary rounded-full p-2 shadow-lg hover:bg-secondary-foreground/90 z-50" onClick={() => handleAddToCollection(anime)}>
+                            <Plus className="text-secondary h-4 w-4" />
+                        </div>
                     </div>
                 </div>
             ))}
@@ -89,6 +104,14 @@ export function AnimeList({
                 </Button>
             </div>
         )}
+
+        {selectedAnime &&
+            <AddToCollection
+                anime={selectedAnime}
+                shownAddToCollection={shownAddToCollection}
+                setShownAddToCollection={setShownAddToCollection}
+            />
+        }
     </>);
 }
 

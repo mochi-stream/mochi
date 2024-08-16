@@ -47,6 +47,7 @@ export default function App() {
         <div>
           <div>
             <h1 className="text-[1.4rem] font-medium">Trending Now</h1>
+            {/* <p className="text-sm text-muted-foreground">Popular animes for you.</p> */}
           </div>
           {data && data.trending && data.trending.media ? (
             <AnimeList list={data.trending.media} />

@@ -131,18 +131,12 @@ model Follow {
   @@index([followingId])
 }
 
-enum Provider {
-  ZORO
-  GOGOANIME
-}
-
 model WatchHistory {
   id           String   @id @default(cuid())
   userId       String
   animeId      String
   episodeId    String
   lastWatched  DateTime
-  providerName Provider
 
   user User @relation(fields: [userId], references: [id])
 
@@ -163,12 +157,11 @@ model Collection {
   id        String @id @default(cuid())
   userId    String
   animeId   String
-  episodeId Int
   status    Status
 
   user User @relation(fields: [userId], references: [id])
 
   @@index([userId])
   @@index([animeId])
-  @@index([episodeId])
+  @@unique([userId, animeId])
 }

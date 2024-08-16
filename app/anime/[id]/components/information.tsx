@@ -15,12 +15,15 @@ import AnimeInfoTabs from "./details-tabs";
 import { ArrowUpRight, CirclePlay, Plus } from "lucide-react";
 
 // import { Skeleton } from "@/components/ui/skeleton";
+
 export function AnimeInformation({
     data,
     id,
+    loading,
 }: {
     id: string;
     data: AnimeInfoPageQuery | undefined;
+    loading: boolean;
 }) {
     const [isExpanded, setIsExpanded] = useState(false);
 
@@ -66,50 +69,52 @@ export function AnimeInformation({
                 )}
 
                 <div className="flex flex-col px-8 py-2">
-                    <div>
-                        <h1 className="text-2xl font-bold">
-                            {data?.Media?.title?.english ?? data?.Media?.title?.userPreferred}
-                        </h1>
-                        <p className="text-sm font-bold text-muted-foreground">
-                            {data?.Media?.title?.romaji} • {data?.Media?.title?.native}
-                        </p>
-                        {sanitizedDescription && (
-                            <p className="text-sm text-muted-foreground mt-2">
-                                <span>{getTextToShow(sanitizedDescription)}</span>
-
-                                {sanitizedDescription.length > 350 && (
-                                    <span
-                                        onClick={handleToggle}
-                                        className="hover:text-primary/70 text-primary cursor-pointer ml-2 select-none"
-                                    >
-                                        {isExpanded ? "Read less" : "Read more"}
-                                    </span>
-                                )}
+                    {!loading && (
+                        <div>
+                            <h1 className="text-2xl font-bold">
+                                {data?.Media?.title?.english ?? data?.Media?.title?.userPreferred}
+                            </h1>
+                            <p className="text-sm font-bold text-muted-foreground">
+                                {data?.Media?.title?.romaji} • {data?.Media?.title?.native}
                             </p>
-                        )}
-                        <div className="flex lg:justify-start justify-center mt-4 gap-2">
-                            <Link href={`/stream/${id}/1`}>
-                                {data?.Media?.status === MediaStatus.NotYetReleased ? (
-                                    <Button className="shadow-lg">
-                                        Plan To Watch
-                                        <Plus className="h-4 w-4 ml-1" />
-                                    </Button>
-                                ) : (
-                                    <Button className="shadow-lg">
-                                        Watch Now
-                                        <CirclePlay className="h-4 w-4 ml-1" />
-                                    </Button>
-                                )}
+                            {sanitizedDescription && (
+                                <p className="text-sm text-muted-foreground mt-2">
+                                    <span>{getTextToShow(sanitizedDescription)}</span>
 
-                            </Link>
-                            <Button className="shadow-lg" variant={"secondary"}>
-                                Start a Thread
-                                <ArrowUpRight className="h-4 w-4 ml-1" />
-                            </Button>
+                                    {sanitizedDescription.length > 350 && (
+                                        <span
+                                            onClick={handleToggle}
+                                            className="hover:text-primary/70 text-primary cursor-pointer ml-2 select-none"
+                                        >
+                                            {isExpanded ? "Read less" : "Read more"}
+                                        </span>
+                                    )}
+                                </p>
+                            )}
+                            <div className="flex lg:justify-start justify-center mt-4 gap-2">
+                                <Link href={`/stream/${id}/1`}>
+                                    {data?.Media?.status === MediaStatus.NotYetReleased ? (
+                                        <Button className="shadow-lg">
+                                            Plan To Watch
+                                            <Plus className="h-4 w-4 ml-1" />
+                                        </Button>
+                                    ) : (
+                                        <Button className="shadow-lg">
+                                            Watch Now
+                                            <CirclePlay className="h-4 w-4 ml-1" />
+                                        </Button>
+                                    )}
+
+                                </Link>
+                                <Button className="shadow-lg" variant={"secondary"}>
+                                    Start a Thread
+                                    <ArrowUpRight className="h-4 w-4 ml-1" />
+                                </Button>
+                            </div>
                         </div>
-                    </div>
+                    )}
                 </div>
-            </div>
+            </div >
             {data && (
                 <div className="grid grid-cols-16 lg:flex-row justify-between pt-8 gap-4">
                     <div className="grid col-span-4 px-6 lg:px-0 pt-2 h-fit w-[95%]">
@@ -201,7 +206,8 @@ export function AnimeInformation({
                         />
                     </div>
                 </div>
-            )}
+            )
+            }
         </>
     );
 }
