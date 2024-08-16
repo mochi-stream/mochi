@@ -8,7 +8,7 @@
 
 @font-face {
   font-family: 'Aeonik';
-  src: url('../public/aeonik.otf') format('opentype');
+  src: url('../public/fonts/aeonik.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
 }

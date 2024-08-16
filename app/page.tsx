@@ -100,8 +100,6 @@ export default function App() {
             <AnimeListSkeleton />
           )}
         </div>
-
-
       </div>
     </div>
   );

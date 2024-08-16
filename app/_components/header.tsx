@@ -6,12 +6,13 @@ import { useUser } from "./context";
 import { SignedIn, SignedOut } from "@clerk/nextjs";
 
 import SearchDialog from "./search";
+import LibraryDialog from "./library";
 import NotificationsDialog from "./notifications";
+
 import AvatarDialog from "./avatar";
 
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { LibraryBig } from "lucide-react";
 
 export default function Header() {
   const me = useUser();
@@ -66,7 +67,7 @@ export default function Header() {
           {me.user ? (
             <>
               <NotificationsDialog userid={me.user.id} />
-              <LibraryBig strokeWidth={1.5} />
+              <LibraryDialog />
               <AvatarDialog user={me.user} />
             </>
           ) : (

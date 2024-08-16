@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ClerkUser } from "@/types/user";
 import { useClerk } from "@clerk/nextjs";
 
-import { CloudIcon, UserCircle, LogOutIcon, SettingsIcon, ChevronDown } from "lucide-react";
+import { CloudIcon, UserCircle, LogOutIcon, SettingsIcon } from "lucide-react";
 
 import {
   DropdownMenu,
@@ -20,8 +20,6 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import { toast } from "sonner";
-
-import { useUser } from "./context";
 
 export default function AvatarDialog({ user }: { user: ClerkUser }) {
 
@@ -52,7 +50,7 @@ export default function AvatarDialog({ user }: { user: ClerkUser }) {
         <DropdownMenuLabel>{`@${user.username}`}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup className="flex flex-col space-y-2">
-          <Link href={`/user/${user.username}`}>
+          <Link href={`/u/${user.username}`}>
             <DropdownMenuItem>
               <UserCircle className="mr-2 h-4 w-4" />
               <span>Profile</span>

@@ -13,9 +13,7 @@ export async function onFollow(id: string) {
   try {
     const followedUser = await followUser(id);
     // Revalidate the user's profile page
-    revalidatePath(`/user/${followedUser.following.username}`);
-    // Revalidate the global feed
-    revalidatePath("/");
+    revalidatePath(`/u/${followedUser.following.username}`);
     return followedUser;
   } catch (error) {
     if (error instanceof Error) {
@@ -38,9 +36,7 @@ export async function onUnfollow(id: string) {
   try {
     const unfollowedUser = await unfollowUser(id);
     // Revalidate the user's profile page
-    revalidatePath(`/user/${unfollowedUser.following.username}`);
-    // Revalidate the global feed
-    revalidatePath("/");
+    revalidatePath(`//${unfollowedUser.following.username}`);
     return unfollowedUser;
   } catch (error) {
     if (error instanceof Error) {

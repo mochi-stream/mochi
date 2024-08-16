@@ -1,25 +1,15 @@
 import { useState } from "react";
 
 import Link from "next/link";
-import Image from "next/image";
-
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogFooter,
-} from "@/components/ui/dialog";
 
 import { Plus, ArrowDown, ArrowUp } from 'lucide-react';
 
 import { Skeleton } from "@/components/ui/skeleton";
 
 import { MediaFragment } from "@/graphql/types";
-import { useUser } from "@/app/_components/context";
 import { Button } from "@/components/ui/button";
 import CustomImage from "../ui/custom-image";
+import AddToCollection from "./add-to-collection";
 
 interface AnimeListProps {
     quantity?: number;
@@ -32,15 +22,6 @@ export function AnimeList({
 }: AnimeListProps) {
 
     quantity = quantity || list.length;
-
-    const [isDialogOpen, setIsDialogOpen] = useState(false);
-    const { isAuthenticated } = useUser();
-
-    const handleAddToCollection = () => {
-        if (!isAuthenticated) {
-            setIsDialogOpen(true);
-        }
-    };
 
     const mediaList =
         list?.filter((item): item is MediaFragment => item !== null) || [];
@@ -86,10 +67,12 @@ export function AnimeList({
                     {/* Render the anime gradient overlay */}
                     <div className="absolute inset-0 bg-gradient-to-t from-10% from-black via-[transparent] to-transparent opacity-70 rounded-lg pointer-events-none"></div>
 
-                    <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity z-[100]" onClick={handleAddToCollection}>
-                        <div className="bg-primary rounded-full p-2 shadow-lg hover:bg-secondary-foreground/90 z-50">
-                            <Plus className="text-secondary h-4 w-4" />
-                        </div>
+                    <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity z-[100]">
+                        <AddToCollection>
+                            <div className="bg-primary rounded-full p-2 shadow-lg hover:bg-secondary-foreground/90 z-50">
+                                <Plus className="text-secondary h-4 w-4" />
+                            </div>
+                        </AddToCollection>
                     </div>
                 </div>
             ))}
@@ -106,33 +89,6 @@ export function AnimeList({
                 </Button>
             </div>
         )}
-        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-            <DialogContent>
-                <DialogHeader>
-                    <DialogTitle>Login Required</DialogTitle>
-                    <DialogDescription>
-                        You need to be logged in to add anime to your watch list. Please log in or sign up.
-                    </DialogDescription>
-                </DialogHeader>
-
-                <DialogFooter className="flex custom-dialog-footer items-center">
-                    <div className="flex justify-end space-x-2">
-                        <div className="gap-2 flex">
-                            <Link href={"/join"}>
-                                <Button
-                                    onClick={() => setIsDialogOpen(false)}
-                                    variant="ghost">
-                                    Close
-                                </Button>
-                            </Link>
-                            <Link href={"/login"}>
-                                <Button>Login</Button>
-                            </Link>
-                        </div>
-                    </div>
-                </DialogFooter >
-            </DialogContent >
-        </Dialog >
     </>);
 }
 
