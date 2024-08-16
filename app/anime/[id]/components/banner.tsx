@@ -38,7 +38,7 @@ export default function Banner({
   return (
     <>
       {data && data.Media && data.Media.bannerImage ? (
-        <div className="relative h-48 w-full px-2 select-none">
+        <div className="relative h-56 w-full px-2 select-none">
           <div className="absolute inset-0">
             <Image
               src={data.Media.bannerImage}
@@ -77,9 +77,9 @@ export default function Banner({
           </div>
         </div>
       ) : loading ? (
-        <Skeleton className="h-48 w-full"></Skeleton>
+          <Skeleton className="h-56 w-full"></Skeleton>
       ) : (
-        <div className="h-48 w-full bg-muted"></div>
+            <div className="h-56 w-full bg-muted"></div>
       )}
     </>
   );

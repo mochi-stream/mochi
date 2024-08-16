@@ -1,18 +1,7 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useMemo, useState, useEffect, useCallback, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-} from "@/components/ui/dropdown-menu";
-
-import { Button } from "@/components/ui/button";
 import { AnimeList, AnimeListSkeleton } from "@/components/anime/list";
-
-import { ArrowDownUp } from "lucide-react";
 
 import { useQuery } from "@apollo/client";
 import {
@@ -22,6 +11,7 @@ import {
 } from "@/graphql/types";
 
 import { SEARCH_PAGE_QUERY } from "@/graphql/queries/searchPageQuery";
+import SearchFilter from "./search-filter";
 
 export default function SearchResults() {
   const searchParams = useSearchParams();
@@ -47,7 +37,8 @@ export default function SearchResults() {
     notifyOnNetworkStatusChange: true, // Allow refetching with fetchMore
   });
 
-  const searchResultsData = data?.Page?.media || [];
+  const searchResultsData = useMemo(() => data?.Page?.media || [], [data?.Page?.media]);
+
   const hasNextPage = data?.Page?.pageInfo?.hasNextPage || false;
 
   useEffect(() => {
@@ -102,33 +93,20 @@ export default function SearchResults() {
 
   return (
     <div className="flex-1 overflow-auto">
-      <title>{`Search Results for "${searchParams.get("query")}"`}</title>
-      {/* Display the search query and sorting options */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-medium">
-            {`Search Results for "${searchParams.get("query")}"`}
-          </h1>
-        </div>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="shrink-0">
-              <ArrowDownUp className="w-4 h-4 mr-2" />
-              Sort by
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-[200px]" align="end">
-            <DropdownMenuRadioGroup value="newest">
-              <DropdownMenuRadioItem value="newest">
-                Newest
-              </DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value="oldest">
-                Oldest
-              </DropdownMenuRadioItem>
-            </DropdownMenuRadioGroup>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
+      {searchParams.get("query") && (
+        <>
+          <title>{`Search Results for "${searchParams.get("query")}"`}</title>
+          {/* Display the search query and sorting options */}
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl font-medium">
+                {`Search Results for "${searchParams.get("query")}"`}
+              </h1>
+            </div>
+          </div></>
+      )}
+
+      <SearchFilter />
 
       {loading && currentPage === 1 ? (
         <AnimeListSkeleton />

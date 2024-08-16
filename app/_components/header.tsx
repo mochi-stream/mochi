@@ -14,10 +14,21 @@ import AvatarDialog from "./avatar";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
+
 export default function Header() {
   const me = useUser();
+  const pathname = usePathname();
+  const hasAnime = pathname.includes('/anime/');
   return (
-    <header className="flex items-center justify-between sticky left-0 right-0 top-0 z-[999] bg-gradient-to-b from-background/80 to-background/0 px-4 lg:px-8 py-6 fade-in">
+    <header className={cn(
+      'flex items-center justify-between left-0 right-0 top-0 z-[999] bg-gradient-to-b from-background/80 to-background/0 px-4 lg:px-8 py-6 fade-in',
+      {
+        'fixed': hasAnime,
+        'sticky': !hasAnime
+      }
+    )}>
       <div className="flex gap-8 items-center">
         <h1 className="text-2xl select-none">
           <Link href="/">Mochi.</Link>

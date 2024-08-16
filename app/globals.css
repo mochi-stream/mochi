@@ -80,15 +80,15 @@ input[type="search"]::-webkit-search-results-decoration {
     overflow-y: scroll; /* Ensure the scrollbar is visible */
 }
 
-.episodes-container::-webkit-scrollbar {
+*::-webkit-scrollbar {
     width: 6px; /* Adjust width as needed */
 }
 
-.episodes-container::-webkit-scrollbar-track {
+*::-webkit-scrollbar-track {
     background: transparent; /* Track color */
 }
 
-.episodes-container::-webkit-scrollbar-thumb {
+*::-webkit-scrollbar-thumb {
     background: #313131; /* Thumb color */
     border-radius: 10px; /* Rounded corners for thumb */
 }

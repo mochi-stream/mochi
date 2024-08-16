@@ -18,7 +18,7 @@ export default function AnimeInfoTabs({ animeId, characters, staff, episodes }: 
     return (
         <div className="flex flex-col w-full">
             <Tabs defaultValue={episodes && animeId && episodes.length > 0 && "epi" || "char"} className="flex flex-col gap-2 items-start">
-                <TabsList className="w-full flex gap-4 items-center overflow-x-auto overflow-y-hidden">
+                <TabsList className="w-full flex gap-4 items-center overflow-x-auto1 overflow-y-hidden">
                     {episodes && animeId && episodes.length > 0 && (
                         <TabsTrigger value="epi">
                             Episodes
