@@ -13,6 +13,7 @@ model User {
   id             String   @unique @id
   email          String   @unique
   imageUrl       String   @db.Text
+  coverImageUrl  String?  @db.Text
   name           String?  @db.Text
   username       String   @unique @default(uuid())
   createdAt      DateTime @default(now())
@@ -136,7 +137,7 @@ model WatchHistory {
   userId       String
   animeId      String
   episodeId    String
-  lastWatched  DateTime
+  lastWatched  DateTime @default(now()) @updatedAt
 
   user User @relation(fields: [userId], references: [id])
 

@@ -11,14 +11,8 @@ export async function onChangeCollection({
   userId: string;
   status: Status;
 }) {
-  try {
-    const collection = await changeCollection({ animeId, userId, status });
-    toast.success("Collection updated.");
-    return collection;
-  } catch (error) {
-    toast.error("Failed to change collection. Please try again later.");
-    throw error;
-  }
+  const collection = await changeCollection({ animeId, userId, status });
+  return collection;
 }
 
 export async function onDeleteCollection({

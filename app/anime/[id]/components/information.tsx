@@ -14,6 +14,14 @@ import AnimeInfoTabs from "./details-tabs";
 
 import { ArrowUpRight, CirclePlay, Plus } from "lucide-react";
 
+import { format, addSeconds } from 'date-fns';
+
+import {
+    Alert,
+    AlertDescription,
+} from "@/components/ui/alert"
+
+
 // import { Skeleton } from "@/components/ui/skeleton";
 
 export function AnimeInformation({
@@ -42,6 +50,25 @@ export function AnimeInformation({
         allowedTags: [],
         allowedAttributes: {},
     });
+
+    // Convert seconds to milliseconds
+    const secondsUntilAiring = data?.Media?.nextAiringEpisode?.timeUntilAiring || 0;
+    const date = new Date();
+    const airingDate = addSeconds(date, secondsUntilAiring);
+
+    // Format the date according to the user's local timezone
+    const options: Intl.DateTimeFormatOptions = {
+        weekday: 'long', // e.g., 'Sunday'
+        day: 'numeric',   // e.g., '18'
+        month: 'short',   // e.g., 'Aug'
+        year: 'numeric',  // e.g., '2024'
+        hour: 'numeric',  // e.g., '6'
+        minute: 'numeric',// e.g., '00'
+        timeZoneName: 'short', // e.g., 'GMT+5:30'
+    };
+    
+    const formattedDate = new Intl.DateTimeFormat(undefined, options).format(airingDate);
+
 
     return (
         <>
@@ -110,6 +137,12 @@ export function AnimeInformation({
                                     Start a Thread
                                     <ArrowUpRight className="h-4 w-4 ml-1" />
                                 </Button>
+                                {data?.Media?.nextAiringEpisode?.episode &&
+                                    <Alert>
+                                        <AlertDescription className="text-muted-foreground">
+                                            Episode {data?.Media?.nextAiringEpisode?.episode} is estimated to air on <span className="text-primary">{formattedDate}</span>
+                                        </AlertDescription>
+                                    </Alert>}
                             </div>
                         </div>
                     )}

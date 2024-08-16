@@ -56,6 +56,7 @@ export default function AddToCollection({
       (async () => {
         try {
           setIsFetching(true);
+          setSelectedStatus("");
           const fetchedCollection = await getCollection(user.id, anime.id);
           setCollection(fetchedCollection?.status || null);
           setSelectedStatus(fetchedCollection?.status || "");
@@ -81,6 +82,7 @@ export default function AddToCollection({
         });
         setCollection(selectedStatus as Status);
         toast.success("Collection updated successfully.");
+        setShownAddToCollection(false);
       } catch (error) {
         toast.error("Failed to update collection. Please try again later.");
       } finally {
@@ -121,6 +123,7 @@ export default function AddToCollection({
               <div className="mt-2 flex flex-col gap-2">
                 <Select
                   value={selectedStatus || ""}
+                  disabled={isFetching || isUpdating}
                   onValueChange={handleStatusChange}
                 >
                   <SelectTrigger>
@@ -134,13 +137,16 @@ export default function AddToCollection({
                     ))}
                   </SelectContent>
                 </Select>
-                <Button
-                  onClick={handleUpdateCollection}
-                  disabled={isFetching || isUpdating}
-                >
-                  Update Collection
-                  {isFetching || isUpdating && <Loader className="h-4 w-4 ml-2 animate-spin" />}
-                </Button>
+                  <Button
+                    onClick={handleUpdateCollection}
+                    disabled={isFetching || isUpdating}
+                  >
+                    Update Collection
+                    {isFetching || isUpdating && <Loader className="h-4 w-4 ml-2 animate-spin" />}
+                  </Button>
+                  {/* <Button variant={"destructive"} onClick={() => setShownAddToCollection(false)}>
+                    Remove
+                  </Button> */}
               </div>
             </div>
           </div>

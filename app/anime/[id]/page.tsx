@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect } from "react";
+
 import { useQuery, gql } from "@apollo/client";import { toast } from "sonner";
 
 import { ANIME_PAGE_INFO_QUERY } from "@/graphql/queries/animePageInfoQuery";
@@ -36,6 +38,10 @@ export default function AnimePage({ params }: AnimePageProps) {
       isAdult: false,
     },
   });
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, []);
 
   if (!loading && (error || !data?.Media?.title?.userPreferred)) {
     toast.error("Failed to load anime data. Please try again later.", {
