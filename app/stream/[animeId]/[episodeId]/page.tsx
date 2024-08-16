@@ -18,6 +18,12 @@ import { Button } from "@/components/ui/button";
 import { ArrowUpRight } from "lucide-react";
 import Episodes from "./_components/episodes";
 
+import { createOrUpdateWatchHistory } from "@/services/watchHistory";
+import { changeCollection } from "@/services/collection";
+import { useUser } from "@clerk/nextjs";
+
+import { Status } from "@prisma/client";
+
 interface WatchPageProps {
     params: {
         animeId: string;
@@ -26,6 +32,27 @@ interface WatchPageProps {
 }
 
 export default function WatchPage({ params }: WatchPageProps) {
+
+    const { user } = useUser();
+
+    useEffect(() => {
+        if (user?.id) {
+            createOrUpdateWatchHistory({
+                userId: user.id,
+                animeId: params.animeId,
+                episodeId: params.episodeId,
+            });
+
+            changeCollection({
+                animeId: params.animeId,
+                userId: user.id,
+                status: Status.WATCHING,
+            });
+        }
+
+    }, [user?.id, params.animeId, params.episodeId]);
+
+
     const { isOnline } = useNetworkStatus();
     const { info, isLoading, episodes, episodesParsed } = useAnimeInfo();
     const [matchingEpisode, setMatchingEpisode] = useState<Episode>();

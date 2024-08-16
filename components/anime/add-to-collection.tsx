@@ -52,7 +52,7 @@ export default function AddToCollection({
   const { isAuthenticated, user } = useUser();
 
   useEffect(() => {
-    if (user?.id) {
+    if (user?.id && isAuthenticated) {
       (async () => {
         try {
           setIsFetching(true);
@@ -137,14 +137,14 @@ export default function AddToCollection({
                     ))}
                   </SelectContent>
                 </Select>
-                  <Button
-                    onClick={handleUpdateCollection}
-                    disabled={isFetching || isUpdating}
-                  >
-                    Update Collection
-                    {isFetching || isUpdating && <Loader className="h-4 w-4 ml-2 animate-spin" />}
-                  </Button>
-                  {/* <Button variant={"destructive"} onClick={() => setShownAddToCollection(false)}>
+                <Button
+                  onClick={handleUpdateCollection}
+                  disabled={isFetching || isUpdating}
+                >
+                  Update Collection
+                  {isFetching || isUpdating && <Loader className="h-4 w-4 ml-2 animate-spin" />}
+                </Button>
+                {/* <Button variant={"destructive"} onClick={() => setShownAddToCollection(false)}>
                     Remove
                   </Button> */}
               </div>

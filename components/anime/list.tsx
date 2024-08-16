@@ -51,7 +51,7 @@ export function AnimeList({
 
 
     return (<>
-        <div className="mt-4 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-6 gap-y-6 gap-4 select-none relative">
+        <div className="mt-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-y-6 gap-4 select-none relative">
             {mediaList.length > quantity && !isExpanded && (
                 <div className="absolute inset-0 bottom-0 bg-gradient-to-t from-background via-transparent to-transparent pointer-events-none z-[81]"></div>
             )}
@@ -84,7 +84,7 @@ export function AnimeList({
                     {/* Render the anime gradient overlay */}
                     <div className="absolute inset-0 bg-gradient-to-t from-10% from-black via-[transparent] to-transparent opacity-70 rounded-lg pointer-events-none"></div>
 
-                    <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity z-[100]">
+                    <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity z-[100] hidden md:block">
                         <div className="bg-primary rounded-full p-2 shadow-lg hover:bg-secondary-foreground/90 z-50" onClick={() => handleAddToCollection(anime)}>
                             <Plus className="text-secondary h-4 w-4" />
                         </div>

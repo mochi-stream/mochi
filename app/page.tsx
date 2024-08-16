@@ -43,7 +43,7 @@ export default function App() {
 
   return (
     <div>
-      <div className="px-4 lg:px-8 py-6">
+      <div className="px-4 md:px-8 py-6">
         <div>
           <div>
             <h1 className="text-[1.4rem] font-medium">Trending Now</h1>

@@ -15,6 +15,15 @@ export async function getCollection(userId: string, animeId: string) {
   return collection;
 }
 
+export async function getCollections(userId: string) {
+  const collections = await db.collection.findMany({
+    where: {
+      userId,
+    },
+  });
+  return collections;
+}
+
 export async function changeCollection({
   animeId,
   userId,
@@ -24,31 +33,22 @@ export async function changeCollection({
   userId: string;
   status: Status;
 }) {
-  const existingCollection = await getCollection(userId, animeId);
-
-  if (existingCollection) {
-    // Update the existing collection entry
-    return await db.collection.update({
-      where: {
-        userId_animeId: {
-          userId,
-          animeId,
-        },
-      },
-      data: {
-        status,
-      },
-    });
-  } else {
-    // Create a new collection entry
-    return await db.collection.create({
-      data: {
+  return await db.collection.upsert({
+    where: {
+      userId_animeId: {
         userId,
         animeId,
-        status,
       },
-    });
-  }
+    },
+    update: {
+      status,
+    },
+    create: {
+      userId,
+      animeId,
+      status,
+    },
+  });
 }
 
 export async function deleteCollection(userId: string, animeId: string) {

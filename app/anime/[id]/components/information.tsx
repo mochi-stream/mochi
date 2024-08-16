@@ -66,7 +66,7 @@ export function AnimeInformation({
         minute: 'numeric',// e.g., '00'
         timeZoneName: 'short', // e.g., 'GMT+5:30'
     };
-    
+
     const formattedDate = new Intl.DateTimeFormat(undefined, options).format(airingDate);
 
 
@@ -95,7 +95,7 @@ export function AnimeInformation({
                     <div className="w-[200px] mt-[-100px] h-[320px] lg:h-[300px] rounded-lg"></div>
                 )}
 
-                <div className="flex flex-col px-8 py-2">
+                <div className="flex flex-col px-8 py-2 w-[95%] md:w-full">
                     {!loading && (
                         <div>
                             <h1 className="text-2xl font-bold">
@@ -118,25 +118,27 @@ export function AnimeInformation({
                                     )}
                                 </p>
                             )}
-                            <div className="flex lg:justify-start justify-center mt-4 gap-2">
-                                <Link href={`/stream/${id}/1`}>
-                                    {data?.Media?.status === MediaStatus.NotYetReleased ? (
-                                        <Button className="shadow-lg">
-                                            Plan To Watch
-                                            <Plus className="h-4 w-4 ml-1" />
-                                        </Button>
-                                    ) : (
-                                        <Button className="shadow-lg">
-                                            Watch Now
-                                            <CirclePlay className="h-4 w-4 ml-1" />
-                                        </Button>
-                                    )}
+                            <div className="flex flex-col md:flex-row items-center md:justify-start justify-center mt-4 gap-2">
+                                <div className="flex gap-2 py-2">
+                                    <Link href={`/stream/${id}/1`}>
+                                        {data?.Media?.status === MediaStatus.NotYetReleased ? (
+                                            <Button className="shadow-lg">
+                                                Plan To Watch
+                                                <Plus className="h-4 w-4 ml-1" />
+                                            </Button>
+                                        ) : (
+                                            <Button className="shadow-lg">
+                                                Watch Now
+                                                <CirclePlay className="h-4 w-4 ml-1" />
+                                            </Button>
+                                        )}
 
-                                </Link>
-                                <Button className="shadow-lg" variant={"secondary"}>
-                                    Start a Thread
-                                    <ArrowUpRight className="h-4 w-4 ml-1" />
-                                </Button>
+                                    </Link>
+                                    <Button className="shadow-lg w-fit" variant={"secondary"}>
+                                        Start a Thread
+                                        <ArrowUpRight className="h-4 w-4 ml-1" />
+                                    </Button>
+                                </div>
                                 {data?.Media?.nextAiringEpisode?.episode &&
                                     <Alert>
                                         <AlertDescription className="text-muted-foreground">
@@ -149,8 +151,8 @@ export function AnimeInformation({
                 </div>
             </div >
             {data && (
-                <div className="grid grid-cols-16 lg:flex-row justify-between pt-8 gap-4">
-                    <div className="grid col-span-4 px-6 lg:px-0 pt-2 h-fit w-[95%]">
+                <div className="flex md:grid grid-cols-16 flex-col lg:flex-row justify-between pt-2 md:pt-8 gap-4">
+                    <div className="grid col-span-4 px-4 md:px-6 lg:px-0 pt-2 h-fit w-[95%]">
                         <h1 className="text-xl select-none font-semibold">Details</h1>
                         <p className="text-sm font-medium text-muted-foreground mt-2">
                             <span className="text-primary font-semibold">Status:</span>{" "}

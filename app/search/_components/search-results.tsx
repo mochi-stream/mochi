@@ -102,6 +102,7 @@ export default function SearchResults() {
 
   return (
     <div className="flex-1 overflow-auto">
+      <title>{`Search Results for "${searchParams.get("query")}"`}</title>
       {/* Display the search query and sorting options */}
       <div className="flex items-center justify-between">
         <div>

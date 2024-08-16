@@ -26,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="font-aeonik">
+      <body className="font-aeonik overflow-x-hidden">
         <ClerkProvider appearance={{
           baseTheme: dark
         }}>
@@ -42,6 +42,7 @@ export default function RootLayout({
                 {children}
                 <Toaster position="bottom-center" duration={3000} />
                 <Footer />
+                <div className="absolute top-0 z-[-200] h-full w-screen rotate-180 transform bg-[radial-gradient(60%_120%_at_100%_100%,hsla(0,0%,0%,0)_0,rgba(255,90,90,.08)_100%)] opacity-70"></div>
               </div>
             </UserProvider>
           </ApolloWrapper>

@@ -16,7 +16,7 @@ export async function getWatchHistory({ userId }: { userId: string }) {
   return watchHistory;
 }
 
-export async function createWatchHistory({
+export async function createOrUpdateWatchHistory({
   userId,
   animeId,
   episodeId,
@@ -25,12 +25,23 @@ export async function createWatchHistory({
   animeId: string;
   episodeId: string;
 }) {
-  const watchHistory = await db.watchHistory.create({
-    data: {
+  const watchHistory = await db.watchHistory.upsert({
+    where: {
+      userId_animeId_episodeId: {
+        userId: userId,
+        animeId: animeId,
+        episodeId: episodeId,
+      },
+    },
+    update: {
+      lastWatched: new Date(), // Update the last watched time
+    },
+    create: {
       userId: userId,
       animeId: animeId,
       episodeId: episodeId,
     },
   });
+
   return watchHistory;
 }

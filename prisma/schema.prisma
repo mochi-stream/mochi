@@ -19,6 +19,7 @@ model User {
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
   bio            String?
+  isAdmin        Boolean  @default(false)
 
   notifications  Notifications[]
   watchHistory   WatchHistory[]
@@ -144,6 +145,8 @@ model WatchHistory {
   @@index([userId])
   @@index([animeId])
   @@index([episodeId])
+
+  @@unique([userId, animeId, episodeId])
 }
 
 enum Status {

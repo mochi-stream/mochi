@@ -121,7 +121,7 @@ export default function SearchDialog() {
         <div className="relative hidden lg:block">
             <Input
                 ref={inputRef}
-                className="rounded-full pl-9 pr-4 py-2 z-10 w-[20rem]"
+                className="rounded-full pl-9 pr-4 py-2 z-10 bg-secondary border-primary/10 w-[20rem]"
                 value={searchValue}
                 onChange={onSearchChange}
                 onFocus={() => searchValue && setOpen(true)}
@@ -133,7 +133,7 @@ export default function SearchDialog() {
                 }}
             />
             <Search
-                className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-primary/70 cursor-pointer"
+                className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-primary/70 cursor-pointer bg-secondary"
             />
             <Button
                 variant="ghost"
