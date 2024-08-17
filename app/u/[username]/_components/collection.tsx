@@ -6,10 +6,10 @@ import { Eye, Folder, Bookmark } from "lucide-react";
 import { Status } from "@prisma/client";
 import { getCollections } from "@/services/collection";
 
-// import {
-//   GetAnimesByIdsQuery,
-//   GetAnimesByIdsQueryVariables,
-// } from "@/graphql/types";
+import {
+  GetAnimesByIdsQuery,
+  GetAnimesByIdsQueryVariables,
+} from "@/graphql/types";
 
 import { AnimeList, AnimeListSkeleton } from "@/components/anime/list";
 
@@ -24,10 +24,10 @@ export default function Collection(
   const [animeIds, setAnimeIds] = useState<number[]>([]);
 
   // Query to fetch anime details
-  const { data, loading, error } = useQuery<any, any>(
+  const { data, loading, error } = useQuery<GetAnimesByIdsQuery, GetAnimesByIdsQueryVariables>(
     GET_ANIMES_QUERY,
     {
-      variables: { idMals: animeIds },
+      variables: { id: animeIds },
       skip: animeIds.length === 0,
     }
   );
@@ -67,10 +67,17 @@ export default function Collection(
           </TabsTrigger>
         </TabsList>
         <TabsContent value="watching">
-          <div className="px-4 py-2">Watching content</div>
+          <div className="px-4 py-2">
+            {data?.Page?.media ? (
+              <AnimeList list={data?.Page?.media || []} />
+            ) : (
+              <AnimeListSkeleton />
+            )}
+          </div>
         </TabsContent>
         <TabsContent value="to-watch">
-          <div className="px-4 py-2">To Watch content</div>
+          <AnimeList list={data?.Page?.media || []} />
+          {loading && <AnimeListSkeleton />}
         </TabsContent>
         <TabsContent value="collections">
           <div className="px-4 py-2">Collections content</div>

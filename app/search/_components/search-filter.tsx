@@ -1,7 +1,8 @@
 "use client"
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
+import lodash from "lodash";
 
 import { Check, ChevronsUpDown } from "lucide-react"
 
@@ -24,6 +25,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+
+import { Input } from "@/components/ui/input"
 
 const currentYear = new Date().getFullYear();
 const years: number[] = [];
@@ -61,6 +64,8 @@ export default function SearchFilter() {
   const [seasonOpen, setSeasonOpen] = useState(false);
   const [seasonValue, setSeasonValue] = useState("");
 
+  const [queryValue, setQueryValue] = useState("");
+
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -78,6 +83,11 @@ export default function SearchFilter() {
     const season = searchParams.get("season")?.toLocaleUpperCase();
     if (season) {
       setSeasonValue(season);
+    }
+
+    const query = searchParams.get("query");
+    if (query) {
+      setQueryValue(query);
     }
   }, [searchParams]);
 
@@ -131,10 +141,42 @@ export default function SearchFilter() {
   };
 
 
+  const debouncedQueryChange = useMemo(
+    () =>
+      lodash.debounce((newValue: string) => {
+        const params = new URLSearchParams(searchParams.toString());
+
+        if (newValue) {
+          params.set("query", newValue);
+        } else {
+          params.delete("query");
+        }
+
+        router.push(`/search?${params.toString()}`);
+      }, 500), // 500ms debounce delay
+    [searchParams, router]
+  );
+
+  const handleQueryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = event.target.value;
+    setQueryValue(newValue);
+
+    debouncedQueryChange(newValue);
+  };
+
   return (
 
-    <div className="w-full grid md:grid-cols-12 pt-4 justify-between">
-      <div className="col-span-3 flex flex-col gap-2 justify-between">
+    <div className="w-full grid md:grid-cols-10 pt-4 justify-between">
+      <div className="col-span-2 flex flex-col gap-2 justify-between">
+        <p className="text-sm text-muted-foreground ml-2">Search</p>
+        <Input
+          placeholder="Search..."
+          className="w-fit rounded-full"
+          value={queryValue}
+          onChange={handleQueryChange}
+        />
+      </div>
+      <div className="col-span-2 flex flex-col gap-2 justify-between">
         <p className="text-sm text-muted-foreground ml-2">Format</p>
         <Popover open={formatOpen} onOpenChange={setFormatOpen}>
           <PopoverTrigger asChild>
@@ -177,7 +219,7 @@ export default function SearchFilter() {
           </PopoverContent>
         </Popover>
       </div>
-      <div className="col-span-3 flex flex-col gap-2 justify-between">
+      <div className="col-span-2 flex flex-col gap-2 justify-between">
         <p className="text-sm text-muted-foreground ml-2">Year</p>
         <Popover open={yearOpen} onOpenChange={setYearOpen}>
           <PopoverTrigger asChild>
@@ -220,7 +262,7 @@ export default function SearchFilter() {
           </PopoverContent>
         </Popover>
       </div>
-      <div className="col-span-3 flex flex-col gap-2 justify-between">
+      <div className="col-span-2 flex flex-col gap-2 justify-between">
         <p className="text-sm text-muted-foreground ml-2">Season</p>
         <Popover open={seasonOpen} onOpenChange={setSeasonOpen}>
           <PopoverTrigger asChild>

@@ -35,6 +35,8 @@ export default function Privacy() {
                     <a
                         href="https://clerk.com/legal/privacy"
                         className="text-blue-500 hover:underline"
+                        target="_blank"
+                        rel="noopener noreferrer"
                     >
                         their Privacy Policy
                     </a>

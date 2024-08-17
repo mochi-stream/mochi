@@ -4701,6 +4701,13 @@ export type AutocompleteSearchQueryVariables = Exact<{
 
 export type AutocompleteSearchQuery = { __typename?: 'Query', Page?: { __typename?: 'Page', media?: Array<{ __typename?: 'Media', id: number, description?: string | null, seasonYear?: number | null, genres?: Array<string | null> | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null> | null } | null };
 
+export type GetAnimesByIdsQueryVariables = Exact<{
+  id?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>> | InputMaybe<Scalars['Int']['input']>>;
+}>;
+
+
+export type GetAnimesByIdsQuery = { __typename?: 'Query', Page?: { __typename?: 'Page', media?: Array<{ __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, averageScore?: number | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null> | null } | null };
+
 export type HomePageAnimeQueryVariables = Exact<{
   season?: InputMaybe<MediaSeason>;
   seasonYear?: InputMaybe<Scalars['Int']['input']>;
@@ -5069,6 +5076,48 @@ export type AutocompleteSearchQueryHookResult = ReturnType<typeof useAutocomplet
 export type AutocompleteSearchLazyQueryHookResult = ReturnType<typeof useAutocompleteSearchLazyQuery>;
 export type AutocompleteSearchSuspenseQueryHookResult = ReturnType<typeof useAutocompleteSearchSuspenseQuery>;
 export type AutocompleteSearchQueryResult = Apollo.QueryResult<AutocompleteSearchQuery, AutocompleteSearchQueryVariables>;
+export const GetAnimesByIdsDocument = gql`
+    query GetAnimesByIds($id: [Int]) {
+  Page {
+    media(id_in: $id, type: ANIME) {
+      ...media
+    }
+  }
+}
+    ${MediaFragmentDoc}`;
+
+/**
+ * __useGetAnimesByIdsQuery__
+ *
+ * To run a query within a React component, call `useGetAnimesByIdsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAnimesByIdsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAnimesByIdsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetAnimesByIdsQuery(baseOptions?: Apollo.QueryHookOptions<GetAnimesByIdsQuery, GetAnimesByIdsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAnimesByIdsQuery, GetAnimesByIdsQueryVariables>(GetAnimesByIdsDocument, options);
+      }
+export function useGetAnimesByIdsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAnimesByIdsQuery, GetAnimesByIdsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAnimesByIdsQuery, GetAnimesByIdsQueryVariables>(GetAnimesByIdsDocument, options);
+        }
+export function useGetAnimesByIdsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetAnimesByIdsQuery, GetAnimesByIdsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetAnimesByIdsQuery, GetAnimesByIdsQueryVariables>(GetAnimesByIdsDocument, options);
+        }
+export type GetAnimesByIdsQueryHookResult = ReturnType<typeof useGetAnimesByIdsQuery>;
+export type GetAnimesByIdsLazyQueryHookResult = ReturnType<typeof useGetAnimesByIdsLazyQuery>;
+export type GetAnimesByIdsSuspenseQueryHookResult = ReturnType<typeof useGetAnimesByIdsSuspenseQuery>;
+export type GetAnimesByIdsQueryResult = Apollo.QueryResult<GetAnimesByIdsQuery, GetAnimesByIdsQueryVariables>;
 export const HomePageAnimeDocument = gql`
     query HomePageAnime($season: MediaSeason, $seasonYear: Int, $nextSeason: MediaSeason, $nextYear: Int) {
   trending: Page(page: 1, perPage: 6) {

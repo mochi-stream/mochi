@@ -7,7 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import Subscriptions from "./subscriptions";
 
 import { AnimeInfoPageQuery } from "@/graphql/types";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Plus } from "lucide-react";
 import AddToCollection from "@/components/anime/add-to-collection";
 
 import { AddToCollection as AddToCollectionType } from "@/types/anime";
@@ -48,7 +48,7 @@ export default function Banner({
             />
           </div>
           <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent z-[-4]"></div>
-          <div className="relative hidden lg:flex justify-end items-end h-full w-full p-4 gap-2">
+          <div className="relative flex justify-between md:justify-end items-end h-full w-full p-4 gap-2">
             {data.Media.trailer ? (
               <Link
                 href={
@@ -57,6 +57,7 @@ export default function Banner({
                     : "#"
                 }
                 target="_blank"
+                className="hidden md:block"
                 rel="noopener noreferrer"
               >
                 <Button className="shadow-lg" variant={"secondary"}>
@@ -64,7 +65,13 @@ export default function Banner({
                 </Button>
               </Link>
             ) : null}
-            <Button className="shadow-lg" onClick={() => handleAddToCollection(data?.Media)}>Add to Collection</Button>
+            <Button className="shadow-lg hidden md:flex" onClick={() => handleAddToCollection(data?.Media)}>
+              <span>Add to Collection</span>
+              <Plus className="h-4 w-4 ml-1" />
+            </Button>
+            <Button className="md:hidden" onClick={() => handleAddToCollection(data?.Media)} size={"icon"}>
+              <Plus className="h-4 w-4" />
+            </Button>
             <Subscriptions animeId={data?.Media?.id} />
 
             {selectedAnime &&
@@ -77,9 +84,9 @@ export default function Banner({
           </div>
         </div>
       ) : loading ? (
-          <Skeleton className="h-56 w-full"></Skeleton>
+        <Skeleton className="h-56 w-full"></Skeleton>
       ) : (
-            <div className="h-56 w-full bg-muted"></div>
+        <div className="h-56 w-full bg-muted"></div>
       )}
     </>
   );

@@ -62,7 +62,7 @@ export function EpisodeList({ list, animeId, quantity }: EpisodeListProps) {
                                     alt={episode.title || "No Title"}
                                     width={1080}
                                     height={600}
-                                    className="w-full h-full rounded-lg transition-pacity object-cover opacity-80 group-hover:opacity-100"
+                                    className="w-full h-full rounded-lg transition-pacity object-cover scale-100 group-hover:scale-105"
                                 />
 
                                 <div className="absolute bottom-0 w-full p-4 z-50 font-aeonik">

@@ -118,7 +118,7 @@ export function AnimeInformation({
                                     )}
                                 </p>
                             )}
-                            <div className="flex flex-col md:flex-row items-center md:justify-start justify-center mt-4 gap-2">
+                            <div className="flex flex-col lg:flex-row items-center md:justify-start justify-center mt-4 gap-2">
                                 <div className="flex gap-2 py-2">
                                     <Link href={`/stream/${id}/1`}>
                                         {data?.Media?.status === MediaStatus.NotYetReleased ? (

@@ -1,15 +1,13 @@
 import { useMemo, useState, useEffect, useCallback, useRef } from "react";
 import { useSearchParams } from "next/navigation";
-
+import lodash from "lodash";
 import { AnimeList, AnimeListSkeleton } from "@/components/anime/list";
-
 import { useQuery } from "@apollo/client";
 import {
   MediaType,
   SearchPageQuery,
   SearchPageQueryVariables
 } from "@/graphql/types";
-
 import { SEARCH_PAGE_QUERY } from "@/graphql/queries/searchPageQuery";
 import SearchFilter from "./search-filter";
 
@@ -17,14 +15,12 @@ export default function SearchResults() {
   const searchParams = useSearchParams();
 
   const [searchResults, setSearchResults] = useState<any[]>([]);
-
   const [currentPage, setCurrentPage] = useState(1);
-
   const observer = useRef<IntersectionObserver | null>(null);
 
   const query = searchParams.get("query") || undefined;
 
-  const { data, loading, fetchMore } = useQuery<
+  const { data, loading, fetchMore, refetch } = useQuery<
     SearchPageQuery,
     SearchPageQueryVariables
   >(SEARCH_PAGE_QUERY, {
@@ -37,16 +33,35 @@ export default function SearchResults() {
     notifyOnNetworkStatusChange: true, // Allow refetching with fetchMore
   });
 
-  const searchResultsData = useMemo(() => data?.Page?.media || [], [data?.Page?.media]);
+  const searchResultsData = useMemo(
+    () => data?.Page?.media || [],
+    [data?.Page?.media]
+  );
 
   const hasNextPage = data?.Page?.pageInfo?.hasNextPage || false;
 
-  useEffect(() => {
-    setSearchResults([]); // Clear previous results
-    setCurrentPage(1); // Reset to the first page
-  }, [query]);
+  const debouncedSearch = useMemo(
+    () =>
+      lodash.debounce(() => {
+        setSearchResults([]); // Clear previous results
+        setCurrentPage(1); // Reset to the first page
+        refetch({
+          page: 1,
+          search: query,
+        });
+      }, 500),
+    [query, refetch]
+  );
 
-  // Update search results when data changes
+  useEffect(() => {
+    debouncedSearch();
+
+    // Cancel the debounce on cleanup
+    return () => {
+      debouncedSearch.cancel();
+    };
+  }, [debouncedSearch]);
+
   useEffect(() => {
     if (currentPage === 1) {
       setSearchResults(searchResultsData);
@@ -69,7 +84,6 @@ export default function SearchResults() {
     }
   }, [currentPage, hasNextPage, fetchMore]);
 
-  // Set up the IntersectionObserver to load more results when the sentinel element is visible
   useEffect(() => {
     const handleObserver = (entries: IntersectionObserverEntry[]) => {
       const target = entries[0];
@@ -96,14 +110,14 @@ export default function SearchResults() {
       {searchParams.get("query") && (
         <>
           <title>{`Search Results for "${searchParams.get("query")}"`}</title>
-          {/* Display the search query and sorting options */}
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-medium">
                 {`Search Results for "${searchParams.get("query")}"`}
               </h1>
             </div>
-          </div></>
+          </div>
+        </>
       )}
 
       <SearchFilter />
