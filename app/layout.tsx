@@ -7,6 +7,8 @@ import { UserProvider } from "./_components/context";
 
 import ApolloWrapper from "./_components/apollo";
 
+import { WebPushProvider } from "./_components/web-push";
+
 import Header from "./_components/header";
 import Footer from "./_components/footer";
 
@@ -32,18 +34,20 @@ export default function RootLayout({
         }}>
           <ApolloWrapper>
             <UserProvider>
-              <div className="relative flex flex-col min-h-screen">
-                <NextTopLoader
-                  color="#ffffff"
-                  showSpinner={false}
-                  height={2}
-                />
-                <Header />
-                {children}
-                <Toaster position="bottom-center" duration={3000} />
-                <Footer />
-                <div className="absolute top-0 z-[-200] h-full w-screen rotate-180 transform bg-[radial-gradient(0%_0%_at_100%_100%,hsla(0,0%,0%,0)_0,rgba(255,90,90,.08)_100%)] opacity-70"></div>
-              </div>
+              <WebPushProvider>
+                <div className="relative flex flex-col min-h-screen">
+                  <NextTopLoader
+                    color="#ffffff"
+                    showSpinner={false}
+                    height={2}
+                  />
+                  <Header />
+                  {children}
+                  <Toaster position="bottom-center" duration={3000} />
+                  <Footer />
+                  <div className="absolute top-0 z-[-200] h-full w-screen rotate-180 transform bg-[radial-gradient(0%_0%_at_100%_100%,hsla(0,0%,0%,0)_0,rgba(255,90,90,.08)_100%)] opacity-70"></div>
+                </div>
+              </WebPushProvider>
             </UserProvider>
           </ApolloWrapper>
         </ClerkProvider>

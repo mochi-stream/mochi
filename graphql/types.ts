@@ -4708,6 +4708,13 @@ export type GetAnimesByIdsQueryVariables = Exact<{
 
 export type GetAnimesByIdsQuery = { __typename?: 'Query', Page?: { __typename?: 'Page', media?: Array<{ __typename?: 'Media', id: number, idMal?: number | null, season?: MediaSeason | null, averageScore?: number | null, seasonYear?: number | null, description?: string | null, type?: MediaType | null, format?: MediaFormat | null, genres?: Array<string | null> | null, isAdult?: boolean | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null } | null } | null> | null } | null };
 
+export type GetNextAiringEpisodeQueryVariables = Exact<{
+  currentTime: Scalars['Int']['input'];
+}>;
+
+
+export type GetNextAiringEpisodeQuery = { __typename?: 'Query', Page?: { __typename?: 'Page', airingSchedules?: Array<{ __typename?: 'AiringSchedule', id: number, episode: number, airingAt: number, media?: { __typename?: 'Media', id: number, title?: { __typename?: 'MediaTitle', romaji?: string | null, english?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', large?: string | null } | null } | null } | null> | null } | null };
+
 export type HomePageAnimeQueryVariables = Exact<{
   season?: InputMaybe<MediaSeason>;
   seasonYear?: InputMaybe<Scalars['Int']['input']>;
@@ -5118,6 +5125,60 @@ export type GetAnimesByIdsQueryHookResult = ReturnType<typeof useGetAnimesByIdsQ
 export type GetAnimesByIdsLazyQueryHookResult = ReturnType<typeof useGetAnimesByIdsLazyQuery>;
 export type GetAnimesByIdsSuspenseQueryHookResult = ReturnType<typeof useGetAnimesByIdsSuspenseQuery>;
 export type GetAnimesByIdsQueryResult = Apollo.QueryResult<GetAnimesByIdsQuery, GetAnimesByIdsQueryVariables>;
+export const GetNextAiringEpisodeDocument = gql`
+    query GetNextAiringEpisode($currentTime: Int!) {
+  Page {
+    airingSchedules(notYetAired: true, airingAt_greater: $currentTime) {
+      id
+      episode
+      airingAt
+      media {
+        id
+        title {
+          romaji
+          english
+        }
+        coverImage {
+          large
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetNextAiringEpisodeQuery__
+ *
+ * To run a query within a React component, call `useGetNextAiringEpisodeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetNextAiringEpisodeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetNextAiringEpisodeQuery({
+ *   variables: {
+ *      currentTime: // value for 'currentTime'
+ *   },
+ * });
+ */
+export function useGetNextAiringEpisodeQuery(baseOptions: Apollo.QueryHookOptions<GetNextAiringEpisodeQuery, GetNextAiringEpisodeQueryVariables> & ({ variables: GetNextAiringEpisodeQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetNextAiringEpisodeQuery, GetNextAiringEpisodeQueryVariables>(GetNextAiringEpisodeDocument, options);
+      }
+export function useGetNextAiringEpisodeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetNextAiringEpisodeQuery, GetNextAiringEpisodeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetNextAiringEpisodeQuery, GetNextAiringEpisodeQueryVariables>(GetNextAiringEpisodeDocument, options);
+        }
+export function useGetNextAiringEpisodeSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetNextAiringEpisodeQuery, GetNextAiringEpisodeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetNextAiringEpisodeQuery, GetNextAiringEpisodeQueryVariables>(GetNextAiringEpisodeDocument, options);
+        }
+export type GetNextAiringEpisodeQueryHookResult = ReturnType<typeof useGetNextAiringEpisodeQuery>;
+export type GetNextAiringEpisodeLazyQueryHookResult = ReturnType<typeof useGetNextAiringEpisodeLazyQuery>;
+export type GetNextAiringEpisodeSuspenseQueryHookResult = ReturnType<typeof useGetNextAiringEpisodeSuspenseQuery>;
+export type GetNextAiringEpisodeQueryResult = Apollo.QueryResult<GetNextAiringEpisodeQuery, GetNextAiringEpisodeQueryVariables>;
 export const HomePageAnimeDocument = gql`
     query HomePageAnime($season: MediaSeason, $seasonYear: Int, $nextSeason: MediaSeason, $nextYear: Int) {
   trending: Page(page: 1, perPage: 6) {

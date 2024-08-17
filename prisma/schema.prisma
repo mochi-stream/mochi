@@ -34,6 +34,10 @@ model User {
   likes      Like[]
   dislikes   Dislike[]
   replies    Reply[]
+
+  PushSubscription PushSubscription[]
+
+  @@index([username])
 }
 
 model Subscription {
@@ -106,7 +110,6 @@ model Reply {
   @@index([commentId])
 }
 
-
 model Notifications {
   id        String   @id @default(cuid())
   userId    String
@@ -117,6 +120,17 @@ model Notifications {
   user      User     @relation(fields: [userId], references: [id])
 
   @@index([userId])
+}
+
+model PushSubscription {
+  id        Int    @id @default(autoincrement())
+  endpoint  String
+  keys      Json
+  createdAt DateTime @default(now())
+  userId   String
+  user     User   @relation(fields: [userId], references: [id])
+
+  @@index([endpoint])
 }
 
 model Follow {

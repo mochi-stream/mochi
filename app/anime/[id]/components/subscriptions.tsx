@@ -10,11 +10,15 @@ import { BellPlus, BellRing, Loader } from "lucide-react";
 
 import { toast } from "sonner";
 
+import { useWebPush } from "@/app/_components/web-push";
+
 export default function Subscriptions({
     animeId,
 }: {
     animeId: number;
 }) {
+
+    const { pushSubscribe, isPushSubscribed } = useWebPush();
 
     const [isSubscribed, setIsSubscribed] = useState<boolean | null>(null);
     const [isSubscribing, setIsSubscribing] = useState(false);
@@ -45,6 +49,15 @@ export default function Subscriptions({
             toast.error("Failed to subscribe. Please try again later.");
             return;
         }
+
+        if (!isSubscribed && !isPushSubscribed) {
+            try {
+                await pushSubscribe();
+            } catch (error) {
+                toast.error("Failed to subscribe. Permission denied.");
+                return;
+            }
+        };
 
         setIsSubscribing(true);
         if (isSubscribed) {
