@@ -1,43 +1,67 @@
-import { CharacterFragment, StaffFragment } from "@/graphql/types";
+// TODO: Recently watched?
+
+import { CharacterFragment, StaffFragment, MediaStreamingEpisode } from "@/graphql/types";
 
 interface DetailedTabsProps {
+    animeId: number | null;
     characters?: CharacterFragment | null;
-    staff?: (StaffFragment | null)[];
+    staff?: (StaffFragment | null)[] | null;
+    episodes?: (MediaStreamingEpisode | null)[] | null;
 }
 
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { CharacterList } from "./character-list";
 import { StaffList } from "./staff-list";
+import { EpisodeList } from "./episode-list";
 
-export default function AnimeInfoTabs({ characters, staff }: DetailedTabsProps) {
+export default function AnimeInfoTabs({ animeId, characters, staff, episodes }: DetailedTabsProps) {
     return (
         <div className="flex flex-col w-full">
-            <Tabs defaultValue="char" className="flex flex-col gap-2 items-start">
-                <TabsList className="w-full flex gap-4 items-center">
+            <Tabs defaultValue={episodes && animeId && episodes.length > 0 && "epi" || "char"} className="flex flex-col gap-2 items-start">
+                <TabsList className="w-full flex gap-4 items-center overflow-x-auto1 overflow-y-hidden">
+                    {episodes && animeId && episodes.length > 0 && (
+                        <TabsTrigger value="epi">
+                            Episodes
+                        </TabsTrigger>
+                    )}
                     <TabsTrigger value="char">
                         Characters
                     </TabsTrigger>
                     <TabsTrigger value="staff">
                         Staff
                     </TabsTrigger>
-                    <TabsTrigger value="activity">
-                        Activity
+                    <TabsTrigger value="art">
+                        Art Works
+                    </TabsTrigger>
+                    <TabsTrigger value="comments">
+                        Comments
                     </TabsTrigger>
                     <TabsTrigger value="threads">
                         Threads
                     </TabsTrigger>
                 </TabsList>
+                <TabsContent value="epi">
+                    {episodes && animeId && episodes?.length > 0 && (
+                        <EpisodeList animeId={animeId} list={episodes.filter((episode): episode is MediaStreamingEpisode => episode !== null)} quantity={8} />
+                    )}
+
+                </TabsContent>
                 <TabsContent value="char">
                     {characters &&
                         <CharacterList list={characters} quantity={5} />}
                 </TabsContent>
                 <TabsContent value="staff">
-                    {staff && staff !== null &&
-                        <StaffList list={staff.filter((s): s is StaffFragment => s !== null)} quantity={5} />}
+                    {staff &&
+                        <StaffList list={staff?.filter((item): item is StaffFragment => item !== null)} quantity={5} />}
                 </TabsContent>
-                <TabsContent value="activity">
+                <TabsContent value="art">
                     <div className="text-muted-foreground px-2 py-4 w-full h-16 flex text-center">
-                        <p>Activity not available yet.</p>
+                        <p>Art Works not available yet.</p>
+                    </div>
+                </TabsContent>
+                <TabsContent value="comments">
+                    <div className="text-muted-foreground px-2 py-4 w-full h-16 flex text-center">
+                        <p>Comments not available yet.</p>
                     </div>
                 </TabsContent>
                 <TabsContent value="threads">

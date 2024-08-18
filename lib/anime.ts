@@ -1,24 +1,10 @@
 "use server";
 
-import { config } from "dotenv";
-config();
+const CONSUMET_URL = process.env.NEXT_PUBLIC_CONSUMET_URL;
 
-const CONSUMET_URL =
-  process.env.CONSUMET_URL || "https://consumet-api-dev.vercel.app";
+import { Episode, VideoDetails } from "@/types/anime";
 
 import axios from "axios";
-
-// import { AnilistSearchResult, AnimeInfo } from "@/types/anime";
-
-export async function getSpotlight() {
-  // return await animeProvider.fetchSpotlight();
-}
-
-// Popular This Season
-// Upcoming
-// Airing
-// Genre Search
-// Add MAL Auto Adder
 
 export async function searchAnime(
   query: string,
@@ -42,19 +28,24 @@ export async function searchAnime(
   }
 }
 
-export async function getAnimeDetails(
-  id: string,
-  provider: string
-): Promise<any> {
+export async function getAnimeDetails(id: string): Promise<Episode[]> {
   try {
     const response = await axios.get<any>(
-      `${CONSUMET_URL}/meta/anilist/info/${id}`,
-      {
-        params: { provider },
-      }
+      `${CONSUMET_URL}/meta/anilist/info/${id}?provider=zoro`
+    );
+    return response.data.episodes;
+  } catch (error) {
+    throw new Error("Error fetching anime details");
+  }
+}
+
+export async function getStreamingLinks(id: string): Promise<VideoDetails> {
+  try {
+    const response = await axios.get<VideoDetails>(
+      `${CONSUMET_URL}/anime/zoro/watch?episodeId=${id}`
     );
     return response.data;
   } catch (error) {
-    throw new Error("Error fetching anime details");
+    throw new Error("Error fetching streaming links");
   }
 }

@@ -10,23 +10,102 @@ datasource db {
 }
 
 model User {
-  id             String   @id @default(uuid())
-  externalUserId String   @unique
+  id             String   @unique @id
   email          String   @unique
   imageUrl       String   @db.Text
+  coverImageUrl  String?  @db.Text
   name           String?  @db.Text
   username       String   @unique @default(uuid())
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
   bio            String?
+  isAdmin        Boolean  @default(false)
 
-  notifications Notifications[]
-  watchHistory  WatchHistory[]
-  collection    Collection[]
+  notifications  Notifications[]
+  watchHistory   WatchHistory[]
+  collection     Collection[]
+
+  subscriptions Subscription[]
 
   following  Follow[] @relation("Following")
   followedBy Follow[] @relation("FollowedBy")
+
+  comments   Comment[]
+  likes      Like[]
+  dislikes   Dislike[]
+  replies    Reply[]
 }
+
+model Subscription {
+  id        String   @unique @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+
+  animeId   String
+
+  @@unique([userId, animeId])
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  content   String   @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  animeId   String
+  episodeId String
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  likes     Like[]
+  dislikes  Dislike[]
+  replies   Reply[]
+
+  @@index([animeId, episodeId])
+}
+
+model Like {
+  id        String   @id @default(uuid())
+  userId    String
+  commentId String?  @map("comment_id")
+  replyId   String?  @map("reply_id")
+
+  user      User     @relation(fields: [userId], references: [id])
+  comment   Comment? @relation(fields: [commentId], references: [id], map: "Like_comment_fk")
+  reply     Reply?   @relation(fields: [replyId], references: [id], map: "Like_reply_fk")
+}
+
+model Dislike {
+  id        String   @id @default(uuid())
+  userId    String
+  commentId String?  @map("comment_id")
+  replyId   String?  @map("reply_id")
+
+  user      User     @relation(fields: [userId], references: [id])
+  comment   Comment? @relation(fields: [commentId], references: [id], map: "Dislike_comment_fk")
+  reply     Reply?   @relation(fields: [replyId], references: [id], map: "Dislike_reply_fk")
+}
+
+model Reply {
+  id         String   @id @default(uuid())
+  content    String   @db.Text
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  userId     String
+  commentId  String
+
+  user       User     @relation(fields: [userId], references: [id])
+  comment    Comment  @relation(fields: [commentId], references: [id])
+  likes      Like[]
+  dislikes   Dislike[]
+
+  @@index([commentId])
+}
+
 
 model Notifications {
   id        String   @id @default(cuid())
@@ -35,7 +114,7 @@ model Notifications {
   message   String
   seen      Boolean  @default(false)
   createdAt DateTime @default(now())
-  user      User     @relation(fields: [userId], references: [externalUserId])
+  user      User     @relation(fields: [userId], references: [id])
 
   @@index([userId])
 }
@@ -54,24 +133,20 @@ model Follow {
   @@index([followingId])
 }
 
-enum Provider {
-  ZORO
-  GOGOANIME
-}
-
 model WatchHistory {
   id           String   @id @default(cuid())
   userId       String
   animeId      String
   episodeId    String
-  lastWatched  DateTime
-  providerName Provider
+  lastWatched  DateTime @default(now()) @updatedAt
 
   user User @relation(fields: [userId], references: [id])
 
   @@index([userId])
   @@index([animeId])
   @@index([episodeId])
+
+  @@unique([userId, animeId, episodeId])
 }
 
 enum Status {
@@ -86,12 +161,11 @@ model Collection {
   id        String @id @default(cuid())
   userId    String
   animeId   String
-  episodeId Int
   status    Status
 
   user User @relation(fields: [userId], references: [id])
 
   @@index([userId])
   @@index([animeId])
-  @@index([episodeId])
+  @@unique([userId, animeId])
 }

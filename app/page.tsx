@@ -1,7 +1,3 @@
-/**
- * Renders the main application component.
- */
-
 "use client";
 
 import { useQuery, gql } from "@apollo/client";
@@ -47,18 +43,20 @@ export default function App() {
 
   return (
     <div>
-      <div className="px-4 lg:px-8 py-6">
+      <div className="px-4 md:px-8 py-6">
         <div>
           <div>
             <h1 className="text-[1.4rem] font-medium">Trending Now</h1>
+            {/* <p className="text-sm text-muted-foreground">Popular animes for you.</p> */}
           </div>
           {data && data.trending && data.trending.media ? (
             <AnimeList list={data.trending.media} />
-            // TODO: Turl this into a spotlight
           ) : (
             <AnimeListSkeleton />
           )}
         </div>
+
+        {/* FEAT: Show Recommended Anime Based on MAL History */}
 
         <div className="mt-6">
           <div>
@@ -66,7 +64,6 @@ export default function App() {
           </div>
           {data && data.season && data.season.media ? (
             <AnimeList list={data.season.media} />
-            // Also add genres sidebar
           ) : (
             <AnimeListSkeleton />
           )}
@@ -100,13 +97,10 @@ export default function App() {
           </div>
           {data && data.nextSeason && data.nextSeason.media ? (
             <AnimeList list={data.nextSeason.media} />
-            // Also add genres sidebar
           ) : (
             <AnimeListSkeleton />
           )}
         </div>
-
-
       </div>
     </div>
   );

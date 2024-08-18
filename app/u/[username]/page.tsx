@@ -1,8 +1,3 @@
-/**
- * UserPage component represents the user profile page.
- * It fetches the user data based on the provided username and renders the profile header and activity components.
- */
-
 "use client";
 
 import { useEffect, useState } from "react";
@@ -26,7 +21,6 @@ interface UserPageProps {
 }
 
 export default function UserPage({ params }: UserPageProps) {
-  // Get the currently logged in user
   const me = useUser();
 
   // State variables to store the user data, loading status, and error
@@ -87,7 +81,7 @@ export default function UserPage({ params }: UserPageProps) {
             </div>
           </div>
         )}
-        <Collection />
+        <Collection userId={user.id} />
       </div>
     </>
   );

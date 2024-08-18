@@ -4,7 +4,7 @@ import "@vidstack/react/player/styles/base.css";
 
 import { useEffect, useRef, useState } from "react";
 
-import { PlayerSubtitle, Intro, Outro } from "@/types/anime";
+import { PlayerSubtitle, TimeRange } from "@/types/anime";
 
 import {
   isHLSProvider,
@@ -27,8 +27,8 @@ interface PlayerProps {
   src: string;
   thumbnail?: string;
   subtitles?: PlayerSubtitle[];
-  intro?: Intro;
-  outro?: Intro;
+  intro?: TimeRange;
+  outro?: TimeRange;
 }
 
 export default function Player({
@@ -72,15 +72,15 @@ export default function Player({
 
   useEffect(() => {
     if (intro && outro) {
-      const intros: Intro[] = [intro];
-      const outros: Outro[] = [outro];
+      const intros: TimeRange[] = [intro];
+      const outros: TimeRange[] = [outro];
       setVttContent(generateVTT(intros, outros));
     }
   }, [intro, outro]);
 
   return (
     <MediaPlayer
-      className="w-full aspect-video bg-slate-900 text-white font-sans overflow-hidden rounded-md ring-media-focus data-[focus]:ring-4"
+      className="w-full aspect-video text-white font-sans overflow-hidden rounded-sm z-[5] ring-media-focus data-[focus]:ring-4 border border-primary/5"
       title={title}
       poster={poster}
       src={src}
@@ -105,6 +105,8 @@ export default function Player({
             data-type="vtt"
           />
         )}
+
+        {/* <Poster src={poster} className="w-full h-fit -z-[5] aspect-video" /> */}
       </MediaProvider>
       <VideoLayout thumbnails={thumbnail} />
     </MediaPlayer>
@@ -121,7 +123,7 @@ const formatTime = (seconds: number): string => {
   )}:${String(secs).padStart(2, "0")}.000`;
 };
 
-const generateVTT = (intros: Intro[], outros: Outro[]): string => {
+const generateVTT = (intros: TimeRange[], outros: TimeRange[]): string => {
   let vtt = "WEBVTT\n\n";
 
   intros.forEach((intro, index) => {

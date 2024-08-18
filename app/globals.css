@@ -8,7 +8,7 @@
 
 @font-face {
   font-family: 'Aeonik';
-  src: url('../public/aeonik.otf') format('opentype');
+  src: url('../public/fonts/aeonik.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
 }
@@ -27,8 +27,8 @@
     --secondary-foreground: 0 20% 98%;
     --muted: 0 0% 14.9%;
     --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 0 0% 10.9%;
+    --accent-foreground: 0 0% 14%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
     --border: 0 0% 16.9%;
@@ -72,4 +72,40 @@ input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-results-button,
 input[type="search"]::-webkit-search-results-decoration {
   display: none;
+}
+
+/* Custom scrollbar styles */
+.episodes-container {
+    /* Custom scrollbar styles for WebKit-based browsers */
+    overflow-y: scroll; /* Ensure the scrollbar is visible */
+}
+
+*::-webkit-scrollbar {
+    width: 6px; /* Adjust width as needed */
+}
+
+*::-webkit-scrollbar-track {
+    background: transparent; /* Track color */
+}
+
+*::-webkit-scrollbar-thumb {
+    background: #313131; /* Thumb color */
+    border-radius: 10px; /* Rounded corners for thumb */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 0.5s forwards;
+    animation-delay: 0.2s;
 }

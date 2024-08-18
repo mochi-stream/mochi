@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { CharacterFragment } from "@/graphql/types";
 
 import { ArrowDown, ArrowUp } from 'lucide-react';
+import CustomImage from "@/components/ui/custom-image";
 
 interface CharacterListProps {
     quantity?: number;
@@ -34,8 +35,8 @@ export function CharacterList({ list, quantity }: CharacterListProps) {
                     key={index}
                     className="relative overflow-hidden cursor-pointer group"
                 >
-                    <Image
-                        loading="lazy"
+                    <CustomImage
+                        index={index}
                         src={character?.node?.image?.large || "/default.png"}
                         alt={character?.node?.name?.userPreferred || "No Title"}
                         width={640}

@@ -34,7 +34,12 @@ export function ProfileHeader({ user }: { user: ProfileUser }) {
   // Render the user's profile information
   return (
     <div className="relative py-12 select-none">
-      <div className="absolute inset-0 bg-cover bg-center opacity-75 bg-[url('https://s4.anilist.co/file/anilistcdn/media/anime/banner/153288-JNsWuMPMAuJL.jpg')]"></div>
+      <div
+        className="absolute inset-0 bg-cover bg-center opacity-75"
+        style={{
+          backgroundImage: `url('${user.coverImageUrl || "https://s4.anilist.co/file/anilistcdn/media/anime/banner/153288-JNsWuMPMAuJL.jpg"}')`,
+        }}
+      ></div>
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-primary-foreground opacity-80"></div>
       <div className="absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-primary-foreground opacity-80"></div>
       <div className="relative z-10 flex flex-col space-y-4 lg:space-y-0 lg:flex-row items-center px-6 lg:px-12 space-x-4">
@@ -50,26 +55,27 @@ export function ProfileHeader({ user }: { user: ProfileUser }) {
               <p className="font-semibold text-lg select-text">
                 @{user.username}
               </p>
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger>
-                    <Badge className="ml-2 h-6">
-                      <Check className="w-4 h-4" />
-                      <p className="text-xs ml-1">Staff</p>
-                    </Badge>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>This user is a staff member of Mochi</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+              {user.isAdmin &&
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <Badge className="ml-2 h-6">
+                        <Check className="w-4 h-4" />
+                        <p className="text-xs ml-1">Staff</p>
+                      </Badge>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>This user is a staff member of Mochi</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>}
             </div>
-            <p className="text-sm mt-2">
+            <p className="mt-1">
               {user.following.length} Followers • {user.followedBy.length}{" "}
-              Followings • 1 Karma
+              Followings
             </p>
           </div>
-          {userId && userId === user.externalUserId ? (
+          {userId && userId === user.id ? (
             <Link href={`/settings/profile`}>
               <Button variant="default" size="sm" className="w-full lg:w-auto">
                 Edit Profile

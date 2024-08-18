@@ -1,5 +1,13 @@
-// TODO: Add Anime Context
+"use client";
 
-export default function StreamPage() {
-    return <div></div>;
+import WatchPage from './[episodeId]/page';
+
+interface StreamPageProps {
+    params: {
+        animeId: string;
+    }
+}
+
+export default function StreamPage({ params }: StreamPageProps) {
+    return <WatchPage params={{ animeId: params.animeId, episodeId: "1" }} />
 }

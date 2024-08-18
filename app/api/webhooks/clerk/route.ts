@@ -91,7 +91,7 @@ export async function POST(req: Request) {
     await db.user.create({
       data: {
         email: payload.data.id,
-        externalUserId: payload.data.id,
+        id: payload.data.id,
         username: payload.data.username,
         imageUrl: payload.data.image_url,
       },
@@ -100,7 +100,7 @@ export async function POST(req: Request) {
   if (eventType === "user.updated") {
     await db.user.update({
       where: {
-        externalUserId: payload.data.id,
+        id: payload.data.id,
       },
       data: {
         username: payload.data.username,
@@ -111,7 +111,7 @@ export async function POST(req: Request) {
   if (eventType === "user.deleted") {
     await db.user.delete({
       where: {
-        externalUserId: payload.data.id,
+        id: payload.data.id,
       },
     });
   }

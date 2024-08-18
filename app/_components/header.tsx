@@ -1,7 +1,3 @@
-/**
- * Global Header component that displays the navigation bar.
- */
-
 "use client";
 
 import Link from "next/link";
@@ -10,50 +6,60 @@ import { useUser } from "./context";
 import { SignedIn, SignedOut } from "@clerk/nextjs";
 
 import SearchDialog from "./search";
+import LibraryDialog from "./library";
 import NotificationsDialog from "./notifications";
+
 import AvatarDialog from "./avatar";
 
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { LibraryBig } from "lucide-react";
+
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 export default function Header() {
   const me = useUser();
+  const pathname = usePathname();
+  const hasAnime = pathname.includes('/anime/');
   return (
-    <header className="flex items-center justify-between sticky left-0 right-0 top-0 z-[999] bg-gradient-to-b from-background from-5% to-background/0 px-4 lg:px-8 py-6 fade-in">
+    <header className={cn(
+      'flex items-center justify-between left-0 right-0 top-0 z-[999] bg-gradient-to-b from-background/80 to-background/0 px-4 lg:px-8 py-6 fade-in',
+      {
+        'fixed': hasAnime,
+        'sticky': !hasAnime
+      }
+    )}>
       <div className="flex gap-8 items-center">
-        {/* Main logo and navigation links */}
         <h1 className="text-2xl select-none">
           <Link href="/">Mochi.</Link>
         </h1>
         <div className="hidden lg:flex gap-4">
           <Link
-            href="search"
+            href="/search"
             className="transition-colors hover:text-muted-foreground"
           >
             Discover
           </Link>
           <Link
-            href="search"
-            className="transition-colors hover:text-muted-foreground"
+            href="#"
+            className="transition-colors text-muted-foreground cursor-not-allowed hover:text-muted-foreground"
           >
             Schedule
           </Link>
           <Link
-            href="news"
-            className="transition-colors hover:text-muted-foreground"
+            href="#"
+            className="transition-colors text-muted-foreground cursor-not-allowed hover:text-muted-foreground"
           >
             News
           </Link>
           <Link
             href="#"
-            className="transition-colors hover:text-muted-foreground"
+            className="transition-colors text-muted-foreground cursor-not-allowed hover:text-muted-foreground"
           >
             Community
           </Link>
         </div>
       </div>
-      {/* Search and user actions */}
       <div className="flex gap-5 items-center">
         <SearchDialog />
         <SignedOut>
@@ -72,7 +78,7 @@ export default function Header() {
           {me.user ? (
             <>
               <NotificationsDialog userid={me.user.id} />
-              <LibraryBig strokeWidth={1.5} />
+              <LibraryDialog />
               <AvatarDialog user={me.user} />
             </>
           ) : (
