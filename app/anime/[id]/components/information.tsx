@@ -169,16 +169,14 @@ export function AnimeInformation({
                         <p className="text-sm font-medium text-muted-foreground mt-2">
                             <span className="text-primary font-semibold">Genres:</span>{" "}
                             {data?.Media?.genres?.map((name, index) => (
-                                <>
-                                    <Link
-                                        href={`/search?genre=${name?.toLowerCase()}`}
-                                        key={index}
-                                        className="hover:text-primary cursor-pointer select-none"
-                                    >
-                                        {name}
-                                        {index < (data?.Media?.genres?.length || 0) - 1 && ", "}
-                                    </Link>
-                                </>
+                                <Link
+                                    href={`/search?genre=${name?.toLowerCase()}`}
+                                    key={index}
+                                    className="hover:text-primary cursor-pointer select-none"
+                                >
+                                    {name}
+                                    {index < (data?.Media?.genres?.length || 0) - 1 && ", "}
+                                </Link>
                             ))}
                         </p>
                         <p className="text-sm font-medium text-muted-foreground mt-2">
