@@ -24,9 +24,40 @@ import { toast } from "sonner";
 export default function AvatarDialog({ user }: { user: ClerkUser }) {
 
   const { signOut } = useClerk();
+
+  const unsubscribeAndUnregister = async () => {
+    // Get the service worker registration
+    const registration = await navigator.serviceWorker.ready;
+
+    // Get the current push subscription
+    const subscription = await registration.pushManager.getSubscription();
+
+    // Unsubscribe the user from push notifications
+    if (subscription) {
+      await fetch('/api/unsubscribe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ endpoint: subscription.endpoint }),
+      });
+
+      await subscription.unsubscribe(); // Unsubscribe the client-side subscription
+    }
+
+    // Unregister the service worker
+    await registration.unregister();
+  };
+
   const toastShow = () => {
     toast.promise(async () => {
+      // First, unsubscribe and unregister the service worker
+      await unsubscribeAndUnregister();
+
+      // Then, sign out the user
       await signOut();
+
+      // Reload the page to ensure all states are cleared
       window.location.reload();
     }, {
       loading: "You are being signed out",
@@ -35,7 +66,7 @@ export default function AvatarDialog({ user }: { user: ClerkUser }) {
       duration: 2000,
     });
   };
-
+  
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

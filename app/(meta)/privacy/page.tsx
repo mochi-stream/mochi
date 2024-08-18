@@ -1,6 +1,6 @@
 export default function Privacy() {
     return (
-        <div className="py-6 px-10">
+        <div className="py-6 px-4 md:px-10">
             <h1 className="text-3xl font-bold mb-4">Privacy Policy</h1>
             <h1 className="text-xl mb-4">Last Updated: August 14, 2024</h1>{" "}
             <p className="mb-6">

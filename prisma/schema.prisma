@@ -110,11 +110,18 @@ model Reply {
   @@index([commentId])
 }
 
+enum NotificationType {
+  EPISODE_AIR
+}
+
 model Notifications {
   id        String   @id @default(cuid())
   userId    String
-  type      String
+  type      NotificationType
+  title     String
   message   String
+  image     String
+  url       String
   seen      Boolean  @default(false)
   createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id])
@@ -182,4 +189,22 @@ model Collection {
   @@index([userId])
   @@index([animeId])
   @@unique([userId, animeId])
+}
+
+enum WorkerType {
+  EPI_NOTIFY
+  SYNC
+}
+
+model Worker {
+  id        String   @id @default(cuid())
+  type      WorkerType
+  lastRun   DateTime
+  pointer   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([type])
+  @@index([pointer])
+  @@unique([type, pointer])
 }
