@@ -30,7 +30,7 @@ export function CharacterList({ list, quantity }: CharacterListProps) {
     <>
       <div className="mt-4 flex flex-wrap gap-4 select-none relative">
         {list.edges && list.edges.length > quantity && !isExpanded && (
-          <div className="absolute inset-0 bottom-0 bg-gradient-to-t from-background via-transparent to-transparent pointer-events-none z-[81]"></div>
+          <div className="absolute inset-0 bottom-0 bg-gradient-to-t from-[#201717] via-transparent to-transparent pointer-events-none z-[81]"></div>
         )}
         {displayedList &&
           displayedList.map((character, index) => (

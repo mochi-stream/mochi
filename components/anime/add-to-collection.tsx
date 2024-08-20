@@ -22,9 +22,9 @@ import {
 } from "@/components/ui/select";
 import { useUser } from "@/app/_components/context";
 import { Status } from "@prisma/client";
-import { onChangeCollection } from "@/actions/collection";
+import { onChangeCollection, onDeleteCollection } from "@/actions/collection";
 import { getCollection } from "@/services/collection";
-import { Loader } from "lucide-react";
+import { Loader, Trash } from "lucide-react";
 
 // Map Status enums to user-friendly strings
 const statusLabels: { [key in Status]: string } = {
@@ -45,6 +45,7 @@ export default function AddToCollection({
   setShownAddToCollection: (value: boolean) => void;
 }) {
 
+  const [noExistingCollection, setNoExistingCollection] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState<string>("");
   const [collection, setCollection] = useState<string | null>(null);
   const [isFetching, setIsFetching] = useState<boolean>(true);
@@ -58,6 +59,9 @@ export default function AddToCollection({
           setIsFetching(true);
           setSelectedStatus("");
           const fetchedCollection = await getCollection(user.id, anime.id);
+          setNoExistingCollection(
+            !fetchedCollection || fetchedCollection.status === null
+          );
           setCollection(fetchedCollection?.status || null);
           setSelectedStatus(fetchedCollection?.status || "");
         } finally {
@@ -91,6 +95,25 @@ export default function AddToCollection({
     }
   };
 
+  const handleDeleteCollection = async () => {
+    if (user?.id && collection) {
+      setIsUpdating(true);
+      try {
+        await onDeleteCollection({
+          animeId: anime.id,
+          userId: user.id,
+        });
+        setCollection(null);
+        toast.success("Collection deleted successfully.");
+        setShownAddToCollection(false);
+      } catch (error) {
+        toast.error("Failed to delete collection. Please try again later.");
+      } finally {
+        setIsUpdating(false);
+      }
+    }
+  };
+
   const sanitizedDescription = sanitizeHtml(anime.description || "", {
     allowedTags: [],
     allowedAttributes: {},
@@ -104,7 +127,11 @@ export default function AddToCollection({
     <Dialog open={shownAddToCollection} onOpenChange={setShownAddToCollection}>
       {isAuthenticated ? (
         <DialogContent>
-          <h2 className="text-xl">Add to Collection</h2>
+          <h2 className="text-xl">
+            {noExistingCollection
+              ? "Add to Collection"
+              : "Update Collection"}
+          </h2>
           <div className="grid grid-cols-3 gap-4">
             <div className="col-span-1">
               <Image
@@ -137,16 +164,19 @@ export default function AddToCollection({
                     ))}
                   </SelectContent>
                 </Select>
-                <Button
-                  onClick={handleUpdateCollection}
-                  disabled={isFetching || isUpdating}
-                >
-                  Update Collection
-                  {isFetching || isUpdating && <Loader className="h-4 w-4 ml-2 animate-spin" />}
-                </Button>
-                {/* <Button variant={"destructive"} onClick={() => setShownAddToCollection(false)}>
-                    Remove
-                  </Button> */}
+                <div className="flex w-full justify-between gap-2">
+                  <Button
+                    onClick={handleUpdateCollection}
+                    disabled={isFetching || isUpdating}
+                    className="w-full"
+                  >
+                    {noExistingCollection ? "Add to Collection" : "Update Collection"}
+                    {isFetching || isUpdating && <Loader className="h-4 w-4 ml-2 animate-spin" />}
+                  </Button>
+                  <Button variant={"ghost"} size={"icon"} onClick={handleDeleteCollection}>
+                    <Trash className="h-4 w-4" />
+                  </Button>
+                </div>
               </div>
             </div>
           </div>

@@ -77,7 +77,7 @@ export default function Subscriptions({
     }
 
     return (<>
-        {isSubscribed === null ? (
+        {isAuthenticated && user && isSubscribed === null ? (
             <Button
                 className={`shadow-lg ${isSubscribing ? "opacity-75" : "opacity-100"
                     }`}
@@ -94,7 +94,6 @@ export default function Subscriptions({
                     }`}
                 size={"icon"}
                 onClick={handleSubscribeToggle}
-                disabled={isSubscribing || isSubscribed === null}
             >
                 <div>
                     {isSubscribed ? (

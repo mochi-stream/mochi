@@ -464,7 +464,7 @@ export default function Comments({
               </div>
             ))}
             {!isExpanded && comments.length > quantity && (
-              <div className="absolute inset-0 bg-gradient-to-t from-10% from-background via-[transparent] to-transparent opacity-90 rounded-lg pointer-events-none"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-10% from-[#201717] via-[transparent] to-transparent opacity-90 rounded-lg pointer-events-none"></div>
             )}
           </div>
 

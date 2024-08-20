@@ -47,7 +47,7 @@ export default function Banner({
               className="object-cover z-[-5] select-none"
             />
           </div>
-          <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent z-[-4]"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-[#201717]/80 to-transparent z-[-4]"></div>
           <div className="relative flex justify-between md:justify-end items-end h-full w-full p-4 gap-2">
             {data.Media.trailer ? (
               <Link
@@ -66,7 +66,7 @@ export default function Banner({
               </Link>
             ) : null}
             <Button className="shadow-lg hidden md:flex" onClick={() => handleAddToCollection(data?.Media)}>
-              <span>Add to Collection</span>
+              <span>Collection</span>
               <Plus className="h-4 w-4 ml-1" />
             </Button>
             <Button className="md:hidden" onClick={() => handleAddToCollection(data?.Media)} size={"icon"}>

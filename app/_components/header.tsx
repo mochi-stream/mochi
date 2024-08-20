@@ -16,11 +16,14 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { useEffect } from "react";
 
 export default function Header() {
   const me = useUser();
+
   const pathname = usePathname();
   const hasAnime = pathname.includes('/anime/');
+
   return (
     <header className={cn(
       'flex items-center justify-between left-0 right-0 top-0 z-[999] bg-gradient-to-b from-background/80 to-background/0 px-4 lg:px-8 py-6 fade-in',

@@ -11,6 +11,7 @@
   src: url('../public/fonts/aeonik.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
 }
 
 @layer base {

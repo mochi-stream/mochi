@@ -35,7 +35,7 @@ export default function App() {
   });
 
 
-  if (!loading && !data) {
+  if (!loading && !data || error) {
     toast.error("Failed to load anime data. Please try again later.", {
       duration: 2000,
     });
@@ -55,6 +55,8 @@ export default function App() {
             <AnimeListSkeleton />
           )}
         </div>
+
+        {/* FEAT: Continue where you last left off */}
 
         {/* FEAT: Show Recommended Anime Based on MAL History */}
 

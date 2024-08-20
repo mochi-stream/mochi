@@ -53,7 +53,7 @@ export function AnimeList({
     return (<>
         <div className="mt-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-y-6 gap-4 select-none relative">
             {mediaList.length > quantity && !isExpanded && (
-                <div className="absolute inset-0 bottom-0 bg-gradient-to-t from-background via-transparent to-transparent pointer-events-none z-[81]"></div>
+                <div className="absolute inset-0 bottom-0 bg-gradient-to-t from-[#201717] via-transparent to-transparent pointer-events-none z-[81]"></div>
             )}
             {displayedList.map((anime, index) => (
                 <div
