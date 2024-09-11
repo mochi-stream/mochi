@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.11.1",
-    "@clerk/nextjs": "^5.2.4",
+    "@clerk/nextjs": "^5.5.2",
     "@clerk/themes": "^2.1.17",
     "@emoji-mart/data": "^1.2.1",
     "@emoji-mart/react": "^1.1.1",
